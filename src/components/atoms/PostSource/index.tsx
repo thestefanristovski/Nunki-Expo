@@ -38,7 +38,7 @@ const PostSource = (props: Props) => {
     const iconName = "akar-icons:" + social + "-fill";
     return(
         <StyledView>
-            <Icon icon={iconName} style={{color:"red", width:25, lineHeight:25, display:"inline-block", paddingRight:10, verticalAlign:"middle"}}/>
+            <Icon icon={iconName} style={{color:"white", width:25, lineHeight:25, display:"inline-block", paddingRight:10, verticalAlign:"middle"}}/>
             <StyledText>{poster}</StyledText>
         </StyledView>
     )

@@ -10,6 +10,7 @@ import PostMetadata from "./src/components/molecules/PostMetadata";
 import PostEngagement from "./src/components/molecules/PostEngagement";
 import VideoPost from "./src/components/organisms/VIdeoPost";
 import {DividerShortRegular} from "fluent-icons-react";
+import TextPost from "./src/components/organisms/TextPost";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
       <MainButton title="I'm a button"></MainButton>
         <DividerShortRegular size={30} color="transparent"/>
       <VideoPost/>
+      <TextPost/>
       <StatusBar style="auto" />
     </View>
   );
