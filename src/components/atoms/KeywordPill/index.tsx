@@ -39,8 +39,8 @@ const KeywordPill = (props: Props) => {
     const {title, onPress} = props;
     return(
         <StyledView>
-            <StyledText>title</StyledText>
-            <StyledPressable>
+            <StyledText>{title}</StyledText>
+            <StyledPressable onPress={onPress}>
                 <Icon icon={"ci:off-close"} style={{width:15, height:15, color: "white"}}/>
             </StyledPressable>
         </StyledView>

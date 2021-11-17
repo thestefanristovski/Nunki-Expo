@@ -9,6 +9,7 @@ import PhotoPost from "./src/components/organisms/PhotoPost";
 import InputField from "./src/components/molecules/InputField";
 import TypePills from "./src/components/organisms/TypePills";
 import KeywordPill from "./src/components/atoms/KeywordPill";
+import SearchBar from "./src/components/molecules/SearchBar";
 
 export default function App() {
   return (
@@ -19,7 +20,7 @@ export default function App() {
       <VideoPost/>
       <TextPost/>
       <PhotoPost/>
-      <KeywordPill/>
+      <SearchBar/>
       <StatusBar style="auto" />
     </View>
   );
@@ -27,7 +28,6 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#111121',
     alignItems: 'center',
     justifyContent: 'center',
