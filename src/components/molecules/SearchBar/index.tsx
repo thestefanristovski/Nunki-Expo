@@ -32,11 +32,11 @@ const StyledPressable = styled.Pressable`
 
 const Bar = styled.View`
   background-color: #191932;
-  display: inline-block;
   vertical-align: middle;
   padding: 10px;
   border-radius: 60px;
   margin-bottom: 30px;
+  display: inline-block;
 `
 
 const StyledTextInput = styled.TextInput`
@@ -53,29 +53,31 @@ const StyledTextInput = styled.TextInput`
 const Search = styled.View`
   background-color: transparent;
   vertical-align: middle;
-  align-items: center;
-  display: flex;
+  align-items: center;  
   justify-content: center;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
   width: 100%;
 `
 
 const CustomButton = styled.View`
   vertical-align: middle;
   margin-left: 30px;
-  display: flex;
-  width: 130px;
 `
 
 const SearchBar = (props: Props) => {
     const {title, onPress} = props;
     return(
         <Search>
-            <Bar>
-                <Icon icon={"fluent:search-16-filled"} style={{height: 30, width:30, color:"white", marginRight: 10, verticalAlign: "middle"}}/>
-                <KeywordPill title={"One"}/>
-                <KeywordPill title={"Two"}/>
-                <StyledTextInput placeholder={"Search by Keywords"} />
-            </Bar>
+            <CustomButton>
+                <Bar>
+                    <Icon icon={"fluent:search-16-filled"} style={{height: 30, width:30, color:"white", marginRight: 10, verticalAlign: "middle"}}/>
+                    <KeywordPill title={"One"}/>
+                    <KeywordPill title={"Two"}/>
+                    <StyledTextInput placeholder={"Search by Keywords"} />
+                </Bar>
+            </CustomButton>
             <CustomButton>
                 <MainButton title={"Search"} />
             </CustomButton>

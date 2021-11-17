@@ -13,7 +13,7 @@ import SearchBar from "./src/components/molecules/SearchBar";
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <View>
       <InputField onPress={function (): void {} }></InputField>
       <DividerShortRegular size={30} color="transparent"/>
       <TypePills/>
@@ -30,6 +30,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#111121',
     alignItems: 'center',
-    justifyContent: 'center',
+
   },
 });
