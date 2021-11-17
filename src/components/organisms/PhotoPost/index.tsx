@@ -3,6 +3,7 @@ import React from 'react';
 import styled from "styled-components/native";
 import PostMetadata from "../../molecules/PostMetadata";
 import PostEngagement from "../../molecules/PostEngagement";
+import FBCollage from "react-native-fb-collage";
 
 
 interface Props {
@@ -17,6 +18,7 @@ interface Props {
     socialMedia: string;
     postTime: string;
     postLocation: string;
+    images: string[];
 }
 
 const StyledView = styled.View`
@@ -38,12 +40,15 @@ const StyledTitle = styled.Text`
   padding: 0px 0px;
 `
 
-const TextPost = (props: Props) => {
-    const {metricTitle1, metricAmount1, metricTitle2, metricAmount2, metricTitle3, metricAmount3, text, poster, socialMedia, postTime, postLocation} = props
+const PhotoPost = (props: Props) => {
+    const {metricTitle1, metricAmount1, metricTitle2, metricAmount2, metricTitle3, metricAmount3, text, poster, socialMedia, postTime, postLocation, images} = props
 
     return(
         <StyledView>
             <StyledTitle>{text}</StyledTitle>
+            <FBCollage
+            images={images}
+            width={420}/>
             <PostMetadata poster={poster} socialMedia={socialMedia} postTime={postTime} postLocation={postLocation}/>
             <PostEngagement metricTitle1={metricTitle1} metricAmount1={metricAmount1} metricTitle2={metricTitle2} metricAmount2={metricAmount2} metricTitle3={metricTitle3} metricAmount3={metricAmount3}/>
         </StyledView>
@@ -51,7 +56,7 @@ const TextPost = (props: Props) => {
 }
 
 
-TextPost.defaultProps = {
+PhotoPost.defaultProps = {
     metricTitle1: "likes",
     metricTitle2: "retweets",
     metricTitle3: "comments",
@@ -62,7 +67,8 @@ TextPost.defaultProps = {
     poster: "Unknown",
     socialMedia: "twitter",
     postTime: "Just Now",
-    postLocation: "Unknown"
+    postLocation: "Unknown",
+    images: ['https://images.unsplash.com/photo-1637090404371-e04d03de9be5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80', 'https://images.unsplash.com/photo-1593642633279-1796119d5482?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=688&q=80', 'https://images.unsplash.com/photo-1637090404371-e04d03de9be5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80', 'https://images.unsplash.com/photo-1593642633279-1796119d5482?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=688&q=80']
 }
 
-export default TextPost;
+export default PhotoPost;

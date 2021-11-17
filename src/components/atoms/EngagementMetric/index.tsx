@@ -24,6 +24,8 @@ const StyledText = styled.Text`
   vertical-align: middle;
 `
 
+//TODO treat metrics that are empty, nothing is shown
+
 const EngagementMetric = (props: Props) => {
     const {metric, amount} = props;
     let icon: string = "ant-design:heart-filled";

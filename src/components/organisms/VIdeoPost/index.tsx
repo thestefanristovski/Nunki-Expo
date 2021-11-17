@@ -27,6 +27,7 @@ const StyledView = styled.View`
   background-color: #191932;
   border-radius: 30px;
   padding: 20px;
+  margin: 10px;
 `
 
 const StyledText = styled.Text`

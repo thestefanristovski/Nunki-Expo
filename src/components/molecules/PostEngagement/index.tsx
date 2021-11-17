@@ -41,6 +41,8 @@ const StyledText = styled.Text`
 const PostEngagement = (props: Props) => {
     const {metricTitle1, metricAmount1, metricTitle2, metricAmount2, metricTitle3, metricAmount3} = props
 
+    //TODO wrap external link in pressable and add post Link to props, define onPress behaviour
+
     return(
         <StyledView>
             <EngagementMetric metric={metricTitle1} amount={metricAmount1}/>
