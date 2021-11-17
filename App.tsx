@@ -5,6 +5,7 @@ import MainButton from "./src/components/atoms/MainButton";
 import VideoPost from "./src/components/organisms/VIdeoPost";
 import {DividerShortRegular} from "fluent-icons-react";
 import TextPost from "./src/components/organisms/TextPost";
+import PhotoPost from "./src/components/organisms/PhotoPost";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <DividerShortRegular size={30} color="transparent"/>
       <VideoPost/>
       <TextPost/>
+      <PhotoPost/>
       <StatusBar style="auto" />
     </View>
   );
