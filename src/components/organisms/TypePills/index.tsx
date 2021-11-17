@@ -1,5 +1,4 @@
 import React from 'react';
-// @ts-ignore
 import styled from "styled-components/native";
 import Pill from '../../atoms/Pill';
 
@@ -8,6 +7,7 @@ interface Props {
     TypeTitle2:string;
     TypeTitle3:string;
     TypeTitle4:string;
+    title: string;
 }
 
 const StyledView = styled.View`
@@ -18,21 +18,23 @@ const StyledView = styled.View`
 `
 
 const StyledText = styled.Text`
-  color: white;
-  font-size: 10px;
+  color: black;
+  font-size: 20px;
   padding: 10px 0px;
 `
 
 const TypePills = (props: Props) => {
-    const {TypeTitle1,  TypeTitle2, TypeTitle3, TypeTitle4} = props
+    const {TypeTitle1,  TypeTitle2, TypeTitle3, TypeTitle4, title} = props
 
     return(
-        <StyledText>
-        <><StyledView><Pill title={TypeTitle1} onPress={function (): void { } }></Pill></StyledView>
-        <StyledView><Pill title={TypeTitle2} onPress={function (): void { } }></Pill></StyledView></>
-        <StyledView><Pill title={TypeTitle3} onPress={function (): void { } }></Pill></StyledView>
-        <StyledView><Pill title={TypeTitle4} onPress={function (): void { } }></Pill></StyledView>    
-        </StyledText>
+      <><StyledText>
+        {title}
+      </StyledText><StyledText>
+          <><StyledView><Pill title={TypeTitle1} onPress={function (): void { } }></Pill></StyledView>
+            <StyledView><Pill title={TypeTitle2} onPress={function (): void { } }></Pill></StyledView></>
+          <StyledView><Pill title={TypeTitle3} onPress={function (): void { } }></Pill></StyledView>
+          <StyledView><Pill title={TypeTitle4} onPress={function (): void { } }></Pill></StyledView>
+        </StyledText></>
     )
 }
 
@@ -41,7 +43,7 @@ TypePills.defaultProps = {
     TypeTitle2: "Images",
     TypeTitle3: "Videos",
     TypeTitle4: "Text",
-    
+    title: " Content Types:"
 }
 
 export default TypePills;
