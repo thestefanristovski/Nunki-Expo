@@ -24,6 +24,7 @@ const StyledView = styled.View`
   border-radius: 30px;
   padding: 20px;
   margin: 10px;
+  width: fit-content;
 `
 
 const StyledText = styled.Text`

@@ -35,7 +35,6 @@ const Bar = styled.View`
   vertical-align: middle;
   padding: 10px;
   border-radius: 60px;
-  margin-bottom: 30px;
   display: inline-block;
 `
 
@@ -47,7 +46,14 @@ const StyledTextInput = styled.TextInput`
   font-size: 14px;
   vertical-align: middle;
   color: white;
-  outline: transparent;
+  outline: none;
+  width: max-content;
+  box-shadow: none;
+  &:focus{
+    outline: none;
+    border-style: none;
+    box-shadow: none;
+  }
 `
 
 const Search = styled.View`
@@ -59,6 +65,7 @@ const Search = styled.View`
   flex-wrap: nowrap;
   flex-direction: row;
   width: 100%;
+  margin-bottom: 30px;
 `
 
 const CustomButton = styled.View`
@@ -66,18 +73,24 @@ const CustomButton = styled.View`
   margin-left: 30px;
 `
 
+const BarContainer = styled.View`
+  vertical-align: middle;
+  margin-left: 30px;
+  width: 70%;
+`
+
 const SearchBar = (props: Props) => {
     const {title, onPress} = props;
     return(
         <Search>
-            <CustomButton>
+            <BarContainer>
                 <Bar>
                     <Icon icon={"fluent:search-16-filled"} style={{height: 30, width:30, color:"white", marginRight: 10, verticalAlign: "middle"}}/>
                     <KeywordPill title={"One"}/>
                     <KeywordPill title={"Two"}/>
-                    <StyledTextInput placeholder={"Search by Keywords"} />
+                    <StyledTextInput placeholder={"Search by Keywords"} style={{outlineStyle:"none", boxShadow:"none"}} />
                 </Bar>
-            </CustomButton>
+            </BarContainer>
             <CustomButton>
                 <MainButton title={"Search"} />
             </CustomButton>
