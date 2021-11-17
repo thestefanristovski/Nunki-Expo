@@ -1,4 +1,3 @@
-
 import React from 'react';
 import styled from "styled-components/native";
 
@@ -28,7 +27,7 @@ const ButtonContainer = styled.TouchableOpacity`
   height: 40px;
   padding: 12px;
   border-radius: 10px;
-  background-color: #111121;
+  background-color: background;
 `
 
 const InputField = (props: Props) => {
