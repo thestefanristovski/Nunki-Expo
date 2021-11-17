@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components/native";
+import MainButton from "../../atoms/MainButton";
 
 interface Props {
   onPress: () => void;
@@ -11,14 +12,6 @@ const StyledText  = styled.Text`
     text-align: center;
     vertical-align: middle;
 `;
-
-const StyledPressable = styled.Pressable`
-  background-color: blue;
-  border-radius: 50px;
-  line-height: 10px;
-  padding: 8px 20px;
-  vertical-align: middle;
-`
 
 const ButtonContainer = styled.TouchableOpacity`
   margin-vertical: 40px;
@@ -44,9 +37,7 @@ const InputField = (props: Props) => {
       </ButtonContainer>
       </StyledText>
       <StyledText>
-      <StyledPressable onPress={onPress}>
-        Search
-      </StyledPressable>
+      <MainButton title={"Search"}/>
       </StyledText>
     </form>
   );

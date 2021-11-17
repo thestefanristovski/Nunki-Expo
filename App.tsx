@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import MainButton from "./src/components/atoms/MainButton";
 import VideoPost from "./src/components/organisms/VIdeoPost";
 import {DividerShortRegular} from "fluent-icons-react";
 import TextPost from "./src/components/organisms/TextPost";
