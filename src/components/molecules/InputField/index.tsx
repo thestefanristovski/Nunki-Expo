@@ -2,7 +2,6 @@ import React from 'react';
 import styled from "styled-components/native";
 
 interface Props {
-  title: string;
   onPress: () => void;
 }
 
@@ -31,7 +30,7 @@ const ButtonContainer = styled.TouchableOpacity`
 `
 
 const InputField = (props: Props) => {
-  const {title, onPress} = props;
+  const {onPress} = props;
   return (
     <form className="input">
       <StyledText>
@@ -46,7 +45,7 @@ const InputField = (props: Props) => {
       </StyledText>
       <StyledText>
       <StyledPressable onPress={onPress}>
-        {title}
+        Search
       </StyledPressable>
       </StyledText>
     </form>

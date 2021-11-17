@@ -2,9 +2,6 @@ import React from 'react';
 // @ts-ignore
 import styled from "styled-components/native";
 import Pill from '../../atoms/Pill';
-import AllPill from '../../atoms/Pill';
-import PostMetadata from "../../atoms/Pill";
-
 
 interface Props {
     TypeTitle1:string;
@@ -26,7 +23,7 @@ const StyledText = styled.Text`
   padding: 10px 0px;
 `
 
-const TextPost = (props: Props) => {
+const TypePills = (props: Props) => {
     const {TypeTitle1,  TypeTitle2, TypeTitle3, TypeTitle4} = props
 
     return(
@@ -39,7 +36,7 @@ const TextPost = (props: Props) => {
     )
 }
 
-TextPost.defaultProps = {
+TypePills.defaultProps = {
     TypeTitle1: "All",
     TypeTitle2: "Images",
     TypeTitle3: "Videos",
@@ -47,4 +44,4 @@ TextPost.defaultProps = {
     
 }
 
-export default TextPost;
+export default TypePills;
