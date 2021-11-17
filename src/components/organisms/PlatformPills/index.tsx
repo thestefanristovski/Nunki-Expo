@@ -7,6 +7,7 @@ interface Props {
     TypeTitle2:string;
     TypeTitle3:string;
     TypeTitle4:string;
+    TypeTitle5:string;
     title: string;
 }
 
@@ -23,8 +24,8 @@ const StyledText = styled.Text`
   padding: 10px 0px;
 `
 
-const TypePills = (props: Props) => {
-    const {TypeTitle1,  TypeTitle2, TypeTitle3, TypeTitle4, title} = props
+const PlatformPills = (props: Props) => {
+    const {TypeTitle1,  TypeTitle2, TypeTitle3, TypeTitle4, TypeTitle5, title} = props
 
     return(
       <><StyledText>
@@ -34,16 +35,18 @@ const TypePills = (props: Props) => {
             <StyledView><Pill title={TypeTitle2} onPress={function (): void { } }></Pill></StyledView></>
           <StyledView><Pill title={TypeTitle3} onPress={function (): void { } }></Pill></StyledView>
           <StyledView><Pill title={TypeTitle4} onPress={function (): void { } }></Pill></StyledView>
+          <StyledView><Pill title={TypeTitle5} onPress={function (): void { } }></Pill></StyledView>
         </StyledText></>
     )
 }
 
-TypePills.defaultProps = {
+PlatformPills.defaultProps = {
     TypeTitle1: "All",
-    TypeTitle2: "Images",
-    TypeTitle3: "Videos",
-    TypeTitle4: "Text",
-    title: " Content Types:"
+    TypeTitle2: "Youtube",
+    TypeTitle3: "Twitter",
+    TypeTitle4: "Vimeo",
+    TypeTitle5: "VK",
+    title: " Platform:"
 }
 
-export default TypePills;
+export default PlatformPills;
