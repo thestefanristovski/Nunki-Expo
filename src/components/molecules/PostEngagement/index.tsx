@@ -1,9 +1,7 @@
 import React from 'react';
-import {Button, Pressable, Text, Image, ImageSourcePropType, View} from "react-native";
+// @ts-ignore
 import styled from "styled-components/native";
 import {Icon} from "@iconify/react"
-import PostSource from "../../atoms/PostSource";
-import PostLocation from "../../atoms/PostLocation";
 import EngagementMetric from "../../atoms/EngagementMetric";
 
 

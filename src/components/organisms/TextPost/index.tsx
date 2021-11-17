@@ -1,11 +1,6 @@
 import React from 'react';
-import {Button, Pressable, Text, Image, ImageSourcePropType, View} from "react-native";
+// @ts-ignore
 import styled from "styled-components/native";
-import {Icon} from "@iconify/react"
-import PostSource from "../../atoms/PostSource";
-import PostLocation from "../../atoms/PostLocation";
-import EngagementMetric from "../../atoms/EngagementMetric";
-import VideoThumbnail from "../../atoms/VideoThumbnail";
 import PostMetadata from "../../molecules/PostMetadata";
 import PostEngagement from "../../molecules/PostEngagement";
 
@@ -18,8 +13,6 @@ interface Props {
     metricTitle3:string;
     metricAmount3:string;
     text: string;
-    length: string;
-    thumbnail: string;
     poster: string;
     socialMedia: string;
     postTime: string;
