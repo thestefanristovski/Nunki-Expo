@@ -23,6 +23,9 @@ const StyledPressable = styled.Pressable`
   line-height: 17px;
   padding: 10px 30px;
   vertical-align: middle;
+  &:focus {
+    border-color: red;
+    transition: border-color 0.3s ease-in-out;
 `
 
 const Pill = (props: Props) => {

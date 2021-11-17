@@ -10,6 +10,7 @@ import InputField from "./src/components/molecules/InputField";
 import TypePills from "./src/components/organisms/TypePills";
 import KeywordPill from "./src/components/atoms/KeywordPill";
 import SearchBar from "./src/components/molecules/SearchBar";
+import PlatformPills from "./src/components/organisms/PlatformPills";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
       <InputField onPress={function (): void {} }></InputField>
       <DividerShortRegular size={30} color="transparent"/>
       <TypePills/>
+      <PlatformPills/>
       <VideoPost/>
       <TextPost/>
       <PhotoPost/>
