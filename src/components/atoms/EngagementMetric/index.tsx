@@ -9,24 +9,15 @@ interface Props {
     amount: string
 }
 
-const StyledPressable = styled.Pressable`
-  background-color: white;
-  border-radius: 30px;
-  padding: 0px;
-  width: 500px;
-  height: 300px;
-  border: white 1px solid;
-`
-
 const StyledView = styled.View`
   display: inline-block;
   vertical-align: middle;
   line-height: 30px;
-  padding: 0px 20px;
+  padding-right: 50px;
 `
 
 const StyledText = styled.Text`
-  color: black;
+  color: #6A6A9F;
   font-size: 15px;
   text-align: center;
   display: inline-block;
@@ -49,7 +40,7 @@ const EngagementMetric = (props: Props) => {
     }
     return(
         <StyledView>
-            <Icon icon={icon} style={{color:"black", width:25, lineHeight:25, display:"inline-block", paddingRight:0, verticalAlign:"middle"}}/>
+            <Icon icon={icon} style={{color:"#6A6A9F", width:25, lineHeight:25, display:"inline-block", paddingRight:0, verticalAlign:"middle"}}/>
             <StyledText>{amount}</StyledText>
         </StyledView>
     )

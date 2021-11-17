@@ -27,11 +27,12 @@ const StyledView = styled.View`
   display: inline-block;
   vertical-align: middle;
   line-height: 30px;
+  padding-top: 10px;
 `
 
 const StyledText = styled.Text`
-  color: black;
-  font-size: 15px;
+  color: #6A6A9F;
+  font-size: 13px;
   text-align: center;
   display: inline-block;
   vertical-align: middle;

@@ -26,8 +26,8 @@ const StyledView = styled.View`
 `
 
 const StyledText = styled.Text`
-  color: black;
-  font-size: 15px;
+  color: white;
+  font-size: 13px;
   text-align: center;
   display: inline-block;
   vertical-align: middle;

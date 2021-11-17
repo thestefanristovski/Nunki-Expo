@@ -13,18 +13,18 @@ interface Props {
 //TODO: Hover behavior of button (see react-native-web-hover)
 
 const StyledPressable = styled.Pressable`
-  background-color: white;
+  background-color: transparent;
   border-radius: 30px;
   padding: 0px;
-  width: 500px;
-  height: 300px;
-  border: white 1px solid;
+  width: 420px;
+  height: 250px;
 `
 
 const StyledImage = styled.Image`
   border-radius: 30px;
-  width: 500px;
-  height: 300px;
+  width: 420px;
+  height: 250px;
+  border: #6083FF 1.5px solid;
 `
 
 const StyledIcon = styled(PlayFilled)`

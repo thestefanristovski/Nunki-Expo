@@ -8,15 +8,15 @@ import EngagementMetric from "./src/components/atoms/EngagementMetric";
 import PostLocation from "./src/components/atoms/PostLocation";
 import PostMetadata from "./src/components/molecules/PostMetadata";
 import PostEngagement from "./src/components/molecules/PostEngagement";
+import VideoPost from "./src/components/organisms/VIdeoPost";
+import {DividerShortRegular} from "fluent-icons-react";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <MainButton title="Hello"></MainButton>
-      <VideoThumbnail />
-      <PostMetadata/>
-      <PostEngagement/>
+      <MainButton title="I'm a button"></MainButton>
+        <DividerShortRegular size={30} color="transparent"/>
+      <VideoPost/>
       <StatusBar style="auto" />
     </View>
   );
@@ -25,7 +25,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#111121',
     alignItems: 'center',
     justifyContent: 'center',
   },

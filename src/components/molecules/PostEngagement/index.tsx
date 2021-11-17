@@ -48,7 +48,7 @@ const PostEngagement = (props: Props) => {
             <EngagementMetric metric={metricTitle1} amount={metricAmount1}/>
             <EngagementMetric metric={metricTitle2} amount={metricAmount2}/>
             <EngagementMetric metric={metricTitle3} amount={metricAmount3}/>
-            <Icon icon="heroicons-solid:external-link" style={{color:"black", width:20, height:20, display:"inline-block", padding:"0 20", verticalAlign:"middle"}}/>
+            <Icon icon="heroicons-solid:external-link" style={{color:"#6A6A9F", width:20, height:20, display:"inline-block", paddingLeft: 150, verticalAlign:"middle"}}/>
         </StyledView>
     )
 }
