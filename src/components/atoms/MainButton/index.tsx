@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, Pressable, Text} from "react-native";
+// @ts-ignore
 import styled from "styled-components/native";
 
 

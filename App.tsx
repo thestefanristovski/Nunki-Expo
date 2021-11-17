@@ -8,6 +8,7 @@ import TextPost from "./src/components/organisms/TextPost";
 import PhotoPost from "./src/components/organisms/PhotoPost";
 import InputField from "./src/components/molecules/InputField";
 import TypePills from "./src/components/organisms/TypePills";
+import KeywordPill from "./src/components/atoms/KeywordPill";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
       <VideoPost/>
       <TextPost/>
       <PhotoPost/>
+      <KeywordPill/>
       <StatusBar style="auto" />
     </View>
   );
