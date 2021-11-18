@@ -41,7 +41,9 @@ export default function Demo() {
         const url = 'http://localhost:3000/youtube/search?sort=relevance&min=1605681523&type=video&'+queryParams
         fetch(url).then(res =>
             res.json()
-        ).then(res => console.log(res))
+        ).then(res => {
+            console.log(res.contents.data.title);
+        })
     }
 
     const { isLoading, error, data, refetch } = useQuery("key", fetchData, {
