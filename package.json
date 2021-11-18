@@ -19,6 +19,7 @@
     "react-native-fb-collage": "^1.0.7",
     "react-native-web": "^0.17.1",
     "react-native-web-hover": "^0.2.9",
+    "react-query": "^3.33.1",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {

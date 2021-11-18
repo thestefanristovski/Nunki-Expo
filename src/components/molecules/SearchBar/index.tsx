@@ -11,6 +11,7 @@ import MainButton from "../../atoms/MainButton";
 interface Props {
     title: string;
     onPress: () => void;
+    onChange: (param: string) => void;
 }
 
 const StyledText  = styled.Text`
@@ -80,19 +81,19 @@ const BarContainer = styled.View`
 `
 
 const SearchBar = (props: Props) => {
-    const {title, onPress} = props;
+    const {onPress, onChange} = props;
     return(
         <Search>
-            <BarContainer>
+            <BarContainer> 
                 <Bar>
                     <Icon icon={"fluent:search-16-filled"} style={{height: 30, width:30, color:"white", marginRight: 10, verticalAlign: "middle"}}/>
                     <KeywordPill title={"One"}/>
                     <KeywordPill title={"Two"}/>
-                    <StyledTextInput placeholder={"Search by Keywords"} style={{outlineStyle:"none", boxShadow:"none"}} />
+                    <StyledTextInput placeholder={"Search by Keywords"} style={{outlineStyle:"none", boxShadow:"none"}} onChangeText={onChange}/>
                 </Bar>
             </BarContainer>
             <CustomButton>
-                <MainButton title={"Search"} />
+                <MainButton title={"Search"} onPress={onPress}/>
             </CustomButton>
         </Search>
 
