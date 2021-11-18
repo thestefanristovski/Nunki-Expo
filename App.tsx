@@ -12,42 +12,15 @@ import PlatformPills from "./src/components/organisms/PlatformPills";
 import styled from "styled-components/native";
 import PostEngagement from "./src/components/molecules/PostEngagement";
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import Demo from './src/pages/Demo';
 
-
-const Cont = styled.View`
-  background-color: #111121;
-  padding: 40px;
-`
-
-const PostsContainer = styled.View`
-  display: flex;
-`
 
 const queryClient = new QueryClient()
 
 export default function App() {
-  const baseUrl = 'http://localhost:3000/youtube/search'
-  const [videos, setVideos] = useState([])
-  const [queryParams, setQueryParams] = useState('')
-
-  const makeQuery = () => {
-    console.log(queryParams)
-  }
-
   return (
     <QueryClientProvider client={queryClient}>
-      <Cont>
-        <SearchBar onPress={makeQuery} onChange={setQueryParams}/>
-        <DividerShortRegular size={30} color="transparent"/>
-        <TypePills/>
-        <PlatformPills/>
-        <PostsContainer>
-            <VideoPost/>
-            <TextPost/>
-            <PhotoPost/>
-        </PostsContainer>
-        <StatusBar style="auto" />
-      </Cont>
+      <Demo />
     </QueryClientProvider>
   );
 }
