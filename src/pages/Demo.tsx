@@ -50,17 +50,18 @@ export default function Demo() {
         refetchOnWindowFocus: false,
         enabled: false // needed to handle refetchs manually
     });
-  
+
     const makeQuery = () => {
         refetch()
     }
-    
+
     return (
         <Cont>
         <SearchBar onPress={makeQuery} onChange={setQueryParams}/>
         <DividerShortRegular size={30} color="transparent"/>
         <TypePills/>
         <PlatformPills/>
+        <VideoPost/>
         <PostsContainer>
             {videos.map((video, index) => (
                 <VideoPost metricTitle1={'views'} metricAmount1={video.views} 

@@ -21,6 +21,7 @@ interface Props {
     socialMedia: string;
     postTime: string;
     postLocation: string;
+    videoLink: string;
 }
 
 const StyledView = styled.View`
@@ -35,16 +36,23 @@ const StyledText = styled.Text`
   color: white;
   font-size: 13px;
   padding: 20px 0px;
+  max-width: 400px;
 `
 
 const StyledTitle = styled.Text`
   color: white;
   font-size: 20px;
   padding: 0px 0px;
+  max-width: 400px;
 `
 
 const VideoPost = (props: Props) => {
-    const {metricTitle1, metricAmount1, metricTitle2, metricAmount2, metricTitle3, metricAmount3, title, description, length, thumbnail, channel, socialMedia, postTime, postLocation} = props
+
+    const {metricTitle1, metricAmount1, metricTitle2, metricAmount2, metricTitle3, metricAmount3, title, description, length, thumbnail, channel, socialMedia, postTime, postLocation, videoLink} = props
+
+    const handleClick = () => {
+        window.open(videoLink)
+    }
 
     return(
         <StyledView>
@@ -52,7 +60,7 @@ const VideoPost = (props: Props) => {
             <StyledText>{description}</StyledText>
             <VideoThumbnail length={length} imageSrc={thumbnail}/>
             <PostMetadata poster={channel} socialMedia={socialMedia} postTime={postTime} postLocation={postLocation}/>
-            <PostEngagement metricTitle1={metricTitle1} metricAmount1={metricAmount1} metricTitle2={metricTitle2} metricAmount2={metricAmount2} metricTitle3={metricTitle3} metricAmount3={metricAmount3}/>
+            <PostEngagement metricTitle1={metricTitle1} metricAmount1={metricAmount1} metricTitle2={metricTitle2} metricAmount2={metricAmount2} metricTitle3={metricTitle3} metricAmount3={metricAmount3} onPress={handleClick}/>
         </StyledView>
     )
 }
@@ -72,7 +80,8 @@ VideoPost.defaultProps = {
     channel: "Unknown",
     socialMedia: "youtube",
     postTime: "Just Now",
-    postLocation: "Unknown"
+    postLocation: "Unknown",
+    videoLink: "https://www.youtube.com/watch?v=cULMPGmFdIQ&ab_channel=A24"
 }
 
 export default VideoPost;

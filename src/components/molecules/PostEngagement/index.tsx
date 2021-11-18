@@ -3,6 +3,7 @@ import React from 'react';
 import styled from "styled-components/native";
 import {Icon} from "@iconify/react"
 import EngagementMetric from "../../atoms/EngagementMetric";
+import {Pressable} from "react-native";
 
 
 interface Props {
@@ -12,15 +13,13 @@ interface Props {
     metricAmount2:string;
     metricTitle3:string;
     metricAmount3:string;
+    onPress: ()=> void;
 }
 
 const StyledPressable = styled.Pressable`
-  background-color: white;
-  border-radius: 30px;
-  padding: 0px;
-  width: 500px;
-  height: 300px;
-  border: white 1px solid;
+  display: inline-block;
+  margin-left: 150px;
+  vertical-align: middle;
 `
 
 const StyledView = styled.View`
@@ -39,7 +38,7 @@ const StyledText = styled.Text`
 `
 
 const PostEngagement = (props: Props) => {
-    const {metricTitle1, metricAmount1, metricTitle2, metricAmount2, metricTitle3, metricAmount3} = props
+    const {metricTitle1, metricAmount1, metricTitle2, metricAmount2, metricTitle3, metricAmount3, onPress} = props
 
     //TODO wrap external link in pressable and add post Link to props, define onPress behaviour
 
@@ -48,7 +47,9 @@ const PostEngagement = (props: Props) => {
             <EngagementMetric metric={metricTitle1} amount={metricAmount1}/>
             <EngagementMetric metric={metricTitle2} amount={metricAmount2}/>
             <EngagementMetric metric={metricTitle3} amount={metricAmount3}/>
-            <Icon icon="heroicons-solid:external-link" style={{color:"#6A6A9F", width:20, height:20, display:"inline-block", paddingLeft: 150, verticalAlign:"middle"}}/>
+            <StyledPressable onPress={onPress}>
+                <Icon icon="heroicons-solid:external-link" style={{color:"#6A6A9F", width:20, height:20, verticalAlign:"middle"}} />
+            </StyledPressable>
         </StyledView>
     )
 }
