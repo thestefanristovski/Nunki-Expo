@@ -12,7 +12,7 @@ import PlatformPills from "../components/organisms/PlatformPills";
 import styled from "styled-components/native";
 import PostEngagement from "../components/molecules/PostEngagement";
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
-
+import Masonry from "@react-native-seoul/masonry-list"
 
 const Cont = styled.View`
   background-color: #111121;
@@ -62,12 +62,34 @@ export default function Demo() {
         <DividerShortRegular size={30} color="transparent"/>
         <TypePills/>
         <PlatformPills/>
-        <PostsContainer>
+        <Masonry
+        data = {videos}
+        renderItem = {({item}) => <VideoPost metricTitle1={'views'} metricAmount1={item.views}
+                                             title={item.title}
+                                             metricTitle2={'likes'} metricAmount2={item.likes}
+                                             metricTitle3={'dislikes'} metricAmount3={item.dislikes}
+                                             description={item.text.substring(0, 300)}
+                                             thumbnail={item.image}
+                                             channel={item.userfullname}
+                                             socialMedia={item.network}
+                                             postTime={item.unix}
+                                             postLocation={item.location.coordinates.join(',')}
+                                             videoLink={item.link}
+                                             length={item.duration}
+        />}/>
+        <StatusBar style="auto" />
+      </Cont>
+    )
+}
+
+
+/*
+<PostsContainer>
             {videos.map((video, index) => (
-                <VideoPost metricTitle1={'views'} metricAmount1={video.views} 
+                <VideoPost metricTitle1={'views'} metricAmount1={video.views}
                 title={video.title}
-                metricTitle2={'likes'} metricAmount2={video.likes} 
-                metricTitle3={'dislikes'} metricAmount3={video.dislikes} 
+                metricTitle2={'likes'} metricAmount2={video.likes}
+                metricTitle3={'dislikes'} metricAmount3={video.dislikes}
                 description={video.text.substring(0, 300)}
                 thumbnail={video.image}
                 channel={video.userfullname}
@@ -79,7 +101,4 @@ export default function Demo() {
                 />
             ))}
         </PostsContainer>
-        <StatusBar style="auto" />
-      </Cont>
-    )
-}
+ */
