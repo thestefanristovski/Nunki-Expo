@@ -26,7 +26,7 @@ const PostsContainer = styled.View`
 
 export default function Demo() {
     const baseUrl = 'http://localhost:3000/youtube/search'
-  const [videos, setVideos] = useState([])
+  const [videos, setVideos] = useState<any[]>([])
   const [queryParams, setQueryParams] = useState('')
 
 //   const { isLoading, error, data } = useQuery('repoData', () => {
@@ -42,7 +42,7 @@ export default function Demo() {
         fetch(url).then(res =>
             res.json()
         ).then(res => {
-            console.log(res.contents.data.title);
+            setVideos(res.contents)
         })
     }
 
@@ -54,6 +54,7 @@ export default function Demo() {
     const makeQuery = () => {
         refetch()
     }
+    
     return (
         <Cont>
         <SearchBar onPress={makeQuery} onChange={setQueryParams}/>
@@ -61,9 +62,9 @@ export default function Demo() {
         <TypePills/>
         <PlatformPills/>
         <PostsContainer>
-            <VideoPost/>
-            <TextPost/>
-            <PhotoPost/>
+            {videos.map((video, index) => (
+                <VideoPost title={video.title}/>
+            ))}
         </PostsContainer>
         <StatusBar style="auto" />
       </Cont>
