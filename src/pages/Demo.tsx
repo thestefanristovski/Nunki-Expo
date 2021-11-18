@@ -38,7 +38,7 @@ export default function Demo() {
 //   )
 
     const fetchData = () => {
-        const url = 'http://localhost:3000/youtube/search?sort=relevance&min=1605681523&type=video&'+queryParams
+        const url = 'http://localhost:3000/youtube/search?sort=relevance&min=1605681523&type=video&q='+queryParams
         fetch(url).then(res =>
             res.json()
         ).then(res => {
