@@ -26,8 +26,9 @@ const PostsContainer = styled.View`
 
 export default function Demo() {
     const baseUrl = 'http://localhost:3000/youtube/search'
-  const [videos, setVideos] = useState<any[]>([])
-  const [queryParams, setQueryParams] = useState('')
+    const [videos, setVideos] = useState<any[]>([])
+    const [queryParams, setQueryParams] = useState('')
+    const [columns, setColumns] = useState(2);
 
 //   const { isLoading, error, data } = useQuery('repoData', () => {
 //     const url = 'http://localhost:3000/youtube/search?sort=relevance&min=1605681523&type=video&'+queryParams
@@ -56,6 +57,14 @@ export default function Demo() {
         refetch()
     }
 
+    React.useEffect(() => {
+        function handleResize() {
+            setColumns(Math.round(window.innerWidth/470));
+        }
+
+        window.addEventListener('resize', handleResize)
+    })
+
     return (
         <Cont>
         <SearchBar onPress={makeQuery} onChange={setQueryParams}/>
@@ -64,6 +73,7 @@ export default function Demo() {
         <PlatformPills/>
         <Masonry
         data = {videos}
+        numColumns = {columns}
         renderItem = {({item}) => <VideoPost metricTitle1={'views'} metricAmount1={item.views}
                                              title={item.title}
                                              metricTitle2={'thumbsup'} metricAmount2={item.likes}
@@ -75,30 +85,9 @@ export default function Demo() {
                                              postTime={item.unix}
                                              postLocation={item.location.coordinates.join(',')}
                                              videoLink={item.link}
-                                             length={item.duration}
-        />}/>
+                                             length={item.duration}/>}
+        />
         <StatusBar style="auto" />
       </Cont>
     )
 }
-
-
-/*
-<PostsContainer>
-            {videos.map((video, index) => (
-                <VideoPost metricTitle1={'views'} metricAmount1={video.views}
-                title={video.title}
-                metricTitle2={'likes'} metricAmount2={video.likes}
-                metricTitle3={'dislikes'} metricAmount3={video.dislikes}
-                description={video.text.substring(0, 300)}
-                thumbnail={video.image}
-                channel={video.userfullname}
-                socialMedia={video.network}
-                postTime={video.unix}
-                postLocation={video.location.coordinates.join(',')}
-                videoLink={video.link}
-                length={video.duration}
-                />
-            ))}
-        </PostsContainer>
- */
