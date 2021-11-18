@@ -66,8 +66,8 @@ export default function Demo() {
         data = {videos}
         renderItem = {({item}) => <VideoPost metricTitle1={'views'} metricAmount1={item.views}
                                              title={item.title}
-                                             metricTitle2={'likes'} metricAmount2={item.likes}
-                                             metricTitle3={'dislikes'} metricAmount3={item.dislikes}
+                                             metricTitle2={'thumbsup'} metricAmount2={item.likes}
+                                             metricTitle3={'thumbsdown'} metricAmount3={item.dislikes}
                                              description={item.text.substring(0, 300)}
                                              thumbnail={item.image}
                                              channel={item.userfullname}
