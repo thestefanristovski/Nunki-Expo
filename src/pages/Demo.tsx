@@ -63,7 +63,13 @@ export default function Demo() {
         <PlatformPills/>
         <PostsContainer>
             {videos.map((video, index) => (
-                <VideoPost title={video.title}/>
+                <VideoPost metricTitle1={'views'} metricAmount1={video.views} 
+                title={video.title}
+                metricTitle2={'likes'} metricAmount2={video.likes} 
+                metricTitle3={'dislikes'} metricAmount3={video.dislikes} 
+                description={video.description}
+                thumbnail={video.thumbnail}
+                channel={video.channel}/>
             ))}
         </PostsContainer>
         <StatusBar style="auto" />
