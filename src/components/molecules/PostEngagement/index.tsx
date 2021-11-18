@@ -18,7 +18,7 @@ interface Props {
 
 const StyledPressable = styled.Pressable`
   display: inline-block;
-  margin-left: 150px;
+  margin-left: 50px;
   vertical-align: middle;
 `
 

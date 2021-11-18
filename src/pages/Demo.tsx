@@ -42,6 +42,7 @@ export default function Demo() {
         fetch(url).then(res =>
             res.json()
         ).then(res => {
+            console.log(res.contents)
             setVideos(res.contents)
         })
     }
@@ -61,16 +62,21 @@ export default function Demo() {
         <DividerShortRegular size={30} color="transparent"/>
         <TypePills/>
         <PlatformPills/>
-        <VideoPost/>
         <PostsContainer>
             {videos.map((video, index) => (
                 <VideoPost metricTitle1={'views'} metricAmount1={video.views} 
                 title={video.title}
                 metricTitle2={'likes'} metricAmount2={video.likes} 
                 metricTitle3={'dislikes'} metricAmount3={video.dislikes} 
-                description={video.description}
-                thumbnail={video.thumbnail}
-                channel={video.channel}/>
+                description={video.text.substring(0, 300)}
+                thumbnail={video.image}
+                channel={video.userfullname}
+                socialMedia={video.network}
+                postTime={video.unix}
+                postLocation={video.location.coordinates.join(',')}
+                videoLink={video.link}
+                length={video.duration}
+                />
             ))}
         </PostsContainer>
         <StatusBar style="auto" />

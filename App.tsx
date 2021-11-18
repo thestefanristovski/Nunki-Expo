@@ -17,10 +17,17 @@ import Demo from './src/pages/Demo';
 
 const queryClient = new QueryClient()
 
+const StyledBcg = styled.View`
+  background-color: #111121;
+  height: 100%
+`
+
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Demo />
+      <StyledBcg>
+        <Demo />
+      </StyledBcg>
     </QueryClientProvider>
   );
 }
