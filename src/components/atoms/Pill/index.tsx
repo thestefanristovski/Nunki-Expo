@@ -6,8 +6,8 @@ import styled from "styled-components/native";
 
 interface Props {
     title: string;
-    onPress: () => void;
-    status: string;
+    onPress: (element: string, another:string) => void;
+    statusActive: string;
 }
 
 const StyledText  = styled.Text`
@@ -31,15 +31,40 @@ const StyledPressable = styled.Pressable`
   display: inline-block;
 `
 
+const StyledPressableActive = styled.Pressable`
+  background-color: #25245D;
+  border-radius: 100px;
+  line-height: 17px;
+  padding: 10px 30px;
+  vertical-align: middle;
+  border: #6083FF 2px solid;
+  width: fit-content;
+  margin-right: 10px;
+  display: inline-block;
+`
+
 const Pill = (props: Props) => {
-    const {title, onPress} = props;
-    return(
-        <StyledPressable onPress={onPress}>
-            <StyledText>
-                {title}
-            </StyledText>
-        </StyledPressable>
-    )
+    const {title, onPress, statusActive} = props;
+
+    if (statusActive === "active") {
+        return(
+            <StyledPressableActive onPress={() => {onPress(title)}}>
+                <StyledText>
+                    {title}
+                </StyledText>
+            </StyledPressableActive>
+        )
+    } else {
+        return(
+            <StyledPressable onPress={() => {onPress(title)}}>
+                <StyledText>
+                    {title}
+                </StyledText>
+            </StyledPressable>
+        )
+    }
+
+
 }
 
 export default Pill;

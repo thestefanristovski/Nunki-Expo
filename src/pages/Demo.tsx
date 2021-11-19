@@ -29,6 +29,8 @@ export default function Demo() {
     const [videos, setVideos] = useState<any[]>([])
     const [queryParams, setQueryParams] = useState('')
     const [columns, setColumns] = useState(2);
+    const [contentTypes, setContentTypes] = useState(["Photos", "Videos", "Text"])
+    const [selectedContentTypes, setSelectedContentTypes] = useState(["Photos", "Videos", "Text"])
 
 //   const { isLoading, error, data } = useQuery('repoData', () => {
 //     const url = 'http://localhost:3000/youtube/search?sort=relevance&min=1605681523&type=video&'+queryParams
@@ -57,6 +59,8 @@ export default function Demo() {
         refetch()
     }
 
+
+
     React.useEffect(() => {
         function handleResize() {
             setColumns(Math.round(window.innerWidth/470));
@@ -65,12 +69,24 @@ export default function Demo() {
         window.addEventListener('resize', handleResize)
     })
 
+    const changedContentType = (element: string, another: string):void  => {
+        console.log(element)
+        console.log(selectedContentTypes)
+        if (selectedContentTypes.includes(element)) {
+            setSelectedContentTypes(selectedContentTypes.filter(selectedItem => selectedItem != element));
+        } else if (element === "All") {
+            setSelectedContentTypes(contentTypes);
+        } else {
+            setSelectedContentTypes(selectedContentTypes.concat(element));
+        }
+    }
+
     return (
         <Cont>
         <SearchBar onPress={makeQuery} onChange={setQueryParams}/>
         <DividerShortRegular size={30} color="transparent"/>
-        <PillMultiselect title={"Content Types"} options={["All", "Photos", "Videos", "Text"]}/>
-        <PillMultiselect/>
+        <PillMultiselect title={"Content Types"} options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType}/>
+
         <Masonry
         data = {videos}
         numColumns = {columns}

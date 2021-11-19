@@ -5,7 +5,6 @@ import VideoPost from "./src/components/organisms/VIdeoPost";
 import {DividerShortRegular} from "fluent-icons-react";
 import TextPost from "./src/components/organisms/TextPost";
 import PhotoPost from "./src/components/organisms/PhotoPost";
-import TypePills from "./src/components/organisms/TypePills";
 import SearchBar from "./src/components/molecules/SearchBar";
 import PlatformPills from "./src/components/organisms/PillMultiselect";
 // @ts-ignore
