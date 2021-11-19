@@ -5,14 +5,14 @@ import VideoPost from "../components/organisms/VIdeoPost";
 import {DividerShortRegular} from "fluent-icons-react";
 import TextPost from "../components/organisms/TextPost";
 import PhotoPost from "../components/organisms/PhotoPost";
-import TypePills from "../components/organisms/TypePills";
 import SearchBar from "../components/molecules/SearchBar";
-import PlatformPills from "../components/organisms/PlatformPills";
+import PlatformPills from "../components/organisms/PillMultiselect";
 // @ts-ignore
 import styled from "styled-components/native";
 import PostEngagement from "../components/molecules/PostEngagement";
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import Masonry from "@react-native-seoul/masonry-list"
+import PillMultiselect from "../components/organisms/PillMultiselect";
 
 const Cont = styled.View`
   background-color: #111121;
@@ -69,8 +69,8 @@ export default function Demo() {
         <Cont>
         <SearchBar onPress={makeQuery} onChange={setQueryParams}/>
         <DividerShortRegular size={30} color="transparent"/>
-        <TypePills/>
-        <PlatformPills/>
+        <PillMultiselect title={"Content Types"} options={["All", "Photos", "Videos", "Text"]}/>
+        <PillMultiselect/>
         <Masonry
         data = {videos}
         numColumns = {columns}

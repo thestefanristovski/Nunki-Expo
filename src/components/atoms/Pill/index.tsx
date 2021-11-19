@@ -1,11 +1,13 @@
 import React from 'react';
 import {Button, Pressable, Text} from "react-native";
+// @ts-ignore
 import styled from "styled-components/native";
 
 
 interface Props {
     title: string;
     onPress: () => void;
+    status: string;
 }
 
 const StyledText  = styled.Text`
@@ -18,14 +20,15 @@ const StyledText  = styled.Text`
 //TODO: Hover behavior of button (see react-native-web-hover)
 
 const StyledPressable = styled.Pressable`
-  background-color: background;
+  background-color: #191932;
   border-radius: 100px;
   line-height: 17px;
   padding: 10px 30px;
   vertical-align: middle;
-  &:focus {
-    border-color: red;
-    transition: border-color 0.3s ease-in-out;
+  border: #6083FF 2px solid;
+  width: fit-content;
+  margin-right: 10px;
+  display: inline-block;
 `
 
 const Pill = (props: Props) => {
