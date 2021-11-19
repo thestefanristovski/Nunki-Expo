@@ -64,8 +64,8 @@ const PillMultiselect = (props: Props) => {
 
 PillMultiselect.defaultProps = {
     title: " Platform:",
-    options: ["All", "Youtube", "Twitter", "Vimeo", "VK"],
-    selected: []
+    options: ["Youtube", "Twitter", "Vimeo", "VK"],
+    selected: ["Youtube", "Twitter", "Vimeo", "VK"]
 }
 
 export default PillMultiselect;

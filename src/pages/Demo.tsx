@@ -25,12 +25,18 @@ const PostsContainer = styled.View`
 
 
 export default function Demo() {
+    //API CALLS
     const baseUrl = 'http://localhost:3000/youtube/search'
-    const [videos, setVideos] = useState<any[]>([])
     const [queryParams, setQueryParams] = useState('')
+    // List of Elements in Grid
+    const [videos, setVideos] = useState<any[]>([])
     const [columns, setColumns] = useState(2);
+    //State: Content Type Multiselect Menu
     const [contentTypes, setContentTypes] = useState(["Photos", "Videos", "Text"])
     const [selectedContentTypes, setSelectedContentTypes] = useState(["Photos", "Videos", "Text"])
+    //State: Platform Multiselect Menu
+    const [platforms, setPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
+    const [selectedPlatforms, setSelectedPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
 
 //   const { isLoading, error, data } = useQuery('repoData', () => {
 //     const url = 'http://localhost:3000/youtube/search?sort=relevance&min=1605681523&type=video&'+queryParams
@@ -69,6 +75,7 @@ export default function Demo() {
         window.addEventListener('resize', handleResize)
     })
 
+    //TODO Unite the two functions
     const changedContentType = (element: string, another: string):void  => {
         console.log(element)
         console.log(selectedContentTypes)
@@ -81,12 +88,24 @@ export default function Demo() {
         }
     }
 
+    const changedPlatform = (element: string, another: string):void  => {
+        console.log(element)
+        console.log(selectedPlatforms)
+        if (selectedPlatforms.includes(element)) {
+            setSelectedPlatforms(selectedPlatforms.filter(selectedItem => selectedItem != element));
+        } else if (element === "All") {
+            setSelectedPlatforms(platforms);
+        } else {
+            setSelectedPlatforms(selectedPlatforms.concat(element));
+        }
+    }
+
     return (
         <Cont>
         <SearchBar onPress={makeQuery} onChange={setQueryParams}/>
         <DividerShortRegular size={30} color="transparent"/>
         <PillMultiselect title={"Content Types"} options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType}/>
-
+        <PillMultiselect title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform}/>
         <Masonry
         data = {videos}
         numColumns = {columns}
