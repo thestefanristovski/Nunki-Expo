@@ -19,11 +19,13 @@ const StyledText  = styled.Text`
 //TODO: Hover behavior of button (see react-native-web-hover)
 
 const StyledPressable = styled.Pressable`
-  background-color: blue;
+  background-color: #023AFF;
   border-radius: 100px;
-  line-height: 17px;
+  height: 60px;
   padding: 10px 30px;
   vertical-align: middle;
+  justify-content: center;
+  align-items: center;
 `
 
 const MainButton = (props: Props) => {

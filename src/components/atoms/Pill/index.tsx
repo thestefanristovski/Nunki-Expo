@@ -40,6 +40,7 @@ const StyledPressableActive = styled.Pressable`
   border: #6083FF 2px solid;
   width: fit-content;
   margin-right: 10px;
+  margin-bottom: 10px;
   display: inline-block;
 `
 
@@ -48,7 +49,8 @@ const Pill = (props: Props) => {
 
     if (statusActive === "active") {
         return(
-            <StyledPressableActive onPress={() => {onPress(title)}}>
+            <StyledPressableActive onPress={() => {// @ts-ignore
+                onPress(title)}}>
                 <StyledText>
                     {title}
                 </StyledText>
@@ -56,7 +58,8 @@ const Pill = (props: Props) => {
         )
     } else {
         return(
-            <StyledPressable onPress={() => {onPress(title)}}>
+            <StyledPressable onPress={() => {// @ts-ignore
+                onPress(title)}}>
                 <StyledText>
                     {title}
                 </StyledText>

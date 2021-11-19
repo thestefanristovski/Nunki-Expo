@@ -72,22 +72,23 @@ const Search = styled.View`
 const CustomButton = styled.View`
   vertical-align: middle;
   margin-left: 30px;
+  margin-right: 30px;
 `
 
 const BarContainer = styled.View`
   vertical-align: middle;
   margin-left: 30px;
-  width: 70%;
+  width: calc(100% - 120px);
 `
 
 const SearchBar = (props: Props) => {
     const {onPress, onChange} = props;
     return(
         <Search>
-            <BarContainer> 
+            <BarContainer>
                 <Bar>
                     <Icon icon={"fluent:search-16-filled"} style={{height: 30, width:30, color:"white", marginRight: 10, verticalAlign: "middle"}}/>
-                    
+
                     <StyledTextInput placeholder={"Search by Keywords"} style={{outlineStyle:"none", boxShadow:"none"}} onChangeText={onChange}/>
                 </Bar>
             </BarContainer>
