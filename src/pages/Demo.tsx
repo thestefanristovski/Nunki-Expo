@@ -103,9 +103,9 @@ export default function Demo() {
     return (
         <Cont>
         <SearchBar onPress={makeQuery} onChange={setQueryParams}/>
-        <DividerShortRegular size={30} color="transparent"/>
         <PillMultiselect title={"Content Types"} options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType}/>
         <PillMultiselect title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform}/>
+        <DividerShortRegular size={10} color="transparent"/>
         <Masonry
         data = {videos}
         numColumns = {columns}

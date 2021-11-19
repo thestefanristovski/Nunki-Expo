@@ -87,7 +87,7 @@ const SearchBar = (props: Props) => {
         <Search>
             <BarContainer>
                 <Bar>
-                    <Icon icon={"fluent:search-16-filled"} style={{height: 30, width:30, color:"white", marginRight: 10, verticalAlign: "middle"}}/>
+                    <Icon icon={"fluent:search-16-filled"} style={{height: 30, width:30, color:"white", marginRight: 10, marginLeft:10, verticalAlign: "middle"}}/>
 
                     <StyledTextInput placeholder={"Search by Keywords"} style={{outlineStyle:"none", boxShadow:"none"}} onChangeText={onChange}/>
                 </Bar>

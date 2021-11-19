@@ -19,6 +19,7 @@ const StyledText = styled.Text`
   color: white;
   font-size: 20px;
   padding: 10px 0;
+  margin-bottom: 10px;
 `
 
 const PillMultiselect = (props: Props) => {
