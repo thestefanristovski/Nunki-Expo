@@ -65,7 +65,7 @@ const DropDown = (props: Props) => {
                 open = {open}
                 value = {value}
                 setOpen = {setOpen}
-                setValue = {setValue}
+                setValue = {ValueChanged}
                 style = {{backgroundColor: "#191932", borderRadius: 100}}
                 containerStyle = {{display: "flex",flexDirection: "row", flexWrap: "nowrap", backgroundColor: "#191932", borderRadius: 100, width: "fit-content", paddingTop: 15, paddingBottom: 15, paddingLeft: 20, paddingRight: 20}}
                 textStyle = {{color: "white", fontSize: 15}}
