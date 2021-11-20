@@ -47,6 +47,7 @@ export default function Demo() {
 //   )
 
     // MAKING A QUERY =========================================================
+    // TODO adapt to array of parameters
 
     const fetchData = () => {
         const url = 'http://localhost:3000/youtube/search?sort=relevance&min=1605681523&type=video&q='+queryParams
@@ -75,6 +76,9 @@ export default function Demo() {
             const keyword:string = text.substring(0, text.lastIndexOf(','));
             const keywords:string[] = queryParams;
             setQueryParams(keywords.concat(keyword));
+        } else {
+            const keywords:string[] = queryParams;
+            setQueryParams(keywords.concat(text));
         }
     }
 
@@ -126,7 +130,7 @@ export default function Demo() {
 
     return (
         <Cont>
-        <SearchBar onPressSearch={makeQuery} onChange={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
+        <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
         <PillMultiselect title={"Content Types"} options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType}/>
         <PillMultiselect title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform}/>
         <DividerShortRegular size={10} color="transparent"/>

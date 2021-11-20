@@ -11,7 +11,7 @@ import MainButton from "../../atoms/MainButton";
 interface Props {
     title: string;
     onPressSearch: () => void;
-    onChange: (param: string) => void;
+    onAddKeyword: (param: string) => void;
     keywords: string[]
     onDelete: (param: string) => void;
 }
@@ -84,14 +84,16 @@ const BarContainer = styled.View`
 `
 
 const SearchBar = (props: Props) => {
-    const {onPressSearch, onChange, keywords, onDelete} = props;
+    const {onPressSearch, onAddKeyword, keywords, onDelete} = props;
+    const [textFieldContent, setTextFieldContent] = React.useState('')
 
     const textField = React.useRef<TextInput>(null)
 
     //Listen for changes in text field, trigger add keyword method in parent when , is typed
     const onChangedText = (text:string) => {
+        setTextFieldContent(text);
         if (text.endsWith(',')) {
-            onChange(text);
+            onAddKeyword(text);
             if (textField !== null) {
                 // @ts-ignore
                 textField.current.clear();
@@ -99,7 +101,18 @@ const SearchBar = (props: Props) => {
         }
     }
 
-    //TODO add method that triggers when search button is pressed, to add the remaining keyword in the text field to the query parameters
+    //When Search is clicked, add remaining keyword from text input to query params and execute query
+    //TODO test functionnality with backend
+    const onSubmitSearch = () => {
+        if (textFieldContent !== '') {
+            onAddKeyword(textFieldContent)
+            if (textField !== null) {
+                // @ts-ignore
+                textField.current.clear();
+            }
+        }
+        onPressSearch();
+    }
 
     return(
         <Search>
@@ -115,7 +128,7 @@ const SearchBar = (props: Props) => {
                 </Bar>
             </BarContainer>
             <CustomButton>
-                <MainButton title={"Search"} onPress={onPressSearch}/>
+                <MainButton title={"Search"} onPress={onSubmitSearch}/>
             </CustomButton>
         </Search>
 
