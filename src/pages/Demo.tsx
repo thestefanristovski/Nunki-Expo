@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text } from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import VideoPost from "../components/organisms/VIdeoPost";
 import {DividerShortRegular} from "fluent-icons-react";
 import TextPost from "../components/organisms/TextPost";
@@ -13,6 +13,7 @@ import PostEngagement from "../components/molecules/PostEngagement";
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import Masonry from "@react-native-seoul/masonry-list"
 import PillMultiselect from "../components/organisms/PillMultiselect";
+import DropDown from "../components/atoms/DropDown";
 
 const Cont = styled.View`
   background-color: #111121;
@@ -130,27 +131,28 @@ export default function Demo() {
 
     return (
         <Cont>
-        <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
-        <PillMultiselect title={"Content Types"} options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType}/>
-        <PillMultiselect title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform}/>
-        <DividerShortRegular size={10} color="transparent"/>
-        <Masonry
-        data = {videos}
-        numColumns = {columns}
-        renderItem = {({item}) => <VideoPost metricTitle1={'views'} metricAmount1={item.views}
-                                             title={item.title}
-                                             metricTitle2={'thumbsup'} metricAmount2={item.likes}
-                                             metricTitle3={'thumbsdown'} metricAmount3={item.dislikes}
-                                             description={item.text.substring(0, 300)}
-                                             thumbnail={item.image}
-                                             channel={item.userfullname}
-                                             socialMedia={item.network}
-                                             postTime={item.unix}
-                                             postLocation={item.location.coordinates.join(',')}
-                                             videoLink={item.link}
-                                             length={item.duration}/>}
-        />
-        <StatusBar style="auto" />
+            <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
+            <PillMultiselect title={"Content Types"} options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType}/>
+            <PillMultiselect title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform}/>
+            <DropDown/>
+            <DividerShortRegular size={10} color="transparent"/>
+            <Masonry
+            data = {videos}
+            numColumns = {columns}
+            renderItem = {({item}) => <VideoPost metricTitle1={'views'} metricAmount1={item.views}
+                                                 title={item.title}
+                                                 metricTitle2={'thumbsup'} metricAmount2={item.likes}
+                                                 metricTitle3={'thumbsdown'} metricAmount3={item.dislikes}
+                                                 description={item.text.substring(0, 300)}
+                                                 thumbnail={item.image}
+                                                 channel={item.userfullname}
+                                                 socialMedia={item.network}
+                                                 postTime={item.unix}
+                                                 postLocation={item.location.coordinates.join(',')}
+                                                 videoLink={item.link}
+                                                 length={item.duration}/>}
+            />
+            <StatusBar style="auto" />
       </Cont>
     )
 }

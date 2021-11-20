@@ -18,7 +18,7 @@ const queryClient = new QueryClient()
 
 const StyledBcg = styled.View`
   background-color: #111121;
-  height: 100%
+  height: 100%;
 `
 
 export default function App() {
