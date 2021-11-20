@@ -27,7 +27,7 @@ const PostsContainer = styled.View`
 export default function Demo() {
     //API CALLS
     const baseUrl = 'http://localhost:3000/youtube/search'
-    const [queryParams, setQueryParams] = useState('')
+    const [queryParams, setQueryParams] = useState([''])
     // List of Elements in Grid
     const [videos, setVideos] = useState<any[]>([])
     const [columns, setColumns] = useState(2);
@@ -45,6 +45,8 @@ export default function Demo() {
 //       ).then(res => console.log(res))
 //      }
 //   )
+
+    // MAKING A QUERY =========================================================
 
     const fetchData = () => {
         const url = 'http://localhost:3000/youtube/search?sort=relevance&min=1605681523&type=video&q='+queryParams
@@ -65,8 +67,26 @@ export default function Demo() {
         refetch()
     }
 
+    // SEARCH BAR KEYWORD METHODS ==============================================
 
+    // A keyword needs to be added (submitted with ','
+    const onAddKeyword = (text: string) => {
+        if (text.endsWith(',')) {
+            const keyword:string = text.substring(0, text.lastIndexOf(','));
+            const keywords:string[] = queryParams;
+            setQueryParams(keywords.concat(keyword));
+        }
+    }
 
+    // A keyword is deleted
+    const onDeleteKeyword = (text:string) => {
+        const keywords:string[] = queryParams;
+        setQueryParams(keywords.filter(item => item !== text));
+    }
+
+    // VISUAL =================================================================
+
+    //Recalculate the number of columns to display for grid
     React.useEffect(() => {
         function handleResize() {
             setColumns(Math.round(window.innerWidth/470));
@@ -75,7 +95,10 @@ export default function Demo() {
         window.addEventListener('resize', handleResize)
     })
 
+    // MULTISELECT MENU LISTENERS =================================================
     //TODO Unite the two functions
+
+    // Listener for changed content type
     const changedContentType = (element: string, another: string):void  => {
         console.log(element)
         console.log(selectedContentTypes)
@@ -88,6 +111,7 @@ export default function Demo() {
         }
     }
 
+    // Listener for changed platform
     const changedPlatform = (element: string, another: string):void  => {
         console.log(element)
         console.log(selectedPlatforms)
@@ -102,7 +126,7 @@ export default function Demo() {
 
     return (
         <Cont>
-        <SearchBar onPress={makeQuery} onChange={setQueryParams}/>
+        <SearchBar onPressSearch={makeQuery} onChange={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
         <PillMultiselect title={"Content Types"} options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType}/>
         <PillMultiselect title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform}/>
         <DividerShortRegular size={10} color="transparent"/>

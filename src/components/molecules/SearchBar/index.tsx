@@ -10,8 +10,10 @@ import MainButton from "../../atoms/MainButton";
 
 interface Props {
     title: string;
-    onPress: () => void;
+    onPressSearch: () => void;
     onChange: (param: string) => void;
+    keywords: string[]
+    onDelete: (param: string) => void;
 }
 
 const StyledText  = styled.Text`
@@ -82,18 +84,38 @@ const BarContainer = styled.View`
 `
 
 const SearchBar = (props: Props) => {
-    const {onPress, onChange} = props;
+    const {onPressSearch, onChange, keywords, onDelete} = props;
+
+    const textField = React.useRef<TextInput>(null)
+
+    //Listen for changes in text field, trigger add keyword method in parent when , is typed
+    const onChangedText = (text:string) => {
+        if (text.endsWith(',')) {
+            onChange(text);
+            if (textField !== null) {
+                // @ts-ignore
+                textField.current.clear();
+            }
+        }
+    }
+
+    //TODO add method that triggers when search button is pressed, to add the remaining keyword in the text field to the query parameters
+
     return(
         <Search>
             <BarContainer>
                 <Bar>
                     <Icon icon={"fluent:search-16-filled"} style={{height: 30, width:30, color:"white", marginRight: 10, marginLeft:10, verticalAlign: "middle"}}/>
-
-                    <StyledTextInput placeholder={"Search by Keywords"} style={{outlineStyle:"none", boxShadow:"none"}} onChangeText={onChange}/>
+                    {keywords.map((element:string) => {
+                        if (element !== '') {
+                            return <KeywordPill title={element} onPress={onDelete}/>
+                        }
+                    })}
+                    <StyledTextInput ref={textField} placeholder={"Search by keywords or phrases"} style={{outlineStyle:"none", boxShadow:"none"}} onChangeText={onChangedText}/>
                 </Bar>
             </BarContainer>
             <CustomButton>
-                <MainButton title={"Search"} onPress={onPress}/>
+                <MainButton title={"Search"} onPress={onPressSearch}/>
             </CustomButton>
         </Search>
 

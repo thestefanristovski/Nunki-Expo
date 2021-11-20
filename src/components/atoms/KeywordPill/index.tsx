@@ -7,7 +7,7 @@ import {Icon} from "@iconify/react";
 
 interface Props {
     title: string;
-    onPress: () => void;
+    onPress: (param:string) => void;
 }
 
 const StyledText  = styled.Text`
@@ -40,7 +40,7 @@ const KeywordPill = (props: Props) => {
     return(
         <StyledView>
             <StyledText>{title}</StyledText>
-            <StyledPressable onPress={onPress}>
+            <StyledPressable onPress={() => onPress(title)}>
                 <Icon icon={"ci:off-close"} style={{width:15, height:15, color: "white"}}/>
             </StyledPressable>
         </StyledView>
