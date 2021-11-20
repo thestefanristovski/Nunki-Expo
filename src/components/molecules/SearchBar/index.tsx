@@ -52,6 +52,7 @@ const StyledTextInput = styled.TextInput`
   outline: none;
   width: max-content;
   box-shadow: none;
+  width: 90%;
   &:focus{
     outline: none;
     border-style: none;
@@ -67,7 +68,6 @@ const Search = styled.View`
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
-  width: 100%;
   margin-bottom: 30px;
 `
 
