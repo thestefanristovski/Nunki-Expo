@@ -6,6 +6,8 @@ import {Icon} from "@iconify/react";
 import KeywordPill from "../../atoms/KeywordPill";
 import InputField from "../InputField";
 import MainButton from "../../atoms/MainButton";
+import AdvancedButton from "../../atoms/AdvancedButton";
+import StatsButton from "../../atoms/StatsButton";
 
 
 interface Props {
@@ -30,6 +32,11 @@ const StyledPressable = styled.Pressable`
   border-radius: 100px;
   line-height: 17px;
   padding: 10px 30px;
+  vertical-align: middle;
+`
+
+const StyledPress = styled.Pressable`
+  background-color: transparent;
   vertical-align: middle;
 `
 
@@ -80,7 +87,7 @@ const CustomButton = styled.View`
 const BarContainer = styled.View`
   vertical-align: middle;
   margin-left: 30px;
-  width: calc(100% - 120px);
+  width: calc(100% - 280px);
 `
 
 const SearchBar = (props: Props) => {
@@ -130,6 +137,8 @@ const SearchBar = (props: Props) => {
             <CustomButton>
                 <MainButton title={"Search"} onPress={onSubmitSearch}/>
             </CustomButton>
+                <AdvancedButton/>
+                <StatsButton/>
         </Search>
 
     )
