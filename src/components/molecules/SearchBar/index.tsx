@@ -7,7 +7,7 @@ import KeywordPill from "../../atoms/KeywordPill";
 import InputField from "../InputField";
 import MainButton from "../../atoms/MainButton";
 import AdvancedButton from "../../atoms/AdvancedButton";
-import StatsButton from "../../atoms/StatsButton";
+import IconButton from "../../atoms/IconButton";
 
 
 interface Props {
@@ -59,7 +59,7 @@ const StyledTextInput = styled.TextInput`
   outline: none;
   width: max-content;
   box-shadow: none;
-  width: 90%;
+  width: 80%;
   &:focus{
     outline: none;
     border-style: none;
@@ -137,8 +137,8 @@ const SearchBar = (props: Props) => {
             <CustomButton>
                 <MainButton title={"Search"} onPress={onSubmitSearch}/>
             </CustomButton>
-                <AdvancedButton/>
-                <StatsButton/>
+                <IconButton icon={"fluent:options-16-filled"}/>
+                <IconButton icon={"ion:stats-chart"}/>
         </Search>
 
     )

@@ -25,15 +25,15 @@ const AdvancedButton = (props: Props) => {
     return(
         <Router>
                   <Link to={'/'}>
-                     <Icon icon={"fluent:options-16-filled"} style={{height: 50, width:50, color:"white", marginRight: 5, marginLeft:5, verticalAlign: "middle"}}/>
+                     <Icon icon={"fluent:options-16-filled"} style={{height: 30, width:30, color:"#6083FF", marginRight: 5, marginLeft:10, verticalAlign: "middle"}}/>
                   </Link>
-            <Routes>  
-                 <Route path="/advanced" element={<Advanced />} />    
+            <Routes>
+                 <Route path="/advanced" element={<Advanced />} />
             </Routes>
         </Router>
 
 
-        
+
     )
 }
 
