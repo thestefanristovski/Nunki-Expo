@@ -7,6 +7,7 @@ import {Icon} from "@iconify/react";
 
 interface Props {
     onPress: () => void;
+    icon: string;
 }
 
 //TODO: Hover behavior of button (see react-native-web-hover)
@@ -18,18 +19,18 @@ const StyledPressable = styled.Pressable`
   vertical-align: left;
 `
 
-const StatsButton = (props: Props) => {
-    const { onPress} = props;
+const IconButton = (props: Props) => {
+    const { onPress, icon} = props;
     return(
         <StyledPressable onPress={onPress}>
-                            <Icon icon={"ion:stats-chart"} style={{height: 30, width:30, color:"white", marginRight: 5, marginLeft:5, verticalAlign: "middle"}}/>
+                            <Icon icon={icon} style={{height: 30, width:30, color:"white", marginRight: 5, marginLeft:5, verticalAlign: "middle"}}/>
         </StyledPressable>
     )
 }
 
 
-StatsButton.defaultProps = {
+IconButton.defaultProps = {
     onPress: ()=> {},
 }
 
-export default StatsButton;
+export default IconButton;
