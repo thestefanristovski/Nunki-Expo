@@ -56,7 +56,7 @@ export default function Demo() {
     // TODO adapt to array of parameters
 
     const fetchData = () => {
-        const url = 'http://localhost:3000/youtube/search?sort=relevance&min=1605681523&type=video&q='+queryParams.join('|')
+        const url = 'http://localhost:3000/youtube/search?limit=50&sort=relevance&min=1605681523&type=video&q='+queryParams.join('|')
         console.log(url);
         fetch(url).then(res =>
             res.json()
@@ -161,7 +161,7 @@ export default function Demo() {
                                                  metricTitle3={'thumbsdown'} metricAmount3={item.dislikes}
                                                  description={item.text.substring(0, 300)}
                                                  thumbnail={item.image}
-                                                 channel={item.userfullname}
+                                                 channel={item.user_fullname}
                                                  socialMedia={item.network}
                                                  postTime={moment.unix(item.unix).fromNow()}
                                                  postLocation={'location'}
