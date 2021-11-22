@@ -3,12 +3,14 @@ import {Button, Pressable, Text} from "react-native";
 // @ts-ignore
 import styled from "styled-components/native";
 import {Icon} from "@iconify/react";
+import {Link} from "react-router-dom";
 
 
 
 interface Props {
     onPress: () => void;
     icon: string;
+    link: string;
 }
 
 //TODO: Hover behavior of button (see react-native-web-hover)
@@ -21,11 +23,13 @@ const StyledPressable = styled.Pressable`
 `
 
 const IconButton = (props: Props) => {
-    const { onPress, icon} = props;
+    const { onPress, icon, link} = props;
     return(
-        <StyledPressable onPress={onPress}>
-                            <Icon icon={icon} style={{height: 30, width:30, color:"#6083FF", marginRight: 5, marginLeft:10, verticalAlign: "middle"}}/>
-        </StyledPressable>
+        <Link to={link}>
+            <StyledPressable onPress={onPress}>
+                <Icon icon={icon} style={{height: 30, width:30, color:"#6083FF", marginRight: 5, marginLeft:10, verticalAlign: "middle"}}/>
+            </StyledPressable>
+        </Link>
     )
 }
 

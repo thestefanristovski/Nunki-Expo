@@ -137,7 +137,8 @@ const SearchBar = (props: Props) => {
             <CustomButton>
                 <MainButton title={"Search"} onPress={onSubmitSearch}/>
             </CustomButton>
-                <AdvancedButton/>
+                <IconButton link={"/advanced"} icon={"fluent:options-16-filled"}/>
+                <IconButton link={"/stats"} icon={"ion:stats-chart"}/>
         </Search>
 
     )

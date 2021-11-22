@@ -15,6 +15,7 @@ import Masonry from "@react-native-seoul/masonry-list"
 import PillMultiselect from "../components/organisms/PillMultiselect";
 import {BrowserRouter as Router, Routes, Route, Link, Outlet} from "react-router-dom";
 import Advanced from "../components/organisms/AdvancedSearch";
+import DropDown from "../components/atoms/DropDown";
 
 
 
@@ -158,8 +159,8 @@ export default function Demo() {
                                                  length={item.duration}/>}
             />
             <StatusBar style="auto" />
-            
+
       </Cont>
-      </Router> 
+      </Router>
     )
 }
