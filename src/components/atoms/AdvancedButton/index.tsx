@@ -4,12 +4,15 @@ import {Button, Pressable, Text} from "react-native";
 import styled from "styled-components/native";
 import {Icon} from "@iconify/react";
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
+import IconButton from "../../atoms/IconButton";
+
 
 
 const AdvancedButton = () => {
     return(
-            <Link to = "/advanced"><Icon icon={"fluent:options-16-filled"} style={{height: 40, width:40, color:"white", marginRight: 5, marginLeft:5, verticalAlign: "middle"}}/></Link>
-    )
+            <><Link to="/advanced"><IconButton icon={"fluent:options-16-filled"} onPress={function (): void { } } /></Link>
+            <Link to="/stats"><IconButton icon={"ion:stats-chart"} onPress={function (): void { } } /></Link></>
+            )
 }
 
 export default AdvancedButton;

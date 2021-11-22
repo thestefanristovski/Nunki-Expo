@@ -34,6 +34,14 @@ const StyledPressable = styled.Pressable`
   align-items: center;
 `
 
+const StyledText  = styled.Text`
+    color: white;
+    font-size: 17px;
+    text-align: left;
+    vertical-align: middle;
+    radius: 20px;
+`;
+
 const DropDown = (props: Props) => {
     const {items, defaultValue, onChangedValue} = props;
     const [value, setValue] = React.useState(defaultValue);
@@ -60,6 +68,8 @@ const DropDown = (props: Props) => {
     // if you inspect element, and change the flex direction of the dropdown to be row, the whole page changes flex direction. I AM LOSING MY MIND
 
     return(
+            <StyledText>
+                Order By
             <DropDownPicker
                 items = {itemsMenu}
                 open = {open}
@@ -75,6 +85,7 @@ const DropDown = (props: Props) => {
                 listItemContainerStyle = {{padding: 10}}
                 theme = "DARK"
             />
+            </StyledText>
     )
 }
 

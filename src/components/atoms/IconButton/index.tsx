@@ -5,6 +5,7 @@ import styled from "styled-components/native";
 import {Icon} from "@iconify/react";
 
 
+
 interface Props {
     onPress: () => void;
     icon: string;
