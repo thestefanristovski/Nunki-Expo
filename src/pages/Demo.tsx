@@ -56,9 +56,8 @@ export default function Demo() {
     // TODO adapt to array of parameters
 
     const fetchData = () => {
-        console.log(queryParams)
         const url = 'http://localhost:3000/youtube/search?sort=relevance&min=1605681523&type=video&q='+queryParams.join('|')
-        console.log(url)
+        console.log(url);
         fetch(url).then(res =>
             res.json()
         ).then(res => {
@@ -79,25 +78,30 @@ export default function Demo() {
     // SEARCH BAR KEYWORD METHODS ==============================================
 
     // A keyword needs to be added (submitted with ','
-    const onAddKeyword = (text: string) => {
+    const onAddKeyword = async (text: string) => {
         if (text.endsWith(',')) {
-            console.log('one')
             const keyword:string = text.substring(0, text.lastIndexOf(','));
             const keywords:string[] = queryParams;
+            // @ts-ignore
             setQueryParams(keywords.concat(keyword));
         } else {
-            console.log('two')
             const keywords:string[] = queryParams;
+            // @ts-ignore
             setQueryParams(keywords.concat(text));
         }
-        console.log(queryParams)
     }
 
     // A keyword is deleted
     const onDeleteKeyword = (text:string) => {
         const keywords:string[] = queryParams;
+        // @ts-ignore
         setQueryParams(keywords.filter(item => item !== text));
     }
+
+    useEffect(() => {
+        console.log("YO");
+        console.log(queryParams);
+    }, [queryParams])
 
     // VISUAL =================================================================
 

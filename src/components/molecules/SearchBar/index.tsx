@@ -6,7 +6,6 @@ import {Icon} from "@iconify/react";
 import KeywordPill from "../../atoms/KeywordPill";
 import InputField from "../InputField";
 import MainButton from "../../atoms/MainButton";
-import AdvancedButton from "../../atoms/AdvancedButton";
 import IconButton from "../../atoms/IconButton";
 
 
@@ -110,17 +109,18 @@ const SearchBar = (props: Props) => {
 
     //When Search is clicked, add remaining keyword from text input to query params and execute query
     //TODO test functionnality with backend
-    const onSubmitSearch = () => {
+    const onSubmitSearch = async () => {
         if (textFieldContent !== '') {
-            onAddKeyword(textFieldContent)
-            console.log(textFieldContent)
+           await onAddKeyword(textFieldContent);
             if (textField !== null) {
                 // @ts-ignore
                 textField.current.clear();
             }
+            onPressSearch();
+        } else {
+            onPressSearch();
         }
-        console.log('launching search')
-        onPressSearch();
+
     }
 
     return(
