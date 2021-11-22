@@ -81,7 +81,7 @@ const Search = styled.View`
 const CustomButton = styled.View`
   vertical-align: middle;
   margin-left: 30px;
-  margin-right: 30px;
+  margin-right: 20px;
 `
 
 const BarContainer = styled.View`

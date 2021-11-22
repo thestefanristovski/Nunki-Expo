@@ -23,7 +23,7 @@ const IconButton = (props: Props) => {
     const { onPress, icon} = props;
     return(
         <StyledPressable onPress={onPress}>
-                            <Icon icon={icon} style={{height: 30, width:30, color:"white", marginRight: 5, marginLeft:5, verticalAlign: "middle"}}/>
+                            <Icon icon={icon} style={{height: 30, width:30, color:"#6083FF", marginRight: 5, marginLeft:10, verticalAlign: "middle"}}/>
         </StyledPressable>
     )
 }
