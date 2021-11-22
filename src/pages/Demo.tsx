@@ -16,6 +16,7 @@ import PillMultiselect from "../components/organisms/PillMultiselect";
 import {BrowserRouter as Router, Routes, Route, Link, Outlet} from "react-router-dom";
 import Advanced from "../components/organisms/AdvancedSearch";
 import DropDown from "../components/atoms/DropDown";
+import moment from "moment";
 
 
 
@@ -153,7 +154,7 @@ export default function Demo() {
                                                  thumbnail={item.image}
                                                  channel={item.userfullname}
                                                  socialMedia={item.network}
-                                                 postTime={item.unix}
+                                                 postTime={moment.unix(item.unix).fromNow()}
                                                  postLocation={item.location.coordinates.join(',')}
                                                  videoLink={item.link}
                                                  length={item.duration}/>}
