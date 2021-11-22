@@ -33,7 +33,7 @@ const PostsContainer = styled.View`
 export default function Demo() {
     //API CALLS
     const baseUrl = 'http://localhost:3000/youtube/search'
-    const [queryParams, setQueryParams] = useState([''])
+    const [queryParams, setQueryParams] = useState([])
     // List of Elements in Grid
     const [videos, setVideos] = useState<any[]>([])
     const [columns, setColumns] = useState(2);
@@ -56,7 +56,9 @@ export default function Demo() {
     // TODO adapt to array of parameters
 
     const fetchData = () => {
-        const url = 'http://localhost:3000/youtube/search?sort=relevance&min=1605681523&type=video&q='+queryParams
+        console.log(queryParams)
+        const url = 'http://localhost:3000/youtube/search?sort=relevance&min=1605681523&type=video&q='+queryParams.join('|')
+        console.log(url)
         fetch(url).then(res =>
             res.json()
         ).then(res => {
@@ -79,13 +81,16 @@ export default function Demo() {
     // A keyword needs to be added (submitted with ','
     const onAddKeyword = (text: string) => {
         if (text.endsWith(',')) {
+            console.log('one')
             const keyword:string = text.substring(0, text.lastIndexOf(','));
             const keywords:string[] = queryParams;
             setQueryParams(keywords.concat(keyword));
         } else {
+            console.log('two')
             const keywords:string[] = queryParams;
             setQueryParams(keywords.concat(text));
         }
+        console.log(queryParams)
     }
 
     // A keyword is deleted
@@ -155,7 +160,7 @@ export default function Demo() {
                                                  channel={item.userfullname}
                                                  socialMedia={item.network}
                                                  postTime={moment.unix(item.unix).fromNow()}
-                                                 postLocation={item.location.coordinates.join(',')}
+                                                 postLocation={'location'}
                                                  videoLink={item.link}
                                                  length={item.duration}/>}
             />

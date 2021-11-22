@@ -113,11 +113,13 @@ const SearchBar = (props: Props) => {
     const onSubmitSearch = () => {
         if (textFieldContent !== '') {
             onAddKeyword(textFieldContent)
+            console.log(textFieldContent)
             if (textField !== null) {
                 // @ts-ignore
                 textField.current.clear();
             }
         }
+        console.log('launching search')
         onPressSearch();
     }
 
