@@ -3,7 +3,7 @@ import React from 'react';
 import styled from "styled-components/native";
 import {Icon} from "@iconify/react"
 import DropDownPicker, {ItemType} from 'react-native-dropdown-picker';
-import {Pressable} from "react-native";
+import {Pressable, View} from "react-native";
 
 
 interface Props {
@@ -34,13 +34,12 @@ const StyledPressable = styled.Pressable`
   align-items: center;
 `
 
-const StyledText  = styled.Text`
-    color: white;
-    font-size: 17px;
-    text-align: left;
-    vertical-align: middle;
-    radius: 20px;
-`;
+const StyledText = styled.Text`
+  color: white;
+  font-size: 20px;
+  padding: 10px 0;
+  margin-bottom: 10px;
+`
 
 const DropDown = (props: Props) => {
     const {items, defaultValue, onChangedValue} = props;
@@ -68,24 +67,24 @@ const DropDown = (props: Props) => {
     // if you inspect element, and change the flex direction of the dropdown to be row, the whole page changes flex direction. I AM LOSING MY MIND
 
     return(
-            <StyledText>
-                Order By
-            <DropDownPicker
-                items = {itemsMenu}
-                open = {open}
-                value = {value}
-                setOpen = {setOpen}
-                setValue = {ValueChanged}
-                style = {{backgroundColor: "#191932", borderRadius: 100}}
-                containerStyle = {{display: "flex",flexDirection: "row", flexWrap: "nowrap", backgroundColor: "#191932", borderRadius: 100, width: "fit-content", paddingTop: 15, paddingBottom: 15, paddingLeft: 20, paddingRight: 20}}
-                textStyle = {{color: "white", fontSize: 15}}
-                showArrowIcon = {false}
-                showTickIcon = {false}
-                dropDownContainerStyle = {{ width: "fit-content", marginTop: 35, borderColor: "transparent"}}
-                listItemContainerStyle = {{padding: 10}}
-                theme = "DARK"
-            />
-            </StyledText>
+            <View>
+                <StyledText>Order By</StyledText>
+                <DropDownPicker
+                    items = {itemsMenu}
+                    open = {open}
+                    value = {value}
+                    setOpen = {setOpen}
+                    setValue = {ValueChanged}
+                    style = {{backgroundColor: "#191932", borderRadius: 100}}
+                    containerStyle = {{display: "flex",flexDirection: "row", flexWrap: "nowrap", backgroundColor: "#191932", borderRadius: 100, width: "fit-content", paddingTop: 15, paddingBottom: 15, paddingLeft: 20, paddingRight: 20}}
+                    textStyle = {{color: "white", fontSize: 15}}
+                    showArrowIcon = {false}
+                    showTickIcon = {false}
+                    dropDownContainerStyle = {{ width: "fit-content", marginTop: 35, borderColor: "transparent"}}
+                    listItemContainerStyle = {{padding: 10}}
+                    theme = "DARK"
+                />
+            </View>
     )
 }
 

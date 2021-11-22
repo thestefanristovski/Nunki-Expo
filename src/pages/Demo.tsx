@@ -17,6 +17,7 @@ import {BrowserRouter as Router, Routes, Route, Link, Outlet} from "react-router
 import Advanced from "../components/organisms/AdvancedSearch";
 import DropDown from "../components/atoms/DropDown";
 import moment from "moment";
+import {fromUnixTime} from 'date-fns'
 
 
 
@@ -151,6 +152,7 @@ export default function Demo() {
                 <Route path = "/" element = {<><PillMultiselect title={"Content Types"} options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} /><PillMultiselect title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform} /></>} />
                 <Route path = "/advanced" element = {<Advanced/>} />
             </Routes>
+            <DropDown/>
             <DividerShortRegular size={10} color="transparent"/>
             <Masonry
             data = {videos}
@@ -163,7 +165,7 @@ export default function Demo() {
                                                  thumbnail={item.image}
                                                  channel={item.user_fullname}
                                                  socialMedia={item.network}
-                                                 postTime={moment.unix(item.unix).fromNow()}
+                                                 postTime={fromUnixTime(item.unix).toString()}
                                                  postLocation={'location'}
                                                  videoLink={item.link}
                                                  length={item.duration}/>}
