@@ -17,7 +17,7 @@ import {BrowserRouter as Router, Routes, Route, Link, Outlet} from "react-router
 import Advanced from "../components/organisms/AdvancedSearch";
 import DropDown from "../components/atoms/DropDown";
 import moment from "moment";
-import {fromUnixTime} from 'date-fns'
+import {fromUnixTime, formatDistanceToNowStrict} from 'date-fns'
 
 
 
@@ -165,7 +165,7 @@ export default function Demo() {
                                                  thumbnail={item.image}
                                                  channel={item.user_fullname}
                                                  socialMedia={item.network}
-                                                 postTime={fromUnixTime(item.unix).toString()}
+                                                 postTime={formatDistanceToNowStrict(fromUnixTime(item.unix), {addSuffix: true})}
                                                  postLocation={'location'}
                                                  videoLink={item.link}
                                                  length={item.duration}/>}
