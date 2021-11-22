@@ -13,7 +13,10 @@ import PostEngagement from "../components/molecules/PostEngagement";
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import Masonry from "@react-native-seoul/masonry-list"
 import PillMultiselect from "../components/organisms/PillMultiselect";
-import DropDown from "../components/atoms/DropDown";
+import {BrowserRouter as Router, Routes, Route, Link, Outlet} from "react-router-dom";
+import Advanced from "../components/organisms/AdvancedSearch";
+
+
 
 const Cont = styled.View`
   background-color: #111121;
@@ -130,11 +133,13 @@ export default function Demo() {
     }
 
     return (
+        <Router>
         <Cont>
-            <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
-            <PillMultiselect title={"Content Types"} options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType}/>
-            <PillMultiselect title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform}/>
-            <DropDown/>
+        <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
+            <Routes>
+                <Route path = "/" element = {<><PillMultiselect title={"Content Types"} options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} /><PillMultiselect title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform} /></>} />
+                <Route path = "/advanced" element = {<Advanced/>} />
+            </Routes>
             <DividerShortRegular size={10} color="transparent"/>
             <Masonry
             data = {videos}
@@ -153,6 +158,8 @@ export default function Demo() {
                                                  length={item.duration}/>}
             />
             <StatusBar style="auto" />
+            
       </Cont>
+      </Router> 
     )
 }

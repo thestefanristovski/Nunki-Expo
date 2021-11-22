@@ -22,7 +22,7 @@ const StatsButton = (props: Props) => {
     const { onPress} = props;
     return(
         <StyledPressable onPress={onPress}>
-                            <Icon icon={"bx:bx-stats"} style={{height: 50, width:50, color:"white", marginRight: 5, marginLeft:5, verticalAlign: "middle"}}/>
+                            <Icon icon={"ion:stats-chart"} style={{height: 30, width:30, color:"white", marginRight: 5, marginLeft:5, verticalAlign: "middle"}}/>
         </StyledPressable>
     )
 }
