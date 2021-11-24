@@ -14,8 +14,9 @@ import CheckBoxLabel from "../../atoms/CheckBoxLabel";
 
 interface Props {
     title: string;
-    onChanged: () => void;
+    onChanged: (element:string, another:string) => void;
     options: string[]
+    selected: string[]
 }
 
 const StyledView = styled.View`
@@ -32,14 +33,18 @@ const StyledText = styled.Text`
 `
 
 const MultiselectFilterMenu = (props: Props) => {
-    const {title, onChanged, options} = props;
+    const {title, onChanged, options, selected} = props;
 
     return(
         <View>
             <StyledText>{title}</StyledText>
             <StyledView>
                 {options.map((element) => {
-                    return <CheckBoxLabel label={element} value={false} onChanged={() => {}}/>
+                    if (selected.includes(element)) {
+                        return <CheckBoxLabel label={element} value={true} onPress={onChanged}/>
+                    } else {
+                        return <CheckBoxLabel label={element} value={false} onPress={onChanged}/>
+                    }
                 })}
             </StyledView>
         </View>
@@ -50,6 +55,7 @@ const MultiselectFilterMenu = (props: Props) => {
 MultiselectFilterMenu.defaultProps = {
     title: "Filter Menu",
     options: ["Option 1", "Option 2", "Option 3"],
+    selected: ["Option 1", "Option 2", "Option 3"],
     onChanged: ()=> {},
 }
 

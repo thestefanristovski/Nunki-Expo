@@ -13,7 +13,7 @@ import CheckBox from "@react-native-community/checkbox";
 interface Props {
     label: string,
     value: boolean,
-    onChanged: () => void
+    onPress: (element: string, another:string) => void;
 }
 
 
@@ -41,7 +41,7 @@ const checkBoxActive = require('../../../../assets/checked.png')
 const checkBoxInactive = require('../../../../assets/unchecked.png')
 
 const CheckBoxLabel = (props: Props) => {
-    const {label, value, onChanged} = props;
+    const {label, value, onPress} = props;
 
     let imgSrc = checkBoxActive
     if (!value) {
@@ -49,7 +49,7 @@ const CheckBoxLabel = (props: Props) => {
     }
 
     return(
-        <StyledPressable onPress={onChanged}>
+        <StyledPressable onPress={onPress}>
             <StyledView>
                 <Image source={imgSrc} style={{width:15, height:15}}/>
             </StyledView>
