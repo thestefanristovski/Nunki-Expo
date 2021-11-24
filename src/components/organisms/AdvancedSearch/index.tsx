@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {Button, Pressable, Text} from "react-native";
 // @ts-ignore
 import styled from "styled-components/native";
-import DropDown from "../../atoms/DropDown";
+import DropDown from "../../molecules/DropDown";
 import PillMultiselectv2 from '../PillMultiselect';
 
 
@@ -63,7 +63,7 @@ const [selectedPlatforms, setSelectedPlatforms] = useState(["Youtube", "Twitter"
         </StyledText>
         <PillMultiselectv2 title={"Content Types"} options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
         <PillMultiselectv2 title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform} />
-        <DropDown /></>  
+        <DropDown /></>
     )
 
 

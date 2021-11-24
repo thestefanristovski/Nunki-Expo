@@ -74,7 +74,7 @@ const Search = styled.View`
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
 `
 
 const CustomButton = styled.View`

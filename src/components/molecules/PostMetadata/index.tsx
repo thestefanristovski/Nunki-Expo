@@ -43,13 +43,22 @@ const StyledText = styled.Text`
 const PostMetadata = (props: Props) => {
     const {socialMedia, poster, postTime, postFlag, postLocation} = props;
 
-    return(
-        <StyledView>
-            <PostSource social={socialMedia} poster={poster}/>
-            <StyledText>{postTime}</StyledText>
-            <PostLocation flag={postFlag} location={postLocation}/>
-        </StyledView>
-    )
+    if (postLocation === "undefined") {
+        return(
+            <StyledView>
+                <PostSource social={socialMedia} poster={poster}/>
+                <StyledText>{postTime}</StyledText>
+            </StyledView>
+        )
+    } else {
+        return(
+            <StyledView>
+                <PostSource social={socialMedia} poster={poster}/>
+                <StyledText>{postTime}</StyledText>
+                <PostLocation flag={postFlag} location={postLocation}/>
+            </StyledView>
+        )
+    }
 }
 
 

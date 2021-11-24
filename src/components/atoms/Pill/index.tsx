@@ -12,7 +12,7 @@ interface Props {
 
 const StyledText  = styled.Text`
     color: white;
-    font-size: 17px;
+    font-size: 14px;
     text-align: center;
     vertical-align: middle;
 `;
@@ -22,8 +22,8 @@ const StyledText  = styled.Text`
 const StyledPressable = styled.Pressable`
   background-color: #191932;
   border-radius: 100px;
-  line-height: 17px;
-  padding: 10px 30px;
+  line-height: 14px;
+  padding: 7px 20px;
   vertical-align: middle;
   border: #6083FF 2px solid;
   width: fit-content;
@@ -34,8 +34,8 @@ const StyledPressable = styled.Pressable`
 const StyledPressableActive = styled.Pressable`
   background-color: #25245D;
   border-radius: 100px;
-  line-height: 17px;
-  padding: 10px 30px;
+  line-height: 14px;
+  padding: 7px 20px;
   vertical-align: middle;
   border: #6083FF 2px solid;
   width: fit-content;

@@ -15,7 +15,7 @@ import Masonry from "@react-native-seoul/masonry-list"
 import PillMultiselect from "../components/organisms/PillMultiselect";
 import {BrowserRouter as Router, Routes, Route, Link, Outlet} from "react-router-dom";
 import Advanced from "../components/organisms/AdvancedSearch";
-import DropDown from "../components/atoms/DropDown";
+import DropDown from "../components/molecules/DropDown";
 import moment from "moment";
 import {fromUnixTime, formatDistanceToNowStrict} from 'date-fns'
 
@@ -147,9 +147,12 @@ export default function Demo() {
     return (
         <Router>
         <Cont>
-        <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
+            <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
             <Routes>
-                <Route path = "/" element = {<><PillMultiselect title={"Content Types"} options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} /><PillMultiselect title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform} /></>} />
+                <Route path = "/" element = {<>
+                    <PillMultiselect options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
+                    <PillMultiselect title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform} />
+                </>} />
                 <Route path = "/advanced" element = {<Advanced/>} />
             </Routes>
             <DropDown/>
@@ -166,7 +169,7 @@ export default function Demo() {
                                                  channel={item.user_fullname}
                                                  socialMedia={item.network}
                                                  postTime={formatDistanceToNowStrict(fromUnixTime(item.unix), {addSuffix: true})}
-                                                 postLocation={'location'}
+                                                 postLocation={item.location && item.location.coordinates.join(',')}
                                                  videoLink={item.link}
                                                  length={item.duration}/>}
             />

@@ -28,7 +28,7 @@ const StyledView = styled.View`
   background-color: #191932;
   border-radius: 30px;
   padding: 20px;
-  margin: 10px;
+  margin: 20px;
   width: fit-content;
 `
 

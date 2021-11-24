@@ -13,6 +13,7 @@ interface Props {
 
 const StyledView = styled.View`
   display: inline-block;
+  margin-left: 30px;
 `
 
 const StyledText = styled.Text`
@@ -20,6 +21,7 @@ const StyledText = styled.Text`
   font-size: 20px;
   padding: 10px 0;
   margin-bottom: 10px;
+  margin-left: 30px;
 `
 
 const PillMultiselect = (props: Props) => {
@@ -64,7 +66,7 @@ const PillMultiselect = (props: Props) => {
 }
 
 PillMultiselect.defaultProps = {
-    title: " Platform:",
+    title: "",
     options: ["Youtube", "Twitter", "Vimeo", "VK"],
     selected: ["Youtube", "Twitter", "Vimeo", "VK"]
 }
