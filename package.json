@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/checkbox": "^0.5.9",
     "@react-native-seoul/masonry-list": "^1.1.1",
     "date-fns": "^2.26.0",
     "expo": "~43.0.2",
@@ -22,6 +23,7 @@
     "react-native-dropdown-menu": "^2.0.0",
     "react-native-dropdown-picker": "^5.2.3",
     "react-native-fb-collage": "^1.0.7",
+    "react-native-svg": "^12.1.1",
     "react-native-web": "^0.17.1",
     "react-native-web-hover": "^0.2.9",
     "react-query": "^3.33.1",

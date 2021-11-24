@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import VideoPost from "../components/organisms/VIdeoPost";
 import {DividerShortRegular} from "fluent-icons-react";
 import TextPost from "../components/organisms/TextPost";
@@ -18,6 +18,9 @@ import Advanced from "../components/organisms/AdvancedSearch";
 import DropDown from "../components/molecules/DropDown";
 import moment from "moment";
 import {fromUnixTime, formatDistanceToNowStrict} from 'date-fns'
+import CheckBox from "@react-native-community/checkbox";
+import CheckBoxLabel from "../components/atoms/CheckBoxLabel";
+import MultiselectFilterMenu from "../components/organisms/MultiselectFilterMenu";
 
 
 
@@ -156,6 +159,7 @@ export default function Demo() {
                 <Route path = "/advanced" element = {<Advanced/>} />
             </Routes>
             <DropDown/>
+            <MultiselectFilterMenu/>
             <DividerShortRegular size={10} color="transparent"/>
             <Masonry
             data = {videos}
