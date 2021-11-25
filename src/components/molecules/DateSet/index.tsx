@@ -52,7 +52,6 @@ background-color: transparent;
                 selected = {selectedDate} 
                 onChange={date=>setSelectedDate(date)}
                 dateFormat='yyyy/MM/dd'
-                isClearable
                 showYearDropdown
                 scrollableMonthYearDropdown
                 placeholderText = "Enter a date"
@@ -65,7 +64,6 @@ background-color: transparent;
                 selected = {selectedDate2} 
                 onChange={date2=>setSelectedDate2(date2)}
                 dateFormat='yyyy/MM/dd'
-                isClearable
                 showYearDropdown
                 scrollableMonthYearDropdown
                 placeholderText = "Enter a date"

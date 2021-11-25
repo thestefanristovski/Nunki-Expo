@@ -7,7 +7,6 @@ import styled from "styled-components/native";
 import DateSet from '../../molecules/DateSet';
 import DropDown from "../../molecules/DropDown";
 import MultiselectFilterMenu from '../MultiselectFilterMenu';
-import PillMultiselect from '../PillMultiselect';
 
 
 export default function AdvancedSearch() {
