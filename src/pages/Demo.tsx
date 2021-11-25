@@ -153,13 +153,11 @@ export default function Demo() {
             <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
             <Routes>
                 <Route path = "/" element = {<>
-                    <PillMultiselect options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
+                    <PillMultiselect title={"Content Types"} options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
                     <PillMultiselect title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform} />
                 </>} />
                 <Route path = "/advanced" element = {<Advanced/>} />
             </Routes>
-            <DropDown/>
-            <MultiselectFilterMenu/>
             <DividerShortRegular size={10} color="transparent"/>
             <Masonry
             data = {videos}
