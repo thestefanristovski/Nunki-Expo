@@ -49,7 +49,8 @@ const CheckBoxLabel = (props: Props) => {
     }
 
     return(
-        <StyledPressable onPress={onPress}>
+        <StyledPressable onPress={() => {// @ts-ignore
+            onPress(label)}}>
             <StyledView>
                 <Image source={imgSrc} style={{width:15, height:15}}/>
             </StyledView>

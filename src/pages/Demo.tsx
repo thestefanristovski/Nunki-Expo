@@ -47,6 +47,10 @@ export default function Demo() {
     //State: Platform Multiselect Menu
     const [platforms, setPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
     const [selectedPlatforms, setSelectedPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
+    //State: Checkbox test
+    const [checkbox, setCheckbox] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
+    const [selectedCheckbox, setSelectedCheckbox] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
+
 
 //   const { isLoading, error, data } = useQuery('repoData', () => {
 //     const url = 'http://localhost:3000/youtube/search?sort=relevance&min=1605681523&type=video&'+queryParams
@@ -147,6 +151,19 @@ export default function Demo() {
         }
     }
 
+    // Listener for changed checkbox
+    const changedCheckbox = (element: string, another: string):void  => {
+        console.log(element)
+        console.log(selectedCheckbox)
+        if (selectedCheckbox.includes(element)) {
+            setSelectedCheckbox(selectedCheckbox.filter(selectedItem => selectedItem != element));
+        } else if (element === "All") {
+            setSelectedCheckbox(platforms);
+        } else {
+            setSelectedCheckbox(selectedCheckbox.concat(element));
+        }
+    }
+
     return (
         <Router>
         <Cont>
@@ -159,7 +176,7 @@ export default function Demo() {
                 <Route path = "/advanced" element = {<Advanced/>} />
             </Routes>
             <DropDown/>
-            <MultiselectFilterMenu/>
+            <MultiselectFilterMenu title={"Test"} options={checkbox} selected={selectedCheckbox} onChanged={changedCheckbox}/>
             <DividerShortRegular size={10} color="transparent"/>
             <Masonry
             data = {videos}
