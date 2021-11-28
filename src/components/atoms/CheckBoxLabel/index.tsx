@@ -43,10 +43,13 @@ const checkBoxInactive = require('../../../../assets/unchecked.png')
 const CheckBoxLabel = (props: Props) => {
     const {label, value, onPress} = props;
 
+
     let imgSrc = checkBoxActive
-    if (!value) {
+    if(!value){
         imgSrc = checkBoxInactive
     }
+    
+
 
     return(
         <StyledPressable onPress={() => {// @ts-ignore

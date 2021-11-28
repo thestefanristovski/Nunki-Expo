@@ -10,8 +10,6 @@ import Pill from "../../atoms/Pill";
 import CheckBox from "@react-native-community/checkbox";
 import CheckBoxLabel from "../../atoms/CheckBoxLabel";
 
-
-
 interface Props {
     title: string;
     onChanged: (element:string, another:string) => void;
@@ -60,4 +58,3 @@ MultiselectFilterMenu.defaultProps = {
 }
 
 export default MultiselectFilterMenu;
-

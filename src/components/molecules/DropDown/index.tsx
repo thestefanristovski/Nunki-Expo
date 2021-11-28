@@ -35,7 +35,7 @@ const StyledPressable = styled.Pressable`
 
 const StyledText = styled.Text`
   color: white;
-  font-size: 15px;
+  font-size: 20px;
   padding: 10px 0;
   margin-bottom: 10px;
   margin-right: 20px;

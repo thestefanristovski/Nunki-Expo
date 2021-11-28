@@ -18,10 +18,6 @@ import Advanced from "../components/organisms/AdvancedSearch";
 import DropDown from "../components/molecules/DropDown";
 import moment from "moment";
 import {fromUnixTime, formatDistanceToNowStrict} from 'date-fns'
-import CheckBox from "@react-native-community/checkbox";
-import CheckBoxLabel from "../components/atoms/CheckBoxLabel";
-import MultiselectFilterMenu from "../components/organisms/MultiselectFilterMenu";
-
 
 
 const Cont = styled.View`
@@ -32,7 +28,6 @@ const Cont = styled.View`
 const PostsContainer = styled.View`
   display: flex;
 `
-
 
 export default function Demo() {
     //API CALLS
