@@ -8,6 +8,7 @@ import DateSet from '../../molecules/DateSet';
 import DropDown from "../../molecules/DropDown";
 import MultiselectFilterMenu from '../MultiselectFilterMenu';
 import KeywordFilterMenu from "../KeywordFilterMenu";
+import SliderFilterMenu from "../SliderFilterMenu";
 
 
 export default function AdvancedSearch() {
@@ -16,6 +17,9 @@ export default function AdvancedSearch() {
     const [selectedCheckbox, setSelectedCheckbox] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
     //State: Exclude Keywords menu
     const [excludeParams, setExcludeParams] = useState([])
+    //State: Video Length Slider Menu
+    const [minLength, setMinLength] = useState(0)
+    const [maxLength, setMaxLength] = useState(5)
 
     // EXCLUDE KEYWORDS FILTER METHODS ========================================
 
@@ -40,6 +44,8 @@ export default function AdvancedSearch() {
         setExcludeParams(keywords.filter(item => item !== text));
     }
 
+    // CHECKBOX METHODS ========================================
+
     // Listener for changed checkbox
     const changedCheckbox = (element: string, another: string):void  => {
         console.log(element)
@@ -52,6 +58,13 @@ export default function AdvancedSearch() {
             setSelectedCheckbox(selectedCheckbox.concat(element));
         }
     }
+
+    // LENGTH SLIDER FILTER METHODS ========================================
+    const onChangeVideoLength = (min:number, max:number) => {
+        setMinLength(min);
+        setMaxLength(max);
+    }
+
 
     const StyledText  = styled.Text`
         color: white;
@@ -77,6 +90,7 @@ export default function AdvancedSearch() {
             <MultiselectFilterMenu title={"Platforms"} options={checkbox} selected={selectedCheckbox} onChanged={changedCheckbox}/>
             <DividerShortRegular size={20} color="transparent"/>
             <KeywordFilterMenu keywords={excludeParams} onAddKeyword={onAddExcludeKeyword} onDelete={onDeleteExcludeKeyword}/>
+            <SliderFilterMenu min={0} defaultMin={minLength} max={10} defaultMax={maxLength} onChangeLength={onChangeVideoLength}/>
         </StyledView>
 
 

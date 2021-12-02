@@ -20,6 +20,7 @@ import moment from "moment";
 import {fromUnixTime, formatDistanceToNowStrict} from 'date-fns'
 import MultiselectFilterMenu from "../components/organisms/MultiselectFilterMenu";
 import KeywordFilterMenu from "../components/organisms/KeywordFilterMenu";
+import SliderFilterMenu from "../components/organisms/SliderFilterMenu";
 
 
 const Cont = styled.View`
@@ -175,7 +176,6 @@ export default function Demo() {
                 </>} />
                 <Route path = "/advanced" element = {<Advanced/>} />
             </Routes>
-
             <Masonry
             data = {videos}
             numColumns = {columns}
