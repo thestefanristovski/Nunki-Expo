@@ -20,6 +20,9 @@ export default function AdvancedSearch() {
     //State: Video Length Slider Menu
     const [minLength, setMinLength] = useState(0)
     const [maxLength, setMaxLength] = useState(5)
+    //State: Date Picker
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
 
     // EXCLUDE KEYWORDS FILTER METHODS ========================================
 
@@ -65,6 +68,12 @@ export default function AdvancedSearch() {
         setMaxLength(max);
     }
 
+    // DATE PICKER FILTER METHODS ========================================
+    const onChangeDates = (start:string, end:string) => {
+        setStartDate(start);
+        setEndDate(end);
+    }
+
 
     const StyledText  = styled.Text`
         color: white;
@@ -85,12 +94,12 @@ export default function AdvancedSearch() {
         <StyledView>
             <DropDown backgroundC={"light"}/>
             <DividerShortRegular size={20} color="transparent" />
-            <DateSet />
-            <DividerShortRegular size={20} color="transparent" />
             <MultiselectFilterMenu title={"Platforms"} options={checkbox} selected={selectedCheckbox} onChanged={changedCheckbox}/>
             <DividerShortRegular size={20} color="transparent"/>
             <KeywordFilterMenu keywords={excludeParams} onAddKeyword={onAddExcludeKeyword} onDelete={onDeleteExcludeKeyword}/>
             <SliderFilterMenu min={0} defaultMin={minLength} max={10} defaultMax={maxLength} onChangeLength={onChangeVideoLength}/>
+            <DividerShortRegular size={20} color="transparent" />
+            <DateSet defaultStart={"2021-12-01T13:24:00"} defaultEnd={"2020-12-17T13:24:00"} title={"Post Date"} onChangeDates={onChangeDates}/>
         </StyledView>
 
 

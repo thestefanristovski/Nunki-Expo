@@ -1,19 +1,27 @@
 
 import { DividerShortRegular } from 'fluent-icons-react';
-import React, {useEffect, useState} from 'react';
+import React, {forwardRef, useEffect, useState} from 'react';
 import {Button, Pressable, Text, View, TextInput} from "react-native";
 // @ts-ignore
 import styled from "styled-components/native";
+// @ts-ignore
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 
 
-export default function DateSet() {
+interface Props {
+    title: string;
+    defaultStart: string;
+    defaultEnd: string;
+    onChangeDates: (start: string, end: string) => void
+}
+
 
 const StyledText  = styled.Text`
     color: white;
-    font-size: 20px;
+    display: inline-block;
+    font-size: 14px;
     text-align: left;
     vertical-align: middle;
 `;
@@ -36,40 +44,78 @@ background-color: transparent;
   margin-bottom: 0px;
 `
 
-    const[selectedDate, setSelectedDate] = useState(null);
-    const[selectedDate2, setSelectedDate2] = useState(null);
+const StyledRow = styled.View`
+  display: inline-block;
+  margin-top: 10px;
+`
+
+const StyledDateBox = styled.View`
+  display: inline-block;
+  margin-left: 20px;
+   width: 150px; 
+`
+
+const StyledTitle = styled.Text`
+  color: white;
+  font-size: 20px;
+  padding: 10px 0;
+  margin-bottom: 10px;
+`
+
+
+export default function DateSet(props: Props) {
+    const{title, defaultStart, defaultEnd, onChangeDates} = props;
+
+    const[selectedDateStart, setSelectedDateStart] = useState(new Date(defaultStart));
+    const[selectedDateEnd, setSelectedDateEnd] = useState(new Date(defaultEnd));
+
+    // @ts-ignore
+    const CustomInput = forwardRef<Button>(({ value, onClick }, ref) => (
+        <Button title={value}  color={"#111121"} onPress={onClick} ref={ref}/>
+    ));
+
+    const onChangeDateStart = (date:Date) => {
+        setSelectedDateStart(date)
+        onChangeDates(date.toDateString(), selectedDateEnd.toDateString())
+    }
+
+    const onChangeDateEnd = (date:Date) => {
+        setSelectedDateEnd(date)
+        onChangeDates(selectedDateStart.toDateString(), date.toDateString())
+    }
 
     return(
-        <>
-        <StyledText>
-            Post Date
-        </StyledText>
-            <DividerShortRegular size={20} color="transparent" />
-                <StyledTextDisplay>
-                    from
-                </StyledTextDisplay>
-                <DatePicker 
-                selected = {selectedDate} 
-                onChange={date=>setSelectedDate(date)}
-                dateFormat='yyyy/MM/dd'
-                showYearDropdown
-                scrollableMonthYearDropdown
-                placeholderText = "Enter a date"
-                />
-                <DividerShortRegular size={10} color="transparent" />
-                    <StyledTextDisplay>
-                         to
-                    </StyledTextDisplay>
-                <DatePicker 
-                selected = {selectedDate2} 
-                onChange={date2=>setSelectedDate2(date2)}
-                dateFormat='yyyy/MM/dd'
-                showYearDropdown
-                scrollableMonthYearDropdown
-                placeholderText = "Enter a date"
-                />
-            
-        </>
+        <View>
+            <StyledTitle>{title}</StyledTitle>
+            <View>
+                <StyledRow>
+                    <StyledText>from</StyledText>
+                    <StyledDateBox>
+                        <DatePicker
+                            selected = {selectedDateStart}
+                            onChange={onChangeDateStart}
+                            dateFormat='yyyy/MM/dd'
+                            showYearDropdown
+                            scrollableMonthYearDropdown
+                            customInput={<CustomInput/>}
+                        />
+                    </StyledDateBox>
+                </StyledRow>
+                <StyledRow>
+                    <StyledText>to</StyledText>
+                    <StyledDateBox>
+                        <DatePicker
+                            selected = {selectedDateEnd}
+                            onChange={onChangeDateEnd}
+                            dateFormat='yyyy/MM/dd'
+                            showYearDropdown
+                            scrollableMonthYearDropdown
+                            customInput={<CustomInput/>}
+                        />
+                    </StyledDateBox>
+                </StyledRow>
+            </View>
+        </View>
     )
 
 }

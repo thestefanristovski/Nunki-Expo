@@ -68,7 +68,7 @@ const SliderFilterMenu = (props: Props) => {
         if (minField.current) {
             minField.current.setNativeProps({text: text})
         }
-        onChangeLength(minValue, maxValue);
+        onChangeLength(Number(text), maxValue);
     }
 
     const onChangedMax = (text:string) => {
@@ -77,7 +77,7 @@ const SliderFilterMenu = (props: Props) => {
         if (maxField.current) {
             maxField.current.setNativeProps({text: text})
         }
-        onChangeLength(minValue, maxValue);
+        onChangeLength(minValue, Number(text));
     }
 
     return(
