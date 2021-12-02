@@ -1,7 +1,7 @@
 
 import { DividerShortRegular } from 'fluent-icons-react';
 import React, {useEffect, useState} from 'react';
-import {Button, Pressable, Text} from "react-native";
+import {Button, Pressable, Text, View} from "react-native";
 // @ts-ignore
 import styled from "styled-components/native";
 import DateSet from '../../molecules/DateSet';
@@ -16,6 +16,9 @@ export default function AdvancedSearch() {
     //State: Checkbox test
     const [checkbox, setCheckbox] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
     const [selectedCheckbox, setSelectedCheckbox] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
+    //For Source Types too
+    const [checkboxType, setCheckboxType] = useState(["Photos", "Video", "Text"])
+    const [selectedCheckboxType, setSelectedCheckboxType] = useState(["Photos", "Video", "Text"])
     //State: Exclude Keywords menu
     const [excludeParams, setExcludeParams] = useState([])
     //State: Video Length Slider Menu
@@ -63,6 +66,18 @@ export default function AdvancedSearch() {
         }
     }
 
+    const changedCheckboxType = (element: string, another: string):void  => {
+        console.log(element)
+        console.log(selectedCheckboxType)
+        if (selectedCheckboxType.includes(element)) {
+            setSelectedCheckboxType(selectedCheckboxType.filter(selectedItem => selectedItem != element));
+        } else if (element === "All") {
+            setSelectedCheckboxType(checkboxType);
+        } else {
+            setSelectedCheckboxType(selectedCheckboxType.concat(element));
+        }
+    }
+
     // LENGTH SLIDER FILTER METHODS ========================================
     const onChangeVideoLength = (min:number, max:number) => {
         setMinLength(min);
@@ -93,9 +108,12 @@ export default function AdvancedSearch() {
     return(
 
         <StyledView>
+            <View>
             <DropDown backgroundC={"light"}/>
-            <DividerShortRegular size={20} color="transparent" />
+            </View>
+            <DividerShortRegular size={40} color="transparent" />
             <MultiselectFilterMenu title={"Platforms"} options={checkbox} selected={selectedCheckbox} onChanged={changedCheckbox}/>
+            <MultiselectFilterMenu title={"Content Types"} options={checkboxType} selected={selectedCheckboxType} onChanged={changedCheckboxType}/>
             <DividerShortRegular size={20} color="transparent"/>
             <KeywordFilterMenu keywords={excludeParams} onAddKeyword={onAddExcludeKeyword} onDelete={onDeleteExcludeKeyword}/>
             <SliderFilterMenu min={0} defaultMin={minLength} max={10} defaultMax={maxLength} onChangeLength={onChangeVideoLength}/>

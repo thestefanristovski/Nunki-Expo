@@ -72,7 +72,7 @@ const SearchRadius = (props: Props) => {
     return(
         <><StyledTitle>
             Location Search Radius
-        </StyledTitle><DividerShortRegular size={10} color="transparent" />
+        </StyledTitle><DividerShortRegular size={20} color="transparent" />
             <Box>
                 <BarContainer>
                     <Bar>
