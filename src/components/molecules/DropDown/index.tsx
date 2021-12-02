@@ -11,6 +11,7 @@ interface Props {
     items: string[]
     defaultValue: string
     onChangedValue: (param:string) => void;
+    backgroundC: string
 }
 
 //TODO treat metrics that are empty, nothing is shown
@@ -35,18 +36,20 @@ const StyledPressable = styled.Pressable`
 
 const StyledText = styled.Text`
   color: white;
-  font-size: 20px;
+  font-size: 14px;
   padding: 10px 0;
-  margin-bottom: 10px;
+  //margin-bottom: 10px;
   margin-right: 20px;
 `
 
 const DropDown = (props: Props) => {
 
-    const {items, onChangedValue} = props;
+    const {items, onChangedValue, backgroundC} = props;
+    let color = "#191932"
 
-    //TODO figure out where the forced flex comes from
-    // if you inspect element, and change the flex direction of the dropdown to be row, the whole page changes flex direction. I AM LOSING MY MIND
+    if (backgroundC !== "dark") {
+        color = "#111121"
+    }
 
     return(
             <StyledView2>
@@ -54,7 +57,7 @@ const DropDown = (props: Props) => {
                 <StyledView>
                     <DropdownMenu
                         style={{flex: 1, borderRadius: 100}}
-                        bgColor={'#191932'}
+                        bgColor={color}
                         tintColor={'white'}
                         activityTintColor={'white'}
                         // arrowImg={}
@@ -74,7 +77,8 @@ const DropDown = (props: Props) => {
 DropDown.defaultProps = {
     items: ["Relevance", "Post Date"],
     defaultValue: "Relevance",
-    onChangedValue: () => {}
+    onChangedValue: () => {},
+    backgroundC: "dark"
 }
 
 export default DropDown;

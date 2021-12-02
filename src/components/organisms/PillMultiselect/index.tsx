@@ -30,7 +30,7 @@ const PillMultiselect = (props: Props) => {
     if (selected.length === options.length) {
         return(
             <View>
-                <StyledText>{title}</StyledText>
+                {title!=="" && <StyledText>{title}</StyledText> }
                 <StyledView>
                     <Pill title={"All"} onPress={onSelected} statusActive={"active"}/>
                     {options.map((element) => {

@@ -19,6 +19,7 @@ import DropDown from "../components/molecules/DropDown";
 import moment from "moment";
 import {fromUnixTime, formatDistanceToNowStrict} from 'date-fns'
 import MultiselectFilterMenu from "../components/organisms/MultiselectFilterMenu";
+import KeywordFilterMenu from "../components/organisms/KeywordFilterMenu";
 
 
 const Cont = styled.View`
@@ -28,6 +29,15 @@ const Cont = styled.View`
 
 const PostsContainer = styled.View`
   display: flex;
+`
+
+const PanelView = styled.View`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin-top: 20px;
+  align-self: stretch;
+  justify-content: space-between;
 `
 
 export default function Demo() {
@@ -43,9 +53,7 @@ export default function Demo() {
     //State: Platform Multiselect Menu
     const [platforms, setPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
     const [selectedPlatforms, setSelectedPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
-    //State: Checkbox test
-    const [checkbox, setCheckbox] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
-    const [selectedCheckbox, setSelectedCheckbox] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
+
 
 
 //   const { isLoading, error, data } = useQuery('repoData', () => {
@@ -107,6 +115,8 @@ export default function Demo() {
         console.log(queryParams);
     }, [queryParams])
 
+
+
     // VISUAL =================================================================
 
     //Recalculate the number of columns to display for grid
@@ -147,33 +157,25 @@ export default function Demo() {
         }
     }
 
-    // Listener for changed checkbox
-    const changedCheckbox = (element: string, another: string):void  => {
-        console.log(element)
-        console.log(selectedCheckbox)
-        if (selectedCheckbox.includes(element)) {
-            setSelectedCheckbox(selectedCheckbox.filter(selectedItem => selectedItem != element));
-        } else if (element === "All") {
-            setSelectedCheckbox(platforms);
-        } else {
-            setSelectedCheckbox(selectedCheckbox.concat(element));
-        }
-    }
-
     return (
         <Router>
         <Cont>
             <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
             <Routes>
                 <Route path = "/" element = {<>
-                    <PillMultiselect options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
+                    <PanelView>
+                        <View>
+                            <PillMultiselect options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
+                        </View>
+                        <View>
+                            <DropDown/>
+                        </View>
+                    </PanelView>
                     <PillMultiselect title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform} />
                 </>} />
                 <Route path = "/advanced" element = {<Advanced/>} />
             </Routes>
-            <DropDown/>
-            <MultiselectFilterMenu title={"Test"} options={checkbox} selected={selectedCheckbox} onChanged={changedCheckbox}/>
-            <DividerShortRegular size={10} color="transparent"/>
+
             <Masonry
             data = {videos}
             numColumns = {columns}

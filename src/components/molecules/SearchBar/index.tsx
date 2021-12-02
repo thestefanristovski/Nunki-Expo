@@ -58,7 +58,7 @@ const StyledTextInput = styled.TextInput`
   outline: none;
   width: max-content;
   box-shadow: none;
-  width: 80%;
+  width: 40%;
   &:focus{
     outline: none;
     border-style: none;
