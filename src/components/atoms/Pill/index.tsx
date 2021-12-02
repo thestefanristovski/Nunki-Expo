@@ -28,6 +28,7 @@ const StyledPressable = styled.Pressable`
   border: #6083FF 2px solid;
   width: fit-content;
   margin-right: 10px;
+  margin-bottom: 10px;
   display: inline-block;
 `
 
