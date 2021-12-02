@@ -104,15 +104,23 @@ export default function AdvancedSearch() {
       background-color: #191932;
       border-radius: 20px;
     `
+    const PanelView = styled.View`
+        display: flex;
+         flex-direction: row;
+         flex-wrap: nowrap;
+         margin-top: 20px;
+         align-self: stretch;
+         justify-content: space-between;
+    `
 
     return(
 
         <StyledView>
-            <View>
-            <DropDown backgroundC={"light"}/>
-            </View>
-            <DividerShortRegular size={40} color="transparent" />
+            <PanelView>
             <MultiselectFilterMenu title={"Platforms"} options={checkbox} selected={selectedCheckbox} onChanged={changedCheckbox}/>
+            <DropDown backgroundC={"light"}/>
+            </PanelView>
+            <DividerShortRegular size={20} color="transparent" />
             <MultiselectFilterMenu title={"Content Types"} options={checkboxType} selected={selectedCheckboxType} onChanged={changedCheckboxType}/>
             <DividerShortRegular size={20} color="transparent"/>
             <KeywordFilterMenu keywords={excludeParams} onAddKeyword={onAddExcludeKeyword} onDelete={onDeleteExcludeKeyword}/>
