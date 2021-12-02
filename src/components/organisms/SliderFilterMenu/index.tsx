@@ -3,7 +3,6 @@ import React from 'react';
 import styled from "styled-components/native";
 import Pill from '../../atoms/Pill';
 import {View, Text, TextInput} from "react-native";
-import MultiSlider from "react-native-multi-slider";
 
 interface Props {
     title: string;
@@ -13,7 +12,6 @@ interface Props {
     defaultMax: number;
     onChangeLength: (min: number, max: number) => void
 }
-
 
 const StyledInput = styled.TextInput`
   background-color: #111121;

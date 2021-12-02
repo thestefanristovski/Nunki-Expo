@@ -9,6 +9,7 @@ import DropDown from "../../molecules/DropDown";
 import MultiselectFilterMenu from '../MultiselectFilterMenu';
 import KeywordFilterMenu from "../KeywordFilterMenu";
 import SliderFilterMenu from "../SliderFilterMenu";
+import AdvancedSearchRadius from '../../molecules/AdvancedSearchRadius';
 
 
 export default function AdvancedSearch() {
@@ -100,6 +101,8 @@ export default function AdvancedSearch() {
             <SliderFilterMenu min={0} defaultMin={minLength} max={10} defaultMax={maxLength} onChangeLength={onChangeVideoLength}/>
             <DividerShortRegular size={20} color="transparent" />
             <DateSet defaultStart={"2021-12-01T13:24:00"} defaultEnd={"2020-12-17T13:24:00"} title={"Post Date"} onChangeDates={onChangeDates}/>
+            <DividerShortRegular size={20} color="transparent" />
+            <AdvancedSearchRadius/>
         </StyledView>
 
 
