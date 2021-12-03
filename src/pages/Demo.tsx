@@ -21,6 +21,7 @@ import {fromUnixTime, formatDistanceToNowStrict} from 'date-fns'
 import MultiselectFilterMenu from "../components/organisms/MultiselectFilterMenu";
 import KeywordFilterMenu from "../components/organisms/KeywordFilterMenu";
 import SliderFilterMenu from "../components/organisms/SliderFilterMenu";
+import Map from "../components/organisms/Map"
 
 
 const Cont = styled.View`
@@ -69,7 +70,7 @@ export default function Demo() {
     // TODO adapt to array of parameters
 
     const fetchData = () => {
-        const url = 'http://localhost:3000/youtube/search?limit=50&sort=relevance&min=1605681523&type=video&q='+queryParams.join('|')
+        const url = 'http://localhost:3000/youtube/search?limit=50&sort=relevant&min=1605681523&type=video&allKeywords='+queryParams.join(',')
         console.log(url);
         fetch(url).then(res =>
             res.json()
@@ -194,6 +195,7 @@ export default function Demo() {
             />
             <StatusBar style="auto" />
 
+        <Map/>
       </Cont>
       </Router>
     )
