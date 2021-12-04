@@ -162,9 +162,9 @@ export default function Demo() {
     return (
         <Router>
         <Cont>
-            <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
             <Routes>
                 <Route path = "/" element = {<>
+                    <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
                     <PanelView>
                         <View>
                             <PillMultiselect options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
@@ -175,7 +175,11 @@ export default function Demo() {
                     </PanelView>
                     <PillMultiselect title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform} />
                 </>} />
-                <Route path = "/advanced" element = {<Advanced/>} />
+                <Route path = "/advanced" element = {<>
+                    <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword} onAdvanced={true}/>
+                    <Advanced/>
+                </>} />
+                <Route path = "/map" element = {<Map/>} />
             </Routes>
             <Masonry
             data = {videos}
@@ -194,8 +198,6 @@ export default function Demo() {
                                                  length={item.duration}/>}
             />
             <StatusBar style="auto" />
-
-        <Map/>
       </Cont>
       </Router>
     )

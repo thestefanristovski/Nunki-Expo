@@ -15,6 +15,7 @@ interface Props {
     onAddKeyword: (param: string) => void;
     keywords: string[]
     onDelete: (param: string) => void;
+    onAdvanced: boolean;
 }
 
 const StyledText  = styled.Text`
@@ -90,7 +91,7 @@ const BarContainer = styled.View`
 `
 
 const SearchBar = (props: Props) => {
-    const {onPressSearch, onAddKeyword, keywords, onDelete} = props;
+    const {onPressSearch, onAddKeyword, keywords, onDelete, onAdvanced} = props;
     const [textFieldContent, setTextFieldContent] = React.useState('')
 
     const textField = React.useRef<TextInput>(null)
@@ -125,6 +126,9 @@ const SearchBar = (props: Props) => {
 
     return(
         <Search>
+            {onAdvanced && <>
+                <IconButton link={"/"} icon={"eva:arrow-back-fill"}/>
+            </>}
             <BarContainer>
                 <Bar>
                     <Icon icon={"fluent:search-16-filled"} style={{height: 30, width:30, color:"white", marginRight: 10, marginLeft:10, verticalAlign: "middle"}}/>
@@ -139,8 +143,10 @@ const SearchBar = (props: Props) => {
             <CustomButton>
                 <MainButton title={"Search"} onPress={onSubmitSearch}/>
             </CustomButton>
+            {!onAdvanced && <>
                 <IconButton link={"/advanced"} icon={"fluent:options-16-filled"}/>
                 <IconButton link={"/stats"} icon={"ion:stats-chart"}/>
+            </>}
         </Search>
 
     )
@@ -150,6 +156,7 @@ const SearchBar = (props: Props) => {
 SearchBar.defaultProps = {
     title: "Hello",
     onPress: ()=> {},
+    onAdvanced: false,
 }
 
 export default SearchBar;
