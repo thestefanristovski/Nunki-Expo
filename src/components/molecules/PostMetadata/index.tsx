@@ -15,23 +15,14 @@ interface Props {
     postLocation:string
 }
 
-const StyledPressable = styled.Pressable`
-  background-color: white;
-  border-radius: 30px;
-  padding: 0px;
-  width: 500px;
-  height: 300px;
-  border: white 1px solid;
-`
-
-const StyledView = styled.View`
+const MetadataContainer = styled.View`
   display: inline-block;
   vertical-align: middle;
   line-height: 30px;
   padding-top: 10px;
 `
 
-const StyledText = styled.Text`
+const PostMetadataTextSecondary = styled.Text`
   color: #6A6A9F;
   font-size: 13px;
   text-align: center;
@@ -45,18 +36,18 @@ const PostMetadata = (props: Props) => {
 
     if (postLocation === "undefined") {
         return(
-            <StyledView>
+            <MetadataContainer>
                 <PostSource social={socialMedia} poster={poster}/>
-                <StyledText>{postTime}</StyledText>
-            </StyledView>
+                <PostMetadataTextSecondary>{postTime}</PostMetadataTextSecondary>
+            </MetadataContainer>
         )
     } else {
         return(
-            <StyledView>
+            <MetadataContainer>
                 <PostSource social={socialMedia} poster={poster}/>
-                <StyledText>{postTime}</StyledText>
+                <PostMetadataTextSecondary>{postTime}</PostMetadataTextSecondary>
                 <PostLocation flag={postFlag} location={postLocation}/>
-            </StyledView>
+            </MetadataContainer>
         )
     }
 }

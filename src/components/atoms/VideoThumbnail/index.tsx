@@ -12,7 +12,7 @@ interface Props {
 
 //TODO: Hover behavior of button (see react-native-web-hover)
 
-const StyledPressable = styled.Pressable`
+const ThumbnailContainer = styled.TouchableOpacity`
   background-color: transparent;
   border-radius: 30px;
   padding: 0px;
@@ -20,19 +20,19 @@ const StyledPressable = styled.Pressable`
   height: 250px;
 `
 
-const StyledImage = styled.Image`
+const ThumbnailImage = styled.Image`
   border-radius: 30px;
   width: 420px;
   height: 250px;
   border: #6083FF 1.5px solid;
 `
 
-const StyledIcon = styled(PlayFilled)`
+const PlayButtonIcon = styled(PlayFilled)`
   width: 50px;
   height: 50px;
 `
 
-const StyledView = styled.View`
+const VideoInfoContainer = styled.View`
   position: absolute;
   left:45%;
   top:43%;
@@ -54,13 +54,13 @@ const StyledText = styled.Text`
 const VideoThumbnail = (props: Props) => {
     const {length, imageSrc, onPress} = props;
     return(
-        <StyledPressable onPress={onPress}>
-            <StyledImage source={{uri: imageSrc}} resizeMode='cover'/>
-            <StyledView>
-                <StyledIcon color="#fff" size={50}/>
+        <ThumbnailContainer onPress={onPress}>
+            <ThumbnailImage source={{uri: imageSrc}} resizeMode='cover'/>
+            <VideoInfoContainer>
+                <PlayButtonIcon color="#fff" size={50}/>
                 <StyledText>{length}</StyledText>
-            </StyledView>
-        </StyledPressable>
+            </VideoInfoContainer>
+        </ThumbnailContainer>
     )
 }
 

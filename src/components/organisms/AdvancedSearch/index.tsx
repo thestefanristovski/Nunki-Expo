@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 import {Button, Pressable, Text, View} from "react-native";
 // @ts-ignore
 import styled from "styled-components/native";
-import DateSet from '../../molecules/DateSet';
+import DateFilterMenu from '../../molecules/DateFilterMenu';
 import DropDown from "../../molecules/DropDown";
 import MultiselectFilterMenu from '../MultiselectFilterMenu';
 import KeywordFilterMenu from "../KeywordFilterMenu";
@@ -97,7 +97,7 @@ export default function AdvancedSearch() {
         vertical-align: middle;
     `;
 
-    const StyledView = styled.View`
+    const AdvancedContainer = styled.View`
       margin-top: 30px;
       padding: 20px;
       padding-left: 50px;
@@ -115,7 +115,7 @@ export default function AdvancedSearch() {
 
     return(
 
-        <StyledView>
+        <AdvancedContainer>
             <MultiselectFilterMenu title={"Platforms"} options={checkbox} selected={selectedCheckbox} onChanged={changedCheckbox}/>
             <DividerShortRegular size={20} color="transparent" />
             <MultiselectFilterMenu title={"Content Types"} options={checkboxType} selected={selectedCheckboxType} onChanged={changedCheckboxType}/>
@@ -123,10 +123,10 @@ export default function AdvancedSearch() {
             <KeywordFilterMenu keywords={excludeParams} onAddKeyword={onAddExcludeKeyword} onDelete={onDeleteExcludeKeyword}/>
             <SliderFilterMenu min={0} defaultMin={minLength} max={10} defaultMax={maxLength} onChangeLength={onChangeVideoLength}/>
             <DividerShortRegular size={20} color="transparent" />
-            <DateSet defaultStart={"2021-12-01T13:24:00"} defaultEnd={"2020-12-17T13:24:00"} title={"Post Date"} onChangeDates={onChangeDates}/>
+            <DateFilterMenu defaultStart={"2021-12-01T13:24:00"} defaultEnd={"2020-12-17T13:24:00"} title={"Post Date"} onChangeDates={onChangeDates}/>
             <DividerShortRegular size={30} color="transparent" />
             <DropDown backgroundC={"light"}/>
-        </StyledView>
+        </AdvancedContainer>
 
 
 

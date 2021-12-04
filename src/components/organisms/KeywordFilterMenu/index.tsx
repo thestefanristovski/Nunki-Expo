@@ -15,14 +15,14 @@ interface Props {
     onDelete: (param: string) => void;
 }
 
-const StyledText = styled.Text`
+const FilterTitle = styled.Text`
   color: white;
   font-size: 20px;
   padding: 10px 0;
   margin-bottom: 10px;
 `
 
-const StyledTextInput = styled.TextInput`
+const TextField = styled.TextInput`
   background-color: #111121;
   border: transparent 0px;
   height: 40px;
@@ -41,12 +41,11 @@ const StyledTextInput = styled.TextInput`
     box-shadow: none;
   }
 `
-const StyledView = styled.View`
+const FilterMenuContainer = styled.View`
     width: 400px;
-    
 `;
 
-const StyledViewKeywords = styled.View`
+const KeywordContainer = styled.View`
     display: inline-block;
     margin-top: 10px;
 `;
@@ -81,17 +80,17 @@ const KeywordFilterMenu = (props: Props) => {
     }
 
     return(
-        <StyledView>
-            <StyledText>{title}</StyledText>
-            <StyledTextInput ref={textField} placeholder={"Exclude keyword or phrase"} style={{outlineStyle:"none", boxShadow:"none"}} onChangeText={onChangedText} onSubmitEditing={onSubmitKeyword}/>
-            <StyledViewKeywords>
+        <FilterMenuContainer>
+            <FilterTitle>{title}</FilterTitle>
+            <TextField ref={textField} placeholder={"Exclude keyword or phrase"} style={{outlineStyle:"none", boxShadow:"none"}} onChangeText={onChangedText} onSubmitEditing={onSubmitKeyword}/>
+            <KeywordContainer>
                 {keywords.map((element:string) => {
                     if (element !== '') {
                         return <KeywordPill title={element} onPress={onDelete}/>
                     }
                 })}
-            </StyledViewKeywords>
-        </StyledView>
+            </KeywordContainer>
+        </FilterMenuContainer>
 
     )
 }

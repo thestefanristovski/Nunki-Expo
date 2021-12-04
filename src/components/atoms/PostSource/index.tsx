@@ -10,23 +10,14 @@ interface Props {
     poster: string
 }
 
-const StyledPressable = styled.Pressable`
-  background-color: white;
-  border-radius: 30px;
-  padding: 0px;
-  width: 500px;
-  height: 300px;
-  border: white 1px solid;
-`
-
-const StyledView = styled.View`
+const PostMetaElementContainer = styled.View`
   display: inline-block;
   vertical-align: middle;
   line-height: 30px;
   padding-right: 10px;
 `
 
-const StyledText = styled.Text`
+const PostMetadataText = styled.Text`
   color: white;
   font-size: 13px;
   text-align: center;
@@ -38,10 +29,10 @@ const PostSource = (props: Props) => {
     const {social, poster} = props;
     const iconName = "akar-icons:" + social + "-fill";
     return(
-        <StyledView>
+        <PostMetaElementContainer>
             <Icon icon={iconName} style={{color:"white", width:25, lineHeight:25, display:"inline-block", paddingRight:10, verticalAlign:"middle"}}/>
-            <StyledText>{poster}</StyledText>
-        </StyledView>
+            <PostMetadataText>{poster}</PostMetadataText>
+        </PostMetaElementContainer>
     )
 }
 

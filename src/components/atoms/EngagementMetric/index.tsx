@@ -9,14 +9,14 @@ interface Props {
     amount: string
 }
 
-const StyledView = styled.View`
+const MetricContainer = styled.View`
   display: inline-block;
   vertical-align: middle;
   line-height: 30px;
   padding-right: 50px;
 `
 
-const StyledText = styled.Text`
+const MetricText = styled.Text`
   color: #6A6A9F;
   font-size: 15px;
   text-align: center;
@@ -41,10 +41,10 @@ const EngagementMetric = (props: Props) => {
         icon = "fa-solid:retweet"
     }
     return(
-        <StyledView>
+        <MetricContainer>
             <Icon icon={icon} style={{color:"#6A6A9F", width:25, lineHeight:25, display:"inline-block", paddingRight:0, verticalAlign:"middle"}}/>
-            <StyledText>{amount}</StyledText>
-        </StyledView>
+            <MetricText>{amount}</MetricText>
+        </MetricContainer>
     )
 }
 

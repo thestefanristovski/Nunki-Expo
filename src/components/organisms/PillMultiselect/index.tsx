@@ -1,7 +1,7 @@
 import React from 'react';
 // @ts-ignore
 import styled from "styled-components/native";
-import Pill from '../../atoms/Pill';
+import MultiPill from '../../atoms/MultiPill';
 import {View} from "react-native";
 
 interface Props {
@@ -11,12 +11,12 @@ interface Props {
     onSelected: (element:string, another:string) => void;
 }
 
-const StyledView = styled.View`
+const MultiselectPillContainer = styled.View`
   display: inline-block;
   margin-left: 30px;
 `
 
-const StyledText = styled.Text`
+const FilterTitle = styled.Text`
   color: white;
   font-size: 20px;
   padding: 10px 0;
@@ -30,34 +30,34 @@ const PillMultiselect = (props: Props) => {
     if (selected.length === options.length) {
         return(
             <View>
-                {title!=="" && <StyledText>{title}</StyledText> }
-                <StyledView>
-                    <Pill title={"All"} onPress={onSelected} statusActive={"active"}/>
+                {title!=="" && <FilterTitle>{title}</FilterTitle> }
+                <MultiselectPillContainer>
+                    <MultiPill title={"All"} onPress={onSelected} statusActive={"active"}/>
                     {options.map((element) => {
                         if (selected.includes(element)) {
-                            return (<Pill title={element} onPress={onSelected} statusActive={"active"}/>)
+                            return (<MultiPill title={element} onPress={onSelected} statusActive={"active"}/>)
                         } else {
-                            return (<Pill title={element} onPress={onSelected} statusActive={"inactive"}/>)
+                            return (<MultiPill title={element} onPress={onSelected} statusActive={"inactive"}/>)
                         }
                     })}
-                </StyledView>
+                </MultiselectPillContainer>
             </View>
 
         )
     } else {
         return(
             <View>
-                {title!=="" && <StyledText>{title}</StyledText> }
-                <StyledView>
-                    <Pill title={"All"} onPress={onSelected} statusActive={"inactive"}/>
+                {title!=="" && <FilterTitle>{title}</FilterTitle> }
+                <MultiselectPillContainer>
+                    <MultiPill title={"All"} onPress={onSelected} statusActive={"inactive"}/>
                     {options.map((element) => {
                         if (selected.includes(element)) {
-                            return (<Pill title={element} onPress={onSelected} statusActive={"active"}/>)
+                            return (<MultiPill title={element} onPress={onSelected} statusActive={"active"}/>)
                         } else {
-                            return (<Pill title={element} onPress={onSelected} statusActive={"inactive"}/>)
+                            return (<MultiPill title={element} onPress={onSelected} statusActive={"inactive"}/>)
                         }
                     })}
-                </StyledView>
+                </MultiselectPillContainer>
             </View>
         )
     }

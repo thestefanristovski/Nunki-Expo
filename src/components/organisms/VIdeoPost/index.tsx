@@ -24,7 +24,7 @@ interface Props {
     videoLink: string;
 }
 
-const StyledView = styled.View`
+const PostContainer = styled.View`
   background-color: #191932;
   border-radius: 30px;
   padding: 20px;
@@ -32,14 +32,14 @@ const StyledView = styled.View`
   width: fit-content;
 `
 
-const StyledText = styled.Text`
+const PostText = styled.Text`
   color: white;
   font-size: 13px;
   padding: 20px 0px;
   max-width: 400px;
 `
 
-const StyledTitle = styled.Text`
+const PostTitle = styled.Text`
   color: white;
   font-size: 20px;
   padding: 0px 0px;
@@ -55,13 +55,13 @@ const VideoPost = (props: Props) => {
     }
 
     return(
-        <StyledView>
-            <StyledTitle>{title}</StyledTitle>
-            <StyledText>{description}</StyledText>
+        <PostContainer>
+            <PostTitle>{title}</PostTitle>
+            <PostText>{description}</PostText>
             <VideoThumbnail length={length} imageSrc={thumbnail}/>
             <PostMetadata poster={channel} socialMedia={socialMedia} postTime={postTime} postLocation={postLocation}/>
             <PostEngagement metricTitle1={metricTitle1} metricAmount1={metricAmount1} metricTitle2={metricTitle2} metricAmount2={metricAmount2} metricTitle3={metricTitle3} metricAmount3={metricAmount3} onPress={handleClick}/>
-        </StyledView>
+        </PostContainer>
     )
 }
 

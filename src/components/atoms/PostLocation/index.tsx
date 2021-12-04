@@ -9,23 +9,14 @@ interface Props {
     location: string
 }
 
-const StyledPressable = styled.Pressable`
-  background-color: white;
-  border-radius: 30px;
-  padding: 0px;
-  width: 500px;
-  height: 300px;
-  border: white 1px solid;
-`
-
-const StyledView = styled.View`
+const PostMetaElementContainer = styled.View`
   display: inline-block;
   vertical-align: middle;
   line-height: 30px;
   padding: 0px 10px;
 `
 
-const StyledText = styled.Text`
+const PostMetadataText = styled.Text`
   color: white;
   font-size: 13px;
   text-align: center;
@@ -37,10 +28,10 @@ const PostLocation = (props: Props) => {
     const {flag, location} = props;
     const icon: string = "twemoji:flag-for-flag-" + flag;
     return(
-        <StyledView>
+        <PostMetaElementContainer>
             <Icon icon={icon} style={{color:"black", width:25, lineHeight:25, display:"inline-block", paddingRight:0, verticalAlign:"middle"}}/>
-            <StyledText>{location}</StyledText>
-        </StyledView>
+            <PostMetadataText>{location}</PostMetadataText>
+        </PostMetaElementContainer>
     )
 }
 

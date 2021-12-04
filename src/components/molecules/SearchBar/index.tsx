@@ -67,7 +67,7 @@ const StyledTextInput = styled.TextInput`
   }
 `
 
-const Search = styled.View`
+const SearchContainer = styled.View`
   background-color: transparent;
   vertical-align: middle;
   align-items: center;  
@@ -78,7 +78,7 @@ const Search = styled.View`
   margin-bottom: 0px;
 `
 
-const CustomButton = styled.View`
+const SearchButtonContainer = styled.View`
   vertical-align: middle;
   margin-left: 30px;
   margin-right: 20px;
@@ -125,7 +125,7 @@ const SearchBar = (props: Props) => {
     }
 
     return(
-        <Search>
+        <SearchContainer>
             {onAdvanced && <>
                 <IconButton link={"/"} icon={"eva:arrow-back-fill"}/>
             </>}
@@ -140,14 +140,14 @@ const SearchBar = (props: Props) => {
                     <StyledTextInput ref={textField} placeholder={"Search by keywords or phrases"} style={{outlineStyle:"none", boxShadow:"none"}} onChangeText={onChangedText}/>
                 </Bar>
             </BarContainer>
-            <CustomButton>
+            <SearchButtonContainer>
                 <MainButton title={"Search"} onPress={onSubmitSearch}/>
-            </CustomButton>
+            </SearchButtonContainer>
             {!onAdvanced && <>
                 <IconButton link={"/advanced"} icon={"fluent:options-16-filled"}/>
                 <IconButton link={"/stats"} icon={"ion:stats-chart"}/>
             </>}
-        </Search>
+        </SearchContainer>
 
     )
 }

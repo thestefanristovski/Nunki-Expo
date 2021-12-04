@@ -1,7 +1,7 @@
 import React from 'react';
 // @ts-ignore
 import styled from "styled-components/native";
-import Pill from '../../atoms/Pill';
+import MultiPill from '../../atoms/MultiPill';
 import {View, Text, TextInput} from "react-native";
 
 interface Props {
@@ -33,21 +33,21 @@ const StyledInput = styled.TextInput`
   }
 `
 
-const StyledText = styled.Text`
+const FilterDescriptor = styled.Text`
   color: white;
   font-size: 15px;
   margin-right: 15px;
   margin-left: 15px;
 `
 
-const StyledTitle = styled.Text`
+const FilterTitle = styled.Text`
   color: white;
   font-size: 20px;
   padding: 10px 0;
   margin-bottom: 10px;
 `
 
-const StyledView = styled.View`
+const SliderFilterContainer = styled.View`
   display: inline-block;
 `
 
@@ -80,13 +80,13 @@ const SliderFilterMenu = (props: Props) => {
 
     return(
         <View>
-            <StyledTitle>{title}</StyledTitle>
-            <StyledView>
+            <FilterTitle>{title}</FilterTitle>
+            <SliderFilterContainer>
                 <StyledInput ref={minField} defaultValue={defaultMin.toString()} onChangeText={onChangedMin}/>
-                <StyledText>-</StyledText>
+                <FilterDescriptor>-</FilterDescriptor>
                 <StyledInput ref={maxField} defaultValue={defaultMax.toString()} onChangeText={onChangedMax}/>
-                <StyledText>mins</StyledText>
-            </StyledView>
+                <FilterDescriptor>mins</FilterDescriptor>
+            </SliderFilterContainer>
         </View>
     )
 

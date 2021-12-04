@@ -6,7 +6,7 @@ import {Icon} from "@iconify/react";
 import KeywordPill from "../../atoms/KeywordPill";
 import MainButton from "../../atoms/MainButton";
 import IconButton from "../../atoms/IconButton";
-import Pill from "../../atoms/Pill";
+import MultiPill from "../../atoms/MultiPill";
 import CheckBox from "@react-native-community/checkbox";
 import CheckBoxLabel from "../../atoms/CheckBoxLabel";
 
@@ -17,12 +17,12 @@ interface Props {
     selected: string[]
 }
 
-const StyledView = styled.View`
+const CheckBoxMenuContainer = styled.View`
   display: inline-block;
   
 `
 
-const StyledText = styled.Text`
+const FilterTitle = styled.Text`
   color: white;
   font-size: 20px;
   padding: 10px 0;
@@ -35,8 +35,8 @@ const MultiselectFilterMenu = (props: Props) => {
 
     return(
         <View>
-            <StyledText>{title}</StyledText>
-            <StyledView>
+            <FilterTitle>{title}</FilterTitle>
+            <CheckBoxMenuContainer>
                 {options.map((element) => {
                     if (selected.includes(element)) {
                         return <CheckBoxLabel label={element} value={true} onPress={onChanged}/>
@@ -44,7 +44,7 @@ const MultiselectFilterMenu = (props: Props) => {
                         return <CheckBoxLabel label={element} value={false} onPress={onChanged}/>
                     }
                 })}
-            </StyledView>
+            </CheckBoxMenuContainer>
         </View>
     )
 }

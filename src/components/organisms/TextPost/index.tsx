@@ -19,7 +19,7 @@ interface Props {
     postLocation: string;
 }
 
-const StyledView = styled.View`
+const PostContainer = styled.View`
   background-color: #191932;
   border-radius: 30px;
   padding: 20px;
@@ -33,21 +33,22 @@ const StyledText = styled.Text`
   padding: 20px 0px;
 `
 
-const StyledTitle = styled.Text`
+const PostTitle = styled.Text`
   color: white;
   font-size: 18px;
   padding: 0px 0px;
+  max-width: 400px;
 `
 
 const TextPost = (props: Props) => {
     const {metricTitle1, metricAmount1, metricTitle2, metricAmount2, metricTitle3, metricAmount3, text, poster, socialMedia, postTime, postLocation} = props
 
     return(
-        <StyledView>
-            <StyledTitle>{text}</StyledTitle>
+        <PostContainer>
+            <PostTitle>{text}</PostTitle>
             <PostMetadata poster={poster} socialMedia={socialMedia} postTime={postTime} postLocation={postLocation}/>
-            <PostEngagement metricTitle1={metricTitle1} metricAmount1={metricAmount1} metricTitle2={metricTitle2} metricAmount2={metricAmount2} metricTitle3={metricTitle3} metricAmount3={metricAmount3}/>
-        </StyledView>
+            <PostEngagement metricTitle1={metricTitle1} metricAmount1={metricAmount1} metricTitle2={metricTitle2} metricAmount2={metricAmount2} metricTitle3={metricTitle3} metricAmount3={metricAmount3} onPress={() => {}}/>
+        </PostContainer>
     )
 }
 

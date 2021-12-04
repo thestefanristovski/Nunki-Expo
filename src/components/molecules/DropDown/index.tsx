@@ -16,29 +16,21 @@ interface Props {
 
 //TODO treat metrics that are empty, nothing is shown
 
-const StyledView = styled.View`
+const DropDownMenuContainer = styled.View`
     width: 120px;
     display: inline-block;
     border-radius: 100px;
     background-color: #191932;
 `
 
-const StyledView2 = styled.View`
+const DropDownContainer = styled.View`
     display: inline-block;
 `
 
-const StyledPressable = styled.Pressable`
-  display: inline-block;
-  vertical-align: middle;
-  justify-content: center;
-  align-items: center;
-`
-
-const StyledText = styled.Text`
+const DropDownTitle = styled.Text`
   color: white;
   font-size: 14px;
   padding: 10px 0;
-  //margin-bottom: 10px;
   margin-right: 20px;
 `
 
@@ -52,9 +44,9 @@ const DropDown = (props: Props) => {
     }
 
     return(
-            <StyledView2>
-                <StyledText>Order by:</StyledText>
-                <StyledView>
+            <DropDownContainer>
+                <DropDownTitle>Order by:</DropDownTitle>
+                <DropDownMenuContainer>
                     <DropdownMenu
                         style={{flex: 1, borderRadius: 100}}
                         bgColor={color}
@@ -68,8 +60,8 @@ const DropDown = (props: Props) => {
                         handler={(selection:string, row:number) => onChangedValue(selection)}
                         data={[items]}
                     />
-                </StyledView>
-            </StyledView2>
+                </DropDownMenuContainer>
+            </DropDownContainer>
     )
 }
 

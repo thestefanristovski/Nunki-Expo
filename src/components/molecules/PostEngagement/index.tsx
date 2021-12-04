@@ -16,13 +16,13 @@ interface Props {
     onPress: ()=> void;
 }
 
-const StyledPressable = styled.Pressable`
+const ExternalLink = styled.TouchableOpacity`
   display: inline-block;
   margin-left: 50px;
   vertical-align: middle;
 `
 
-const StyledView = styled.View`
+const EngagementContainer = styled.View`
   display: inline-block;
   vertical-align: middle;
   line-height: 30px;
@@ -43,14 +43,14 @@ const PostEngagement = (props: Props) => {
     //TODO wrap external link in pressable and add post Link to props, define onPress behaviour
 
     return(
-        <StyledView>
+        <EngagementContainer>
             <EngagementMetric metric={metricTitle1} amount={metricAmount1}/>
             <EngagementMetric metric={metricTitle2} amount={metricAmount2}/>
             <EngagementMetric metric={metricTitle3} amount={metricAmount3}/>
-            <StyledPressable onPress={onPress}>
+            <ExternalLink onPress={onPress}>
                 <Icon icon="heroicons-solid:external-link" style={{color:"#6A6A9F", width:20, height:20, verticalAlign:"middle"}} />
-            </StyledPressable>
-        </StyledView>
+            </ExternalLink>
+        </EngagementContainer>
     )
 }
 

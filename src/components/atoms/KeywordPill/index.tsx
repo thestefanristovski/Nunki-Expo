@@ -10,7 +10,7 @@ interface Props {
     onPress: (param:string) => void;
 }
 
-const StyledText  = styled.Text`
+const PillText  = styled.Text`
     color: white;
     font-size: 15px;
     text-align: center;
@@ -20,7 +20,7 @@ const StyledText  = styled.Text`
 
 //TODO: Hover behavior of button (see react-native-web-hover)
 
-const StyledView = styled.View`
+const PillContainer = styled.View`
   background-color: #6083FF;
   border-radius: 8px;
   padding: 5px;
@@ -31,7 +31,7 @@ const StyledView = styled.View`
   margin-top: 5px;
 `
 
-const StyledPressable = styled.Pressable`
+const PillCloseButtonContainer = styled.TouchableOpacity`
   display: inline-block;
   margin-left: 8px;
   vertical-align: middle;
@@ -40,12 +40,12 @@ const StyledPressable = styled.Pressable`
 const KeywordPill = (props: Props) => {
     const {title, onPress} = props;
     return(
-        <StyledView>
-            <StyledText>{title}</StyledText>
-            <StyledPressable onPress={() => onPress(title)}>
+        <PillContainer>
+            <PillText>{title}</PillText>
+            <PillCloseButtonContainer onPress={() => onPress(title)}>
                 <Icon icon={"ci:off-close"} style={{width:15, height:15, color: "white"}}/>
-            </StyledPressable>
-        </StyledView>
+            </PillCloseButtonContainer>
+        </PillContainer>
     )
 }
 
