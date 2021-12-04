@@ -18,7 +18,7 @@ const MapContainer = styled.View`
   border-radius: 20px;
   background-color: #191932;
   align-items: center;
-  margin: 20px;
+  margin: 10px;
 `
 
 const ButtonContainer = styled.View`

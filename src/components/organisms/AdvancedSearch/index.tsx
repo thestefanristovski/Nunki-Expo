@@ -116,10 +116,7 @@ export default function AdvancedSearch() {
     return(
 
         <StyledView>
-            <PanelView>
             <MultiselectFilterMenu title={"Platforms"} options={checkbox} selected={selectedCheckbox} onChanged={changedCheckbox}/>
-            <DropDown backgroundC={"light"}/>
-            </PanelView>
             <DividerShortRegular size={20} color="transparent" />
             <MultiselectFilterMenu title={"Content Types"} options={checkboxType} selected={selectedCheckboxType} onChanged={changedCheckboxType}/>
             <DividerShortRegular size={20} color="transparent"/>
@@ -127,8 +124,8 @@ export default function AdvancedSearch() {
             <SliderFilterMenu min={0} defaultMin={minLength} max={10} defaultMax={maxLength} onChangeLength={onChangeVideoLength}/>
             <DividerShortRegular size={20} color="transparent" />
             <DateSet defaultStart={"2021-12-01T13:24:00"} defaultEnd={"2020-12-17T13:24:00"} title={"Post Date"} onChangeDates={onChangeDates}/>
-            <DividerShortRegular size={20} color="transparent" />
-            <AdvancedSearchRadius/>
+            <DividerShortRegular size={30} color="transparent" />
+            <DropDown backgroundC={"light"}/>
         </StyledView>
 
 

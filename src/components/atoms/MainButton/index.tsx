@@ -18,7 +18,7 @@ const StyledText  = styled.Text`
 
 //TODO: Hover behavior of button (see react-native-web-hover)
 
-const StyledPressable = styled.Pressable`
+const StyledPressable = styled.TouchableOpacity`
   background-color: #023AFF;
   border-radius: 100px;
   height: 60px;

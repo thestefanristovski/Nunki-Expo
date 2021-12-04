@@ -15,7 +15,7 @@ interface Props {
 
 //TODO: Hover behavior of button (see react-native-web-hover)
 
-const StyledPressable = styled.Pressable`
+const StyledPressable = styled.TouchableOpacity`
   background-color: transparent;
   line-height: 2px;
   padding: 5px 2px;
