@@ -85,6 +85,7 @@ const SliderFilterMenu = (props: Props) => {
                 <StyledInput ref={minField} defaultValue={defaultMin.toString()} onChangeText={onChangedMin}/>
                 <StyledText>-</StyledText>
                 <StyledInput ref={maxField} defaultValue={defaultMax.toString()} onChangeText={onChangedMax}/>
+                <StyledText>mins</StyledText>
             </StyledView>
         </View>
     )

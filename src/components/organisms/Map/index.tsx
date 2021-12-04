@@ -8,12 +8,30 @@ import { Icon } from 'react-native-elements'
 
 import ControlPanel from './control-panel';
 import {getFeatureStyle, getEditHandleStyle} from './style';
+import MainButton from "../../atoms/MainButton";
 
 const TOKEN = 'pk.eyJ1IjoiemluZWJmYWRpbGkiLCJhIjoiY2t3amYwNHBpMWhqMDJ4bnN0ZGx0OGpwaiJ9.TSa7TFyuKEt2cBxu4eUZag'; // Set your mapbox token here
 
 
 const MapContainer = styled.View`
   padding: 20px;
+  border-radius: 20px;
+  background-color: #191932;
+  align-items: center;
+  margin: 20px;
+`
+
+const ButtonContainer = styled.View`
+  margin-top: 20px;
+  margin-bottom: 20px;
+  justify-content: left;
+  display: inline-block;
+  width: 100%;
+`
+
+const ButtonFrame = styled.View`
+  display: inline-block;
+  margin-right: 20px;
 `
 
 const styles = StyleSheet.create({
@@ -70,8 +88,8 @@ export default function Map() {
   }, []);
 
   const drawTools = (
-      <>
-    <TouchableOpacity style={styles.buttonDraw} onPress={() => setMode(new DrawCircleFromCenterMode())}>
+    <>
+      <TouchableOpacity style={styles.buttonDraw} onPress={() => setMode(new DrawCircleFromCenterMode())}>
         <Text style={styles.title}>DRAW</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.buttonDelete} onPress={onDelete}>
@@ -108,6 +126,14 @@ export default function Map() {
         />
         {drawTools}
       </MapGL>
+      <ButtonContainer>
+        <ButtonFrame >
+          <MainButton title={"Add"} onPress={() => {}}/>
+        </ButtonFrame>
+        <ButtonFrame>
+          <MainButton title={"Cancel"} onPress={() => {}}/>
+        </ButtonFrame>
+      </ButtonContainer>
     </MapContainer>
   );
 }

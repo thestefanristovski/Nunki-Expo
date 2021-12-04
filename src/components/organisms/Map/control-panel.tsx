@@ -4,12 +4,23 @@ import centroid from '@turf/centroid'
 import bbox from '@turf/bbox'
 import distance from '@turf/distance'
 import styled from "styled-components/native";
+import st from "styled-components"
 
 
 const PanelContainer = styled.View`
   color: white;
-  textAlign: center;
+  font-family: sans-serif;
+  text-align: left;
+  width: 100%;
+  padding-left: 20px;
 `
+
+const StyledP = st.p`
+  padding: 0;
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 12px;
+`;
 
 function ControlPanel(props) {
   const polygon = props.polygon;
@@ -46,11 +57,12 @@ function ControlPanel(props) {
   }
   return (
     <PanelContainer>
+      <h3>Draw an area to search in</h3>
       {polygon ? polygon && (
-        <p>
-          CENTER: ({circleCenter.geometry.coordinates.map(x => x.toFixed(3)).join(',')})    |    DIAMETER (km): {getDiameter(circleBBox).toFixed(2)}
-        </p>    
-      ) : <p>DRAW A CIRCLE</p>}
+        <StyledP>
+          Your Area: center - ({circleCenter.geometry.coordinates.map(x => x.toFixed(3)).join(',')}) | diameter (km) - {getDiameter(circleBBox).toFixed(2)}. Click on the area and press the delete button to start over.
+        </StyledP>
+      ) : <StyledP>Click on the Draw button to designate a search area. Click on the map to set the center and click again to select the search radius.</StyledP>}
     </PanelContainer>
   );
 }
