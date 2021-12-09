@@ -77,12 +77,12 @@ class DropdownMenu extends Component {
     <View style={{opacity: 0.4, backgroundColor: 'black', flex: 1 }} />
     </TouchableOpacity>
 
-      <ScrollView style={[{position: 'absolute', top: 0, left: 0, right: 0, backgroundColor: '#191932', borderRadius: 20}, heightStyle]} >
+      <ScrollView style={[{position: 'absolute', top: 0, left: 0, right: 0, backgroundColor: '#191932', borderRadius: 20, zIndex:100}, heightStyle]} >
       {
         currentTitles.map((title, index) =>
-        <TouchableOpacity key={index} activeOpacity={1} style={{flex: 1, height: 1000}} onPress={this.itemOnPress.bind(this, index)} >
+        <TouchableOpacity key={index} activeOpacity={1} style={{flex: 1, height: 1000, zIndex:100}} onPress={this.itemOnPress.bind(this, index)} >
         {this.renderChcek(index, title)}
-      <View style={{backgroundColor: '#191932', height: 1, marginLeft: 15}} />
+      <View style={{backgroundColor: '#191932', height: 1, marginLeft: 15, zIndex:100}} />
       </TouchableOpacity>
       )
       }
@@ -184,9 +184,9 @@ class DropdownMenu extends Component {
   render() {
 
     return (
-      <View style={{flexDirection: 'column', flex: 1}} >
+      <View style={{flexDirection: 'column', flex: 1, zIndex:100}} >
   <View style={{
-      flexDirection: 'row', borderRadius: 100, paddingHorizontal: 20,
+      flexDirection: 'row', borderRadius: 100, paddingHorizontal: 20, zIndex:100,
         backgroundColor: this.props.bgColor ? this.props.bgColor : this.defaultConfig.bgColor}} >
     {
       this.props.data.map((rows, index) =>
@@ -194,8 +194,8 @@ class DropdownMenu extends Component {
       activeOpacity={1}
       onPress={this.openOrClosePanel.bind(this, index)}
       key={index}
-      style={{flex: 1, height: 40, alignItems: "center", justifyContent: "center"}} >
-    <View style={{flexDirection: 'row', alignItems: "center", justifyContent: "center"}} >
+      style={{flex: 1, height: 40, alignItems: "center", justifyContent: "center", zIndex:100}} >
+    <View style={{flexDirection: 'row', alignItems: "center", justifyContent: "center", zIndex:100 }} >
     <Text
       style={[
         styles.title_style,

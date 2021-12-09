@@ -10,7 +10,7 @@ import {Pressable, View} from "react-native";
 interface Props {
     items: string[]
     defaultValue: string
-    onChangedValue: (param:string) => void;
+    onChangedValue: (param:number) => void;
     backgroundC: string
 }
 
@@ -21,10 +21,12 @@ const DropDownMenuContainer = styled.View`
     display: inline-block;
     border-radius: 100px;
     background-color: #191932;
+    z-index: 100;
 `
 
 const DropDownContainer = styled.View`
     display: inline-block;
+    z-index: 100;
 `
 
 const DropDownTitle = styled.Text`
@@ -57,7 +59,7 @@ const DropDown = (props: Props) => {
                         optionTextStyle={{color: 'red'}}
                         titleStyle={{color: 'red'}}
                         // maxHeight={300}
-                        handler={(selection:string, row:number) => onChangedValue(selection)}
+                        handler={(selection:string, row:number) => onChangedValue(row)}
                         data={[items]}
                     />
                 </DropDownMenuContainer>
@@ -67,7 +69,7 @@ const DropDown = (props: Props) => {
 
 
 DropDown.defaultProps = {
-    items: ["Relevance", "Post Date"],
+    items: ["Relevance", "Most Recent", "Most Popular"],
     defaultValue: "Relevance",
     onChangedValue: () => {},
     backgroundC: "dark"
