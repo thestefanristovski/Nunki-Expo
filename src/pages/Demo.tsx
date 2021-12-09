@@ -149,6 +149,11 @@ export default function Demo() {
         }
     }
 
+    // DROPDOWN ORDER BY MENU LISTENER =============================================
+    const changedOrderBy = (element: number) => {
+        console.log(element);
+    }
+
     // Listener for changed platform
     const changedPlatform = (element: string, another: string):void  => {
         console.log(element)
@@ -186,10 +191,10 @@ export default function Demo() {
                             <PillMultiselect options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
                         </View>
                         <View>
-                            <DropDown/>
+                            <DropDown onChangedValue={changedOrderBy}/>
                         </View>
                     </PanelView>
-                    <PillMultiselect title={"Platforms"} options={platforms} selected={selectedPlatforms} onSelected={changedPlatform} />
+
                 </>} />
                 <Route path = "/advanced" element = {<>
                     <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword} onAdvanced={true}/>
@@ -197,39 +202,41 @@ export default function Demo() {
                 </>} />
                 <Route path = "/map" element = {<Map/>} />
             </Routes>
-            <Masonry
-            data = {results}
-            numColumns = {columns}
-            // @ts-ignore
-            renderItem = {({item}) => {
-                if (item.content_type === 'video' && selectedContentTypes.includes("Videos")) {
-                    let metricTitles = ['views', 'thumbsup', "thumbsdown"]
-                    let metricAmounts = [item.views, item.likes, item.dislikes]
-                    if (item.network === 'vimeo') {
-                        metricTitles = ['views', 'likes', "comments"]
-                    }
-                    if ((item.network === 'youtube' && selectedPlatforms.includes('Youtube')) || (item.network === 'vimeo' && selectedPlatforms.includes('Vimeo'))) {
-                        return <VideoPost title={item.title}
-                                          description={item.text}
-                                          metricTitles={metricTitles}
-                                          metricAmounts={metricAmounts}
-                                          thumbnail={item.image}
-                                          channel={item.user_fullname}
-                                          socialMedia={item.network}
-                                          postTime={formatDistanceToNowStrict(fromUnixTime(item.unix), {addSuffix: true})}
-                                          postLocation={item.location && item.location.coordinates.join(',')}
-                                          postLink={item.link}
-                                          length={item.duration}/>
-                    } else {
-                        return null
-                    }
+            <View style={{zIndex:-10}}>
+                <Masonry
+                    data = {results}
+                    numColumns = {columns}
+                    // @ts-ignore
+                    renderItem = {({item}) => {
+                        if (item.content_type === 'video' && selectedContentTypes.includes("Videos")) {
+                            let metricTitles = ['views', 'thumbsup', "thumbsdown"]
+                            let metricAmounts = [item.views, item.likes, item.dislikes]
+                            if (item.network === 'vimeo') {
+                                metricTitles = ['views', 'likes', "comments"]
+                            }
+                            if ((item.network === 'youtube' && selectedPlatforms.includes('Youtube')) || (item.network === 'vimeo' && selectedPlatforms.includes('Vimeo'))) {
+                                return <VideoPost title={item.title}
+                                                  description={item.text}
+                                                  metricTitles={metricTitles}
+                                                  metricAmounts={metricAmounts}
+                                                  thumbnail={item.image}
+                                                  channel={item.user_fullname}
+                                                  socialMedia={item.network}
+                                                  postTime={formatDistanceToNowStrict(fromUnixTime(item.unix), {addSuffix: true})}
+                                                  postLocation={item.location && item.location.coordinates.join(',')}
+                                                  postLink={item.link}
+                                                  length={item.duration}/>
+                            } else {
+                                return null
+                            }
 
-                } else {
-                    return null
-                }
+                        } else {
+                            return null
+                        }
 
-            }}
-            />
+                    }}
+                />
+            </View>
             <StatusBar style="auto" />
         </Cont>
         </Router>
