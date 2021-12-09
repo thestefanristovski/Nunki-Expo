@@ -22,15 +22,12 @@ import MultiselectFilterMenu from "../components/organisms/MultiselectFilterMenu
 import KeywordFilterMenu from "../components/organisms/KeywordFilterMenu";
 import SliderFilterMenu from "../components/organisms/SliderFilterMenu";
 import Map from "../components/organisms/Map"
+import ClusterMenu from '../components/organisms/ClusterMenu';
 
 
 const Cont = styled.View`
   background-color: #111121;
   padding: 40px;
-`
-
-const PostsContainer = styled.View`
-  display: flex;
 `
 
 const PanelView = styled.View`
@@ -55,6 +52,9 @@ export default function Demo() {
     //State: Platform Multiselect Menu
     const [platforms, setPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
     const [selectedPlatforms, setSelectedPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
+
+    const [clusters, setCluster] = useState(["Topic 1", "Topic 2", "Topic 3", "Topic 4"])
+    const [selectedCluster, setSelectedCluster] = useState(["Topic 1 ", "Topic 2", "Topic 3", "Topic 4"])
 
     // MAKING A QUERY =========================================================
     // TODO adapt to array of parameters
@@ -154,6 +154,18 @@ export default function Demo() {
         }
     }
 
+    const changedCluster = (element: string, another: string):void  => {
+        console.log(element)
+        console.log(selectedCluster)
+        if (selectedCluster.includes(element)) {
+            setSelectedCluster(selectedCluster.filter(selectedItem => selectedItem != element));
+        } else if (element === "All") {
+            setSelectedCluster(clusters);
+        } else {
+            setSelectedCluster(selectedCluster.concat(element));
+        }
+    }
+
     return (
         <Router>
         <Cont>
@@ -162,7 +174,7 @@ export default function Demo() {
                     <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
                     <PanelView>
                         <View>
-                            <PillMultiselect options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
+                            <PillMultiselect title = {"Content Type"} options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
                         </View>
                         <View>
                             <DropDown/>
