@@ -55,6 +55,9 @@ export default function Demo() {
     const [clusters, setCluster] = useState(["Topic 1", "Topic 2", "Topic 3", "Topic 4"])
     const [selectedCluster, setSelectedCluster] = useState(["Topic 1 ", "Topic 2", "Topic 3", "Topic 4"])
 
+    const OrderBy = ['relevance', 'recent', 'popular']
+    const [selectedOrder, setSelectedOrder] = useState(0);
+
     // MAKING A QUERY =========================================================
     // TODO adapt to array of parameters
 
@@ -151,7 +154,7 @@ export default function Demo() {
 
     // DROPDOWN ORDER BY MENU LISTENER =============================================
     const changedOrderBy = (element: number) => {
-        console.log(element);
+        setSelectedOrder(element);
     }
 
     // Listener for changed platform
