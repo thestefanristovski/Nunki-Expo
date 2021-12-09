@@ -6,17 +6,14 @@ import PostEngagement from "../../molecules/PostEngagement";
 
 
 interface Props {
-    metricTitle1:string;
-    metricAmount1:string;
-    metricTitle2:string;
-    metricAmount2:string;
-    metricTitle3:string;
-    metricAmount3:string;
+    metricTitles:string[];
+    metricAmounts:string[];
     text: string;
     poster: string;
     socialMedia: string;
     postTime: string;
     postLocation: string;
+    postLink: string;
 }
 
 const PostContainer = styled.View`
@@ -41,30 +38,31 @@ const PostTitle = styled.Text`
 `
 
 const TextPost = (props: Props) => {
-    const {metricTitle1, metricAmount1, metricTitle2, metricAmount2, metricTitle3, metricAmount3, text, poster, socialMedia, postTime, postLocation} = props
+    const {metricAmounts, metricTitles, text, poster, socialMedia, postTime, postLocation, postLink} = props
+
+    const handleClick = () => {
+        window.open(postLink)
+    }
 
     return(
         <PostContainer>
             <PostTitle>{text}</PostTitle>
             <PostMetadata poster={poster} socialMedia={socialMedia} postTime={postTime} postLocation={postLocation}/>
-            <PostEngagement metricTitle1={metricTitle1} metricAmount1={metricAmount1} metricTitle2={metricTitle2} metricAmount2={metricAmount2} metricTitle3={metricTitle3} metricAmount3={metricAmount3} onPress={() => {}}/>
+            <PostEngagement metricTitles={metricTitles} metricAmounts={metricAmounts} onPress={handleClick}/>
         </PostContainer>
     )
 }
 
 
 TextPost.defaultProps = {
-    metricTitle1: "likes",
-    metricTitle2: "retweets",
-    metricTitle3: "comments",
-    metricAmount1: 0,
-    metricAmount2: 0,
-    metricAmount3: 0,
+    metricTitles: ['views', 'thumbsup', "thumbsdown"],
+    metricAmounts: ["0", "0", "0"],
     text: "Tweet not found",
     poster: "Unknown",
     socialMedia: "twitter",
     postTime: "Just Now",
-    postLocation: "Unknown"
+    postLocation: "Unknown",
+    postLink: ""
 }
 
 export default TextPost;
