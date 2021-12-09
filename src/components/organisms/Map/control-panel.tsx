@@ -5,6 +5,7 @@ import bbox from '@turf/bbox'
 import distance from '@turf/distance'
 import styled from "styled-components/native";
 import st from "styled-components"
+import { useEffect } from 'react';
 
 
 const PanelContainer = styled.View`
@@ -22,7 +23,13 @@ const StyledP = st.p`
   font-size: 12px;
 `;
 
-function ControlPanel(props) {
+interface Props {
+  polygon: any;
+  selectRadius: (radius: string) => void;
+  selectCenter: (center: string) => void;
+}
+
+function ControlPanel(props: Props) {
   const polygon = props.polygon;
   const circleCenter = polygon && centroid(polygon)
   const circleBBox = polygon && bbox(polygon)
@@ -48,20 +55,30 @@ function ControlPanel(props) {
 
     const units = "kilometers";
 
-    // const points = {
-    //   "type": "FeatureCollection",
-    //   "features": [point1, point2]
-    // };
-
-    return distance(point1, point2, units)
+    return distance(point1, point2, units)*1000
   }
+
+  const addParams = () => {
+    props.selectCenter(circleCenter.geometry.coordinates.join(','));
+    props.selectRadius(getDiameter(circleBBox).toString())
+  }
+  
+  const clearParams = () => {
+    props.selectCenter('');
+    props.selectRadius('')
+  }
+
+  useEffect(() => {
+    polygon && circleCenter && circleBBox ? addParams() : clearParams;
+  });
+
   return (
     <PanelContainer>
       <h3>Draw an area to search in</h3>
       {polygon ? polygon && (
         <StyledP>
-          Your Area: center - ({circleCenter.geometry.coordinates.map(x => x.toFixed(3)).join(',')}) | diameter (km) - {getDiameter(circleBBox).toFixed(2)}. Click on the area and press the delete button to start over.
-        </StyledP>
+          Your Area: center - ({circleCenter.geometry.coordinates.map(x => x.toFixed(3)).join(',')}) | diameter (m) - {getDiameter(circleBBox).toFixed(2)}. Click on the area and press the delete button to start over.
+        </StyledP> 
       ) : <StyledP>Click on the Draw button to designate a search area. Click on the map to set the center and click again to select the search radius.</StyledP>}
     </PanelContainer>
   );

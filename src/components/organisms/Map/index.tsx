@@ -4,12 +4,12 @@ import MapGL from 'react-map-gl';
 import {Editor, DrawCircleFromCenterMode, EditingMode} from 'react-map-gl-draw';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import styled from "styled-components/native";
-import { Icon } from 'react-native-elements'
 
 import ControlPanel from './control-panel';
 import {getFeatureStyle, getEditHandleStyle} from './style';
 import MainButton from "../../atoms/MainButton";
 import TextButton from "../../atoms/TextButton";
+import { Link } from 'react-router-dom';
 
 const TOKEN = 'pk.eyJ1IjoiemluZWJmYWRpbGkiLCJhIjoiY2t3amYwNHBpMWhqMDJ4bnN0ZGx0OGpwaiJ9.TSa7TFyuKEt2cBxu4eUZag'; // Set your mapbox token here
 
@@ -62,7 +62,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 });
-export default function Map() {
+
+
+interface Props {
+  onSelectLocation: (center: string, radius: string) => void;
+}
+const Map = (props: Props) => {
   const [viewport, setViewport] = useState({
     longitude: 2.3522,
     latitude: 48.8566,
@@ -71,6 +76,9 @@ export default function Map() {
   const [mode, setMode] = useState(null);
   const [selectedFeatureIndex, setSelectedFeatureIndex] = useState(null);
   const editorRef = useRef(null);
+  const [radius, setRadius] = useState('')
+  const [center, setCenter] = useState('')
+
 
   const onSelect = useCallback(options => {
     setSelectedFeatureIndex(options && options.selectedFeatureIndex);
@@ -103,9 +111,17 @@ export default function Map() {
   const selectedFeature =
     features && (features[selectedFeatureIndex] || features[features.length - 1]);
 
+  const onAdd = () => {
+     props.onSelectLocation(center, radius)
+  }
+
+  const onCancel = () => {
+    props.onSelectLocation('', '')
+
+  }
   return (
     <MapContainer>
-      <ControlPanel polygon={selectedFeature} />
+      <ControlPanel polygon={selectedFeature} selectRadius={setRadius} selectCenter={setCenter}/>
       <MapGL
         {...viewport}
         width="90vw"
@@ -128,13 +144,18 @@ export default function Map() {
         {drawTools}
       </MapGL>
       <ButtonContainer>
+        <Link to={'/'}>
         <ButtonFrame >
-          <MainButton title={"Add"} onPress={() => {}}/>
+            <MainButton title={"Add"} onPress={onAdd}/> 
         </ButtonFrame>
+        </Link> 
         <ButtonFrame>
-          <TextButton title={"Cancel"} onPress={() => {}} link={'/'}/>
+          <TextButton title={"Cancel"} onPress={onCancel} link={'/'}/>
         </ButtonFrame>
       </ButtonContainer>
     </MapContainer>
   );
 }
+
+
+export default Map;

@@ -53,6 +53,10 @@ export default function Demo() {
     const [platforms, setPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
     const [selectedPlatforms, setSelectedPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
 
+    //State: Location center and radius
+    const [radius, setRadius] = useState('')
+    const [center, setCenter] = useState('')
+
     const [clusters, setCluster] = useState(["Topic 1", "Topic 2", "Topic 3", "Topic 4"])
     const [selectedCluster, setSelectedCluster] = useState(["Topic 1 ", "Topic 2", "Topic 3", "Topic 4"])
 
@@ -113,6 +117,13 @@ export default function Demo() {
     }, [queryParams])
 
 
+    const onSelectLocation = (center: string, radius: string) => {
+        if (center && radius) {
+            setRadius(radius);
+            setCenter(center);
+        }
+        //setRadius(radius);
+    }
 
     // VISUAL =================================================================
 
@@ -186,7 +197,7 @@ export default function Demo() {
                     <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword} onAdvanced={true}/>
                     <Advanced/>
                 </>} />
-                <Route path = "/map" element = {<Map/>} />
+                <Route path = "/map" element = {<Map onSelectLocation={onSelectLocation}/>} />
             </Routes>
             <Masonry
             data = {videos}
