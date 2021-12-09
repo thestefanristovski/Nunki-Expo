@@ -9,6 +9,7 @@ import { Icon } from 'react-native-elements'
 import ControlPanel from './control-panel';
 import {getFeatureStyle, getEditHandleStyle} from './style';
 import MainButton from "../../atoms/MainButton";
+import TextButton from "../../atoms/TextButton";
 
 const TOKEN = 'pk.eyJ1IjoiemluZWJmYWRpbGkiLCJhIjoiY2t3amYwNHBpMWhqMDJ4bnN0ZGx0OGpwaiJ9.TSa7TFyuKEt2cBxu4eUZag'; // Set your mapbox token here
 
@@ -131,7 +132,7 @@ export default function Map() {
           <MainButton title={"Add"} onPress={() => {}}/>
         </ButtonFrame>
         <ButtonFrame>
-          <MainButton title={"Cancel"} onPress={() => {}}/>
+          <TextButton title={"Cancel"} onPress={() => {}} link={'/'}/>
         </ButtonFrame>
       </ButtonContainer>
     </MapContainer>
