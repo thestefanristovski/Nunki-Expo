@@ -30,6 +30,7 @@ const PostContainer = styled.View`
   padding: 20px;
   margin: 20px;
   width: fit-content;
+  max-width: 600px;
 `
 
 const PostText = styled.Text`

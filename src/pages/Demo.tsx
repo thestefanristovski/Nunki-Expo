@@ -56,21 +56,12 @@ export default function Demo() {
     const [platforms, setPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
     const [selectedPlatforms, setSelectedPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
 
-
-
-//   const { isLoading, error, data } = useQuery('repoData', () => {
-//     const url = 'http://localhost:3000/youtube/search?sort=relevance&min=1605681523&type=video&'+queryParams
-//      fetch(url).then(res =>
-//        res.json()
-//       ).then(res => console.log(res))
-//      }
-//   )
-
     // MAKING A QUERY =========================================================
     // TODO adapt to array of parameters
 
     const fetchData = () => {
-        const url = 'http://localhost:3000/youtube/search?limit=50&sort=relevant&min=1605681523&type=video&allKeywords='+queryParams.join(',')
+        //const url = 'https://search.api.nunki.co/youtube/search?limit=50&sort=relevant&min=1605681523&type=video&allKeywords='+queryParams.join(',')
+        const url = 'https://search.api.nunki.co/youtube/search?min=1605681523&type=video&normalize=true&sort=relevant&anyKeywords=' + queryParams.join(',');
         console.log(url);
         fetch(url).then(res =>
             res.json()
@@ -91,17 +82,21 @@ export default function Demo() {
 
     // SEARCH BAR KEYWORD METHODS ==============================================
 
-    // A keyword needs to be added (submitted with ','
+    // A keyword needs to be added
     const onAddKeyword = async (text: string) => {
         if (text.endsWith(',')) {
             const keyword:string = text.substring(0, text.lastIndexOf(','));
             const keywords:string[] = queryParams;
-            // @ts-ignore
-            setQueryParams(keywords.concat(keyword));
+            if (!keywords.includes(keyword)) {
+                // @ts-ignore
+                setQueryParams(keywords.concat(keyword));
+            }
         } else {
             const keywords:string[] = queryParams;
-            // @ts-ignore
-            setQueryParams(keywords.concat(text));
+            if (!keywords.includes(text)) {
+                // @ts-ignore
+                setQueryParams(keywords.concat(text));
+            }
         }
     }
 
@@ -124,7 +119,7 @@ export default function Demo() {
     //Recalculate the number of columns to display for grid
     React.useEffect(() => {
         function handleResize() {
-            setColumns(Math.round(window.innerWidth/470));
+            setColumns(Math.round(window.innerWidth/600));
         }
 
         window.addEventListener('resize', handleResize)
@@ -198,7 +193,7 @@ export default function Demo() {
                                                  length={item.duration}/>}
             />
             <StatusBar style="auto" />
-      </Cont>
-      </Router>
+        </Cont>
+        </Router>
     )
 }
