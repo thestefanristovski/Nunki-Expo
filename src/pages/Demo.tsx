@@ -174,6 +174,7 @@ export default function Demo() {
         }
     }
 
+
     return (
         <Router>
         <Cont>
@@ -199,6 +200,7 @@ export default function Demo() {
             <Masonry
             data = {results}
             numColumns = {columns}
+            // @ts-ignore
             renderItem = {({item}) => {
                 if (item.content_type === 'video' && selectedContentTypes.includes("Videos")) {
                     let metricTitles = ['views', 'thumbsup', "thumbsdown"]
@@ -206,17 +208,22 @@ export default function Demo() {
                     if (item.network === 'vimeo') {
                         metricTitles = ['views', 'likes', "comments"]
                     }
-                    return <VideoPost title={item.title}
-                                      description={item.text}
-                                      metricTitles={metricTitles}
-                                      metricAmounts={metricAmounts}
-                                      thumbnail={item.image}
-                                      channel={item.user_fullname}
-                                      socialMedia={item.network}
-                                      postTime={formatDistanceToNowStrict(fromUnixTime(item.unix), {addSuffix: true})}
-                                      postLocation={item.location && item.location.coordinates.join(',')}
-                                      postLink={item.link}
-                                      length={item.duration}/>
+                    if ((item.network === 'youtube' && selectedPlatforms.includes('Youtube')) || (item.network === 'vimeo' && selectedPlatforms.includes('Vimeo'))) {
+                        return <VideoPost title={item.title}
+                                          description={item.text}
+                                          metricTitles={metricTitles}
+                                          metricAmounts={metricAmounts}
+                                          thumbnail={item.image}
+                                          channel={item.user_fullname}
+                                          socialMedia={item.network}
+                                          postTime={formatDistanceToNowStrict(fromUnixTime(item.unix), {addSuffix: true})}
+                                          postLocation={item.location && item.location.coordinates.join(',')}
+                                          postLink={item.link}
+                                          length={item.duration}/>
+                    } else {
+                        return null
+                    }
+
                 } else {
                     return null
                 }
