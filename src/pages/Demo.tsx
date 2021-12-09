@@ -225,7 +225,7 @@ export default function Demo() {
                                       socialMedia={item.network}
                                       postTime={formatDistanceToNowStrict(fromUnixTime(item.unix), {addSuffix: true})}
                                       postLocation={item.location && item.location.coordinates.join(',')}
-                                      videoLink={item.link}
+                                      postLink={item.link}
                                       length={item.duration}/>
                 } else {
                     return <TextPost/>

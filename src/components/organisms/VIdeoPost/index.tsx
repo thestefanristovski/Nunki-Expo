@@ -17,7 +17,7 @@ interface Props {
     socialMedia: string;
     postTime: string;
     postLocation: string;
-    videoLink: string;
+    postLink: string;
 }
 
 const PostContainer = styled.View`
@@ -45,17 +45,29 @@ const PostTitle = styled.Text`
 
 const VideoPost = (props: Props) => {
 
-    const {metricTitles, metricAmounts, title, description, length, thumbnail, channel, socialMedia, postTime, postLocation, videoLink} = props
+    const {metricTitles, metricAmounts, title, description, length, thumbnail, channel, socialMedia, postTime, postLocation, postLink} = props
 
     const handleClick = () => {
-        window.open(videoLink)
+        window.open(postLink)
     }
+
+    //format length
+    function pad(num:number, size:number) {
+        let numb = num.toString();
+        while (numb.length < size) numb = "0" + numb;
+        return numb;
+    }
+
+    const lenSeconds = Number(length)
+    const mins = Math.floor(lenSeconds/60)
+    const secs = lenSeconds - mins*60
+    const formattedTime = pad(mins, 2) + ":" + pad(secs, 2);
 
     return(
         <PostContainer>
             <PostTitle>{title}</PostTitle>
             <PostText>{description}</PostText>
-            <VideoThumbnail length={length} imageSrc={thumbnail}/>
+            <VideoThumbnail length={formattedTime} imageSrc={thumbnail}/>
             <PostMetadata poster={channel} socialMedia={socialMedia} postTime={postTime} postLocation={postLocation}/>
             <PostEngagement metricTitles={metricTitles} metricAmounts={metricAmounts} onPress={handleClick}/>
         </PostContainer>

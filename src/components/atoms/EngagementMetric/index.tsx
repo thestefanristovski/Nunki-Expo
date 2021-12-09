@@ -40,10 +40,33 @@ const EngagementMetric = (props: Props) => {
     } else if (metric == "retweets") {
         icon = "fa-solid:retweet"
     }
+
+    //format likes and dislikes
+    const SI_SYMBOL = ["", "K", "M", "G", "T", "P", "E"];
+
+    function abbreviateNumber(number:number){
+
+        // what tier? (determines SI symbol)
+        const tier = Math.log10(Math.abs(number)) / 3 | 0;
+
+        // if zero, we don't need a suffix
+        if(tier == 0) return number;
+
+        // get suffix and determine scale
+        const suffix = SI_SYMBOL[tier];
+        const scale = Math.pow(10, tier * 3);
+
+        // scale the number
+        const scaled = number / scale;
+
+        // format number and add suffix
+        return scaled.toFixed(1) + suffix;
+    }
+
     return(
         <MetricContainer>
             <Icon icon={icon} style={{color:"#6A6A9F", width:25, lineHeight:25, display:"inline-block", paddingRight:0, verticalAlign:"middle"}}/>
-            <MetricText>{amount}</MetricText>
+            <MetricText>{abbreviateNumber(Number(amount))}</MetricText>
         </MetricContainer>
     )
 }

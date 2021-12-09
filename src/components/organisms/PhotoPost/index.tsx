@@ -7,18 +7,15 @@ import FBCollage from "react-native-fb-collage";
 
 
 interface Props {
-    metricTitle1:string;
-    metricAmount1:string;
-    metricTitle2:string;
-    metricAmount2:string;
-    metricTitle3:string;
-    metricAmount3:string;
+    metricTitles:string[];
+    metricAmounts:string[];
     text: string;
     poster: string;
     socialMedia: string;
     postTime: string;
     postLocation: string;
     images: string[];
+    postLink: string;
 }
 
 const PostContainer = styled.View`
@@ -37,7 +34,11 @@ const PostTitle = styled.Text`
 `
 
 const PhotoPost = (props: Props) => {
-    const {metricTitle1, metricAmount1, metricTitle2, metricAmount2, metricTitle3, metricAmount3, text, poster, socialMedia, postTime, postLocation, images} = props
+    const {metricTitles, metricAmounts, text, poster, socialMedia, postTime, postLocation, images, postLink} = props
+
+    const handleClick = () => {
+        window.open(postLink)
+    }
 
     return(
         <PostContainer>
@@ -46,7 +47,7 @@ const PhotoPost = (props: Props) => {
             images={images}
             width={420}/>
             <PostMetadata poster={poster} socialMedia={socialMedia} postTime={postTime} postLocation={postLocation}/>
-            <PostEngagement metricTitle1={metricTitle1} metricAmount1={metricAmount1} metricTitle2={metricTitle2} metricAmount2={metricAmount2} metricTitle3={metricTitle3} metricAmount3={metricAmount3} onPress={() => {}}/>
+            <PostEngagement metricTitles={metricTitles} metricAmounts={metricAmounts} onPress={handleClick}/>
         </PostContainer>
     )
 }
