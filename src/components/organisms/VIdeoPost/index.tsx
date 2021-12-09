@@ -7,12 +7,8 @@ import PostEngagement from "../../molecules/PostEngagement";
 
 
 interface Props {
-    metricTitle1:string;
-    metricAmount1:string;
-    metricTitle2:string;
-    metricAmount2:string;
-    metricTitle3:string;
-    metricAmount3:string;
+    metricTitles:string[];
+    metricAmounts:string[];
     title: string;
     description: string;
     length: string;
@@ -49,7 +45,7 @@ const PostTitle = styled.Text`
 
 const VideoPost = (props: Props) => {
 
-    const {metricTitle1, metricAmount1, metricTitle2, metricAmount2, metricTitle3, metricAmount3, title, description, length, thumbnail, channel, socialMedia, postTime, postLocation, videoLink} = props
+    const {metricTitles, metricAmounts, title, description, length, thumbnail, channel, socialMedia, postTime, postLocation, videoLink} = props
 
     const handleClick = () => {
         window.open(videoLink)
@@ -61,19 +57,13 @@ const VideoPost = (props: Props) => {
             <PostText>{description}</PostText>
             <VideoThumbnail length={length} imageSrc={thumbnail}/>
             <PostMetadata poster={channel} socialMedia={socialMedia} postTime={postTime} postLocation={postLocation}/>
-            <PostEngagement metricTitle1={metricTitle1} metricAmount1={metricAmount1} metricTitle2={metricTitle2} metricAmount2={metricAmount2} metricTitle3={metricTitle3} metricAmount3={metricAmount3} onPress={handleClick}/>
+            <PostEngagement metricTitles={metricTitles} metricAmounts={metricAmounts} onPress={handleClick}/>
         </PostContainer>
     )
 }
 
 
 VideoPost.defaultProps = {
-    metricTitle1: "thumbsup",
-    metricTitle2: "thumbsdown",
-    metricTitle3: "views",
-    metricAmount1: 0,
-    metricAmount2: 0,
-    metricAmount3: 0,
     title: "Unknown",
     description: "Description not found",
     length: "00:00",
@@ -82,7 +72,9 @@ VideoPost.defaultProps = {
     socialMedia: "youtube",
     postTime: "Just Now",
     postLocation: "Unknown",
-    videoLink: "https://www.youtube.com/watch?v=cULMPGmFdIQ&ab_channel=A24"
+    videoLink: "https://www.youtube.com/watch?v=cULMPGmFdIQ&ab_channel=A24",
+    metricTitles: ['views', 'thumbsup', "thumbsdown"],
+    metricAmounts: ["0", "0", "0"]
 }
 
 export default VideoPost;

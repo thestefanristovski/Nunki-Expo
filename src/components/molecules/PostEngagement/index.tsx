@@ -7,12 +7,8 @@ import {Pressable} from "react-native";
 
 
 interface Props {
-    metricTitle1:string;
-    metricAmount1:string;
-    metricTitle2:string;
-    metricAmount2:string;
-    metricTitle3:string;
-    metricAmount3:string;
+    metricTitles:string[];
+    metricAmounts:string[];
     onPress: ()=> void;
 }
 
@@ -38,15 +34,15 @@ const StyledText = styled.Text`
 `
 
 const PostEngagement = (props: Props) => {
-    const {metricTitle1, metricAmount1, metricTitle2, metricAmount2, metricTitle3, metricAmount3, onPress} = props
+    const {metricTitles, metricAmounts, onPress} = props
 
     //TODO wrap external link in pressable and add post Link to props, define onPress behaviour
 
     return(
         <EngagementContainer>
-            <EngagementMetric metric={metricTitle1} amount={metricAmount1}/>
-            <EngagementMetric metric={metricTitle2} amount={metricAmount2}/>
-            <EngagementMetric metric={metricTitle3} amount={metricAmount3}/>
+            {metricTitles.map((val, i) => {
+                return <EngagementMetric metric={val} amount={metricAmounts[i]}/>
+            })}
             <ExternalLink onPress={onPress}>
                 <Icon icon="heroicons-solid:external-link" style={{color:"#6A6A9F", width:20, height:20, verticalAlign:"middle"}} />
             </ExternalLink>
@@ -56,12 +52,8 @@ const PostEngagement = (props: Props) => {
 
 
 PostEngagement.defaultProps = {
-    metricTitle1: "thumbsup",
-    metricTitle2: "thumbsdown",
-    metricTitle3: "views",
-    metricAmount1: 0,
-    metricAmount2: 0,
-    metricAmount3: 0,
+    metricTitles: ['views', 'thumbsup', "thumbsdown"],
+    metricAmounts: ["0", "0", "0"]
 }
 
 export default PostEngagement;

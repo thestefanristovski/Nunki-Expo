@@ -61,14 +61,32 @@ export default function Demo() {
 
     const fetchData = () => {
         //const url = 'https://search.api.nunki.co/youtube/search?limit=50&sort=relevant&min=1605681523&type=video&allKeywords='+queryParams.join(',')
-        const url = 'https://search.api.nunki.co/youtube/search?min=1605681523&type=video&normalize=true&sort=relevant&anyKeywords=' + queryParams.join(',');
-        console.log(url);
+        const urlYoutube = 'https://search.api.nunki.co/youtube/search?min=1605681523&type=video&normalize=true&sort=relevant&anyKeywords=' + queryParams.join(',');
+        const urlVimeo = 'https://search.api.nunki.co/vimeo/search?sort=relevant&min=1605681523&type=video&normalize=true&anyKeywords=' + + queryParams.join(',');
+        console.log(urlYoutube);
+        console.log(urlVimeo);
+        Promise.all([
+            fetch(urlYoutube),
+            fetch(urlVimeo)
+        ]).then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
+        .then(([data1, data2]) => {
+            let vids = videos;
+            console.log(data1.contents);
+            console.log(data2.contents);
+            vids = vids.concat(data1.contents);
+            vids = vids.concat(data2.contents);
+            console.log(vids);
+            setVideos(vids);
+        })
+
+        /*
         fetch(url).then(res =>
             res.json()
         ).then(res => {
             console.log(res.contents)
             setVideos(res.contents)
         })
+         */
     }
 
     const { isLoading, error, data, refetch } = useQuery("key", fetchData, {
@@ -191,18 +209,29 @@ export default function Demo() {
             <Masonry
             data = {videos}
             numColumns = {columns}
-            renderItem = {({item}) => <VideoPost metricTitle1={'views'} metricAmount1={item.views}
-                                                 title={item.title}
-                                                 metricTitle2={'thumbsup'} metricAmount2={item.likes}
-                                                 metricTitle3={'thumbsdown'} metricAmount3={item.dislikes}
-                                                 description={item.text.substring(0, 300)}
-                                                 thumbnail={item.image}
-                                                 channel={item.user_fullname}
-                                                 socialMedia={item.network}
-                                                 postTime={formatDistanceToNowStrict(fromUnixTime(item.unix), {addSuffix: true})}
-                                                 postLocation={item.location && item.location.coordinates.join(',')}
-                                                 videoLink={item.link}
-                                                 length={item.duration}/>}
+            renderItem = {({item}) => {
+                if (item.content_type === 'video') {
+                    let metricTitles = ['views', 'thumbsup', "thumbsdown"]
+                    let metricAmounts = [item.views, item.likes, item.dislikes]
+                    if (item.network === 'vimeo') {
+                        metricTitles = ['views', 'likes', "comments"]
+                    }
+                    return <VideoPost title={item.title}
+                                      description={item.text.substring(0, 300)}
+                                      metricTitles={metricTitles}
+                                      metricAmounts={metricAmounts}
+                                      thumbnail={item.image}
+                                      channel={item.user_fullname}
+                                      socialMedia={item.network}
+                                      postTime={formatDistanceToNowStrict(fromUnixTime(item.unix), {addSuffix: true})}
+                                      postLocation={item.location && item.location.coordinates.join(',')}
+                                      videoLink={item.link}
+                                      length={item.duration}/>
+                } else {
+                    return <TextPost/>
+                }
+
+            }}
             />
             <StatusBar style="auto" />
         </Cont>

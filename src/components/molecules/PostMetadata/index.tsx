@@ -46,7 +46,7 @@ const PostMetadata = (props: Props) => {
             <MetadataContainer>
                 <PostSource social={socialMedia} poster={poster}/>
                 <PostMetadataTextSecondary>{postTime}</PostMetadataTextSecondary>
-                <PostLocation flag={postFlag} location={postLocation}/>
+                {postLocation !== "Unknown" && <PostLocation flag={postFlag} location={postLocation}/>}
             </MetadataContainer>
         )
     }
