@@ -26,7 +26,8 @@ const StyledP = st.p`
 interface Props {
   polygon: any;
   selectRadius: (radius: string) => void;
-  selectCenter: (center: string) => void;
+  selectLatitude: (latitude: string) => void;
+  selectLongitude: (longitude: string) => void;
 }
 
 function ControlPanel(props: Props) {
@@ -59,12 +60,14 @@ function ControlPanel(props: Props) {
   }
 
   const addParams = () => {
-    props.selectCenter(circleCenter.geometry.coordinates.join(','));
+    props.selectLatitude(circleCenter.geometry.coordinates[1].toString())
+    props.selectLongitude(circleCenter.geometry.coordinates[0].toString())
     props.selectRadius(getDiameter(circleBBox).toString())
   }
   
   const clearParams = () => {
-    props.selectCenter('');
+    props.selectLatitude('')
+    props.selectLongitude('')
     props.selectRadius('')
   }
 

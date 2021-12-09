@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
 
 
 interface Props {
-  onSelectLocation: (center: string, radius: string) => void;
+  onSelectLocation: (latitude: string, longitude: string, radius: string) => void;
 }
 const Map = (props: Props) => {
   const [viewport, setViewport] = useState({
@@ -77,7 +77,8 @@ const Map = (props: Props) => {
   const [selectedFeatureIndex, setSelectedFeatureIndex] = useState(null);
   const editorRef = useRef(null);
   const [radius, setRadius] = useState('')
-  const [center, setCenter] = useState('')
+  const [latitude, setLatitude] = useState('')
+  const [longitude, setLongitude] = useState('')
 
 
   const onSelect = useCallback(options => {
@@ -112,16 +113,16 @@ const Map = (props: Props) => {
     features && (features[selectedFeatureIndex] || features[features.length - 1]);
 
   const onAdd = () => {
-     props.onSelectLocation(center, radius)
+     props.onSelectLocation(latitude, longitude, radius)
   }
 
   const onCancel = () => {
-    props.onSelectLocation('', '')
+    props.onSelectLocation('','', '')
 
   }
   return (
     <MapContainer>
-      <ControlPanel polygon={selectedFeature} selectRadius={setRadius} selectCenter={setCenter}/>
+      <ControlPanel polygon={selectedFeature} selectRadius={setRadius} selectLatitude={setLatitude} selectLongitude={setLongitude}/>
       <MapGL
         {...viewport}
         width="90vw"

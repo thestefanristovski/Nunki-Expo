@@ -54,18 +54,27 @@ export default function Demo() {
 
     //State: Location center and radius
     const [radius, setRadius] = useState('')
-    const [center, setCenter] = useState('')
+    const [latitude, setLatitude] = useState('')
+    const [longitude, setLongitude] = useState('')
 
     const [clusters, setCluster] = useState(["Topic 1", "Topic 2", "Topic 3", "Topic 4"])
     const [selectedCluster, setSelectedCluster] = useState(["Topic 1 ", "Topic 2", "Topic 3", "Topic 4"])
+
+    const youtubeBaseUrl = 'https://search.api.nunki.co/youtube/search?'
+    const vimeoBaseUrl = 'https://search.api.nunki.co/vimeo/search?'
 
     // MAKING A QUERY =========================================================
     // TODO adapt to array of parameters
 
     const fetchData = () => {
+        console.log(latitude)
+        console.log(longitude)
+        console.log(radius)
+        const parameters = `min=1605681523&type=video&normalize=true&limit=10&sort=relevant&anyKeywords=${queryParams.join(',')}` 
+        + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`;
         //const url = 'https://search.api.nunki.co/youtube/search?limit=50&sort=relevant&min=1605681523&type=video&allKeywords='+queryParams.join(',')
-        const urlYoutube = 'https://search.api.nunki.co/youtube/search?min=1605681523&type=video&normalize=true&limit=10&sort=relevant&anyKeywords=' + queryParams.join(',');
-        const urlVimeo = 'https://search.api.nunki.co/vimeo/search?sort=relevant&min=1605681523&type=video&normalize=true&anyKeywords=' + + queryParams.join(',');
+        const urlYoutube = youtubeBaseUrl + parameters;
+        const urlVimeo = vimeoBaseUrl + parameters;
         console.log(urlYoutube);
         console.log(urlVimeo);
         Promise.all([
@@ -122,13 +131,22 @@ export default function Demo() {
     useEffect(() => {
         console.log("YO");
         console.log(queryParams);
-    }, [queryParams])
+        console.log(latitude)
+        console.log(longitude)
+        console.log(radius)
+    }, [queryParams, latitude, longitude, radius])
 
 
-    const onSelectLocation = (center: string, radius: string) => {
-        if (center && radius) {
+    const onSelectLocation = (latitude: string, longitude: string, radius: string) => {
+        console.log('IN FONCTION')
+        console.log(latitude)
+        console.log(longitude)
+        console.log(radius)
+        if (latitude && longitude && radius) {
+            console.log('IN FONCTION')
             setRadius(radius);
-            setCenter(center);
+            setLatitude(latitude);
+            setLongitude(longitude);
         }
         //setRadius(radius);
     }
