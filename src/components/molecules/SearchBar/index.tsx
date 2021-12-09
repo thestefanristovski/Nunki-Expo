@@ -16,6 +16,7 @@ interface Props {
     keywords: string[]
     onDelete: (param: string) => void;
     onAdvanced: boolean;
+    hasLocation: boolean;
 }
 
 const StyledText  = styled.Text`
@@ -80,18 +81,37 @@ const SearchContainer = styled.View`
 
 const SearchButtonContainer = styled.View`
   vertical-align: middle;
-  margin-left: 30px;
+  margin-left: 10px;
   margin-right: 20px;
 `
 
 const BarContainer = styled.View`
   vertical-align: middle;
   margin-left: 30px;
-  width: calc(100% - 280px);
+  width: calc(100% - 350px);
+`
+
+const LocationContainer = styled.View`
+  background-color: #191932;
+  vertical-align: middle;
+  padding: 10px;
+  border-radius: 60px;
+  display: inline-block;
+  margin-left: 10px;
+`
+
+const LocationContainerActive = styled.View`
+  background-color: #25245D;
+  vertical-align: middle;
+  padding: 10px;
+  border-radius: 60px;
+  display: inline-block;
+  margin-left: 10px;
+  border: 1px solid #6083FF;
 `
 
 const SearchBar = (props: Props) => {
-    const {onPressSearch, onAddKeyword, keywords, onDelete, onAdvanced} = props;
+    const {onPressSearch, onAddKeyword, keywords, onDelete, onAdvanced, hasLocation} = props;
     const [textFieldContent, setTextFieldContent] = React.useState('')
 
     const textField = React.useRef<TextInput>(null)
@@ -140,6 +160,13 @@ const SearchBar = (props: Props) => {
                     <StyledTextInput ref={textField} placeholder={"Search by keywords or phrases"} style={{outlineStyle:"none", boxShadow:"none"}} onChangeText={onChangedText}/>
                 </Bar>
             </BarContainer>
+            {hasLocation
+                ? <LocationContainerActive>
+                    <IconButton link={'/map'} icon={"ion:map-outline"}/>
+                  </LocationContainerActive>
+                : <LocationContainer>
+                    <IconButton link={'/map'} icon={"ion:map-outline"}/>
+                  </LocationContainer>}
             <SearchButtonContainer>
                 <MainButton title={"Search"} onPress={onSubmitSearch}/>
             </SearchButtonContainer>
@@ -157,6 +184,7 @@ SearchBar.defaultProps = {
     title: "Hello",
     onPress: ()=> {},
     onAdvanced: false,
+    hasLocation: false,
 }
 
 export default SearchBar;
