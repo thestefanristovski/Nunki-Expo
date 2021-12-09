@@ -40,11 +40,10 @@ const PanelView = styled.View`
 `
 
 export default function Demo() {
-    //API CALLS
-    const baseUrl = 'http://localhost:3000/youtube/search'
+    //Query Parameters
     const [queryParams, setQueryParams] = useState([])
     // List of Elements in Grid
-    const [videos, setVideos] = useState<any[]>([])
+    const [results, setResults] = useState<any[]>([])
     const [columns, setColumns] = useState(2);
     //State: Content Type Multiselect Menu
     const [contentTypes, setContentTypes] = useState(["Photos", "Videos", "Text"])
@@ -61,7 +60,7 @@ export default function Demo() {
 
     const fetchData = () => {
         //const url = 'https://search.api.nunki.co/youtube/search?limit=50&sort=relevant&min=1605681523&type=video&allKeywords='+queryParams.join(',')
-        const urlYoutube = 'https://search.api.nunki.co/youtube/search?min=1605681523&type=video&normalize=true&sort=relevant&anyKeywords=' + queryParams.join(',');
+        const urlYoutube = 'https://search.api.nunki.co/youtube/search?min=1605681523&type=video&normalize=true&limit=10&sort=relevant&anyKeywords=' + queryParams.join(',');
         const urlVimeo = 'https://search.api.nunki.co/vimeo/search?sort=relevant&min=1605681523&type=video&normalize=true&anyKeywords=' + + queryParams.join(',');
         console.log(urlYoutube);
         console.log(urlVimeo);
@@ -70,23 +69,14 @@ export default function Demo() {
             fetch(urlVimeo)
         ]).then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
         .then(([data1, data2]) => {
-            let vids = videos;
+            let vids = results;
             console.log(data1.contents);
             console.log(data2.contents);
             vids = vids.concat(data1.contents);
             vids = vids.concat(data2.contents);
             console.log(vids);
-            setVideos(vids);
+            setResults(vids);
         })
-
-        /*
-        fetch(url).then(res =>
-            res.json()
-        ).then(res => {
-            console.log(res.contents)
-            setVideos(res.contents)
-        })
-         */
     }
 
     const { isLoading, error, data, refetch } = useQuery("key", fetchData, {
@@ -192,7 +182,7 @@ export default function Demo() {
                     <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
                     <PanelView>
                         <View>
-                            <PillMultiselect title = {"Content Type"} options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
+                            <PillMultiselect options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
                         </View>
                         <View>
                             <DropDown/>
@@ -207,17 +197,17 @@ export default function Demo() {
                 <Route path = "/map" element = {<Map/>} />
             </Routes>
             <Masonry
-            data = {videos}
+            data = {results}
             numColumns = {columns}
             renderItem = {({item}) => {
-                if (item.content_type === 'video') {
+                if (item.content_type === 'video' && selectedContentTypes.includes("Videos")) {
                     let metricTitles = ['views', 'thumbsup', "thumbsdown"]
                     let metricAmounts = [item.views, item.likes, item.dislikes]
                     if (item.network === 'vimeo') {
                         metricTitles = ['views', 'likes', "comments"]
                     }
                     return <VideoPost title={item.title}
-                                      description={item.text.substring(0, 300)}
+                                      description={item.text}
                                       metricTitles={metricTitles}
                                       metricAmounts={metricAmounts}
                                       thumbnail={item.image}
@@ -228,7 +218,7 @@ export default function Demo() {
                                       postLink={item.link}
                                       length={item.duration}/>
                 } else {
-                    return <TextPost/>
+                    return null
                 }
 
             }}

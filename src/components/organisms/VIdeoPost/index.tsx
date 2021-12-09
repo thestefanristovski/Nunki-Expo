@@ -66,7 +66,7 @@ const VideoPost = (props: Props) => {
     return(
         <PostContainer>
             <PostTitle>{title}</PostTitle>
-            <PostText>{description}</PostText>
+            <PostText>{description.substring(0,140)}</PostText>
             <VideoThumbnail length={formattedTime} imageSrc={thumbnail}/>
             <PostMetadata poster={channel} socialMedia={socialMedia} postTime={postTime} postLocation={postLocation}/>
             <PostEngagement metricTitles={metricTitles} metricAmounts={metricAmounts} onPress={handleClick}/>
