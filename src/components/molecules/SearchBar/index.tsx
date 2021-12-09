@@ -173,7 +173,6 @@ const SearchBar = (props: Props) => {
             {!onAdvanced && <>
                 <IconButton link={"/advanced"} icon={"fluent:options-16-filled"}/>
                 <IconButton link={"/stats"} icon={"ion:stats-chart"}/>
-                <IconButton link={"/map"} icon={"akar-icons:map"}/>
             </>}
         </SearchContainer>
 
