@@ -145,13 +145,11 @@ const Map = (props: Props) => {
         {drawTools}
       </MapGL>
       <ButtonContainer>
-        <Link to={'/'}>
         <ButtonFrame >
-            <MainButton title={"Add"} onPress={onAdd}/> 
+            <MainButton title={"Add"} onPress={onAdd}/>
         </ButtonFrame>
-        </Link> 
         <ButtonFrame>
-          <TextButton title={"Cancel"} onPress={onCancel} link={'/'}/>
+          <TextButton title={"Cancel"} onPress={onCancel}/>
         </ButtonFrame>
       </ButtonContainer>
     </MapContainer>

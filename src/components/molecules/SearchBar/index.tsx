@@ -17,6 +17,8 @@ interface Props {
     onDelete: (param: string) => void;
     onAdvanced: boolean;
     hasLocation: boolean;
+    onChangeAdvanced: (param: boolean) => void;
+    onChangeMap: (param: boolean) => void;
 }
 
 const StyledText  = styled.Text`
@@ -111,7 +113,7 @@ const LocationContainerActive = styled.View`
 `
 
 const SearchBar = (props: Props) => {
-    const {onPressSearch, onAddKeyword, keywords, onDelete, onAdvanced, hasLocation} = props;
+    const {onPressSearch, onAddKeyword, keywords, onDelete, onAdvanced, hasLocation, onChangeAdvanced, onChangeMap} = props;
     const [textFieldContent, setTextFieldContent] = React.useState('')
 
     const textField = React.useRef<TextInput>(null)
@@ -144,10 +146,18 @@ const SearchBar = (props: Props) => {
 
     }
 
+    const changeAdvanced = () => {
+        onChangeAdvanced(!onAdvanced);
+    }
+
+    const changeMap = () => {
+        onChangeMap(true);
+    }
+
     return(
         <SearchContainer>
             {onAdvanced && <>
-                <IconButton link={"/"} icon={"eva:arrow-back-fill"}/>
+                <IconButton onPress={changeAdvanced} icon={"eva:arrow-back-fill"}/>
             </>}
             <BarContainer>
                 <Bar>
@@ -162,17 +172,17 @@ const SearchBar = (props: Props) => {
             </BarContainer>
             {hasLocation
                 ? <LocationContainerActive>
-                    <IconButton link={'/map'} icon={"ion:map-outline"}/>
+                    <IconButton onPress={changeMap} icon={"ion:map-outline"}/>
                   </LocationContainerActive>
                 : <LocationContainer>
-                    <IconButton link={'/map'} icon={"ion:map-outline"}/>
+                    <IconButton onPress={changeMap} icon={"ion:map-outline"}/>
                   </LocationContainer>}
             <SearchButtonContainer>
                 <MainButton title={"Search"} onPress={onSubmitSearch}/>
             </SearchButtonContainer>
             {!onAdvanced && <>
-                <IconButton link={"/advanced"} icon={"fluent:options-16-filled"}/>
-                <IconButton link={"/stats"} icon={"ion:stats-chart"}/>
+                <IconButton onPress={changeAdvanced} icon={"fluent:options-16-filled"}/>
+                <IconButton icon={"ion:stats-chart"}/>
             </>}
         </SearchContainer>
 

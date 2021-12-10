@@ -10,7 +10,6 @@ import {Link} from "react-router-dom";
 interface Props {
     onPress: () => void;
     title: string;
-    link: string;
 }
 
 //TODO: Hover behavior of button (see react-native-web-hover)
@@ -28,13 +27,11 @@ const ButtonText = styled.Text`
 `
 
 const TextButton = (props: Props) => {
-    const { onPress, title, link} = props;
+    const { onPress, title } = props;
     return(
-        <Link to={link}>
-            <TextButtonContainer onPress={onPress}>
-                <ButtonText>{title}</ButtonText>
-            </TextButtonContainer>
-        </Link>
+        <TextButtonContainer onPress={onPress}>
+            <ButtonText>{title}</ButtonText>
+        </TextButtonContainer>
     )
 }
 

@@ -23,6 +23,7 @@ import KeywordFilterMenu from "../components/organisms/KeywordFilterMenu";
 import SliderFilterMenu from "../components/organisms/SliderFilterMenu";
 import Map from "../components/organisms/Map"
 import ClusterMenu from '../components/organisms/ClusterMenu';
+import MainButton from "../components/atoms/MainButton";
 
 
 const Cont = styled.View`
@@ -64,6 +65,10 @@ export default function Demo() {
     const vimeoBaseUrl = 'https://search.api.nunki.co/vimeo/search?'
     const OrderBy = ['relevance', 'recent', 'popular']
     const [selectedOrder, setSelectedOrder] = useState(0);
+    //State: Page display
+    const [onAdvanced, setOnAdvanced] = useState(false);
+    const [onMap, setOnMap] = useState(false);
+
     // MAKING A QUERY =========================================================
     // TODO adapt to array of parameters
 
@@ -71,7 +76,7 @@ export default function Demo() {
         console.log(latitude)
         console.log(longitude)
         console.log(radius)
-        const parameters = `min=1605681523&type=video&normalize=true&limit=10&sort=relevant&anyKeywords=${queryParams.join(',')}` 
+        const parameters = `min=1605681523&type=video&normalize=true&limit=10&sort=relevant&anyKeywords=${queryParams.join(',')}`
         + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`;
         //const url = 'https://search.api.nunki.co/youtube/search?limit=50&sort=relevant&min=1605681523&type=video&allKeywords='+queryParams.join(',')
         const urlYoutube = youtubeBaseUrl + parameters;
@@ -149,6 +154,7 @@ export default function Demo() {
             setLatitude(latitude);
             setLongitude(longitude);
         }
+        setOnMap(false);
         //setRadius(radius);
     }
 
@@ -209,29 +215,31 @@ export default function Demo() {
         }
     }
 
+    //FUNCTIONS FOR PAGE STATE CHANGE ==================================================
+    const onChangeAdvanced = (changeTo: boolean) => {
+        setOnAdvanced(changeTo);
+    }
+
+    const onChangeMap = (changeTo: boolean) => {
+        setOnMap(changeTo);
+    }
 
     return (
         <Router>
         <Cont>
-            <Routes>
-                <Route path = "/" element = {<>
-                    <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword}/>
-                    <PanelView>
-                        <View>
-                            <PillMultiselect options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
-                        </View>
-                        <View>
-                            <DropDown onChangedValue={changedOrderBy}/>
-                        </View>
-                    </PanelView>
+            {!onMap && <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword} onAdvanced={onAdvanced} onChangeAdvanced={onChangeAdvanced} onChangeMap={onChangeMap}/>}
+            {!onMap && !onAdvanced &&
+            <PanelView>
+                <View>
+                    <PillMultiselect options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
+                </View>
+                <View>
+                    <DropDown onChangedValue={changedOrderBy}/>
+                </View>
+            </PanelView>}
+            {onAdvanced && <Advanced/>}
+            {onMap && <Map onSelectLocation={onSelectLocation}/>}
 
-                </>} />
-                <Route path = "/advanced" element = {<>
-                    <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword} onAdvanced={true}/>
-                    <Advanced/>
-                </>} />
-                <Route path = "/map" element = {<Map onSelectLocation={onSelectLocation}/>} />
-            </Routes>
             <View style={{zIndex:-10}}>
                 <Masonry
                     data = {results}
