@@ -30,27 +30,6 @@ const StyledText  = styled.Text`
 
 //TODO: Hover behavior of button (see react-native-web-hover)
 
-const StyledPressable = styled.Pressable`
-  background-color: blue;
-  border-radius: 100px;
-  line-height: 17px;
-  padding: 10px 30px;
-  vertical-align: middle;
-`
-
-const StyledPress = styled.Pressable`
-  background-color: transparent;
-  vertical-align: middle;
-`
-
-const Bar = styled.View`
-  background-color: #191932;
-  vertical-align: middle;
-  padding: 10px;
-  border-radius: 60px;
-  display: inline-block;
-`
-
 const StyledTextInput = styled.TextInput`
   background-color: transparent;
   border: transparent 0px;
@@ -60,9 +39,8 @@ const StyledTextInput = styled.TextInput`
   vertical-align: middle;
   color: white;
   outline: none;
-  width: max-content;
   box-shadow: none;
-  width: 40%;
+  flex-grow: 1;
   &:focus{
     outline: none;
     border-style: none;
@@ -74,7 +52,7 @@ const SearchContainer = styled.View`
   background-color: transparent;
   vertical-align: middle;
   align-items: center;  
-  justify-content: center;
+  justify-content: flex-start;
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
@@ -84,19 +62,27 @@ const SearchContainer = styled.View`
 const SearchButtonContainer = styled.View`
   vertical-align: middle;
   margin-left: 10px;
-  margin-right: 20px;
+  margin-right: 10px;
 `
 
 const BarContainer = styled.View`
   vertical-align: middle;
-  margin-left: 30px;
-  width: calc(100% - 350px);
+  //margin-left: 30px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #191932;
+  border-radius: 60px;
+  padding: 5px;
+  
 `
 
 const LocationContainer = styled.View`
   background-color: #191932;
   vertical-align: middle;
-  padding: 10px;
+  padding: 10px 20px;
   border-radius: 60px;
   display: inline-block;
   margin-left: 10px;
@@ -105,7 +91,7 @@ const LocationContainer = styled.View`
 const LocationContainerActive = styled.View`
   background-color: #25245D;
   vertical-align: middle;
-  padding: 10px;
+  padding: 10px 15px;
   border-radius: 60px;
   display: inline-block;
   margin-left: 10px;
@@ -157,10 +143,11 @@ const SearchBar = (props: Props) => {
     return(
         <SearchContainer>
             {onAdvanced && <>
-                <IconButton onPress={changeAdvanced} icon={"eva:arrow-back-fill"}/>
+                <View style={{marginRight: 10}}>
+                    <IconButton onPress={changeAdvanced} icon={"ion:arrow-back-outline"}/>
+                </View>
             </>}
             <BarContainer>
-                <Bar>
                     <Icon icon={"fluent:search-16-filled"} style={{height: 30, width:30, color:"white", marginRight: 10, marginLeft:10, verticalAlign: "middle"}}/>
                     {keywords.map((element:string) => {
                         if (element !== '') {
@@ -168,7 +155,6 @@ const SearchBar = (props: Props) => {
                         }
                     })}
                     <StyledTextInput ref={textField} placeholder={"Search by keywords or phrases"} style={{outlineStyle:"none", boxShadow:"none"}} onChangeText={onChangedText}/>
-                </Bar>
             </BarContainer>
             {hasLocation
                 ? <LocationContainerActive>
@@ -181,8 +167,12 @@ const SearchBar = (props: Props) => {
                 <MainButton title={"Search"} onPress={onSubmitSearch}/>
             </SearchButtonContainer>
             {!onAdvanced && <>
-                <IconButton onPress={changeAdvanced} icon={"fluent:options-16-filled"}/>
-                <IconButton icon={"ion:stats-chart"}/>
+                <View style={{marginLeft: 10, marginRight: 10}}>
+                    <IconButton onPress={changeAdvanced} icon={"fluent:options-16-filled"}/>
+                </View>
+                <View style={{marginLeft: 10}}>
+                    <IconButton icon={"ion:stats-chart"}/>
+                </View>
             </>}
         </SearchContainer>
 

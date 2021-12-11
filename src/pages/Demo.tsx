@@ -28,7 +28,7 @@ import MainButton from "../components/atoms/MainButton";
 
 const Cont = styled.View`
   background-color: #111121;
-  padding: 40px;
+  padding: 30px;
 `
 
 const PanelView = styled.View`
@@ -163,7 +163,7 @@ export default function Demo() {
     //Recalculate the number of columns to display for grid
     React.useEffect(() => {
         function handleResize() {
-            setColumns(Math.round(window.innerWidth/600));
+            setColumns(Math.round(window.innerWidth/500));
         }
 
         window.addEventListener('resize', handleResize)

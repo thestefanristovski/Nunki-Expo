@@ -18,7 +18,7 @@ const MetricContainer = styled.View`
 
 const MetricText = styled.Text`
   color: #6A6A9F;
-  font-size: 15px;
+  font-size: 13px;
   text-align: center;
   display: inline-block;
   vertical-align: middle;

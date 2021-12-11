@@ -17,7 +17,6 @@ interface Props {
 const IconButtonContainer = styled.TouchableOpacity`
   background-color: transparent;
   line-height: 2px;
-  padding: 5px 2px;
   vertical-align: left;
 `
 
@@ -25,7 +24,7 @@ const IconButton = (props: Props) => {
     const { onPress, icon } = props;
     return(
         <IconButtonContainer onPress={onPress}>
-            <Icon icon={icon} style={{height: 30, width:30, color:"#6083FF", marginRight: 5, marginLeft:10, verticalAlign: "middle"}}/>
+            <Icon icon={icon} style={{height: 30, width: 30, color:"#6083FF", verticalAlign: "middle"}}/>
         </IconButtonContainer>
     )
 }

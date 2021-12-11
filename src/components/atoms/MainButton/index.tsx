@@ -11,7 +11,7 @@ interface Props {
 
 const ButtonText  = styled.Text`
     color: white;
-    font-size: 17px;
+    font-size: 14px;
     text-align: center;
     vertical-align: middle;
 `;
@@ -21,7 +21,7 @@ const ButtonText  = styled.Text`
 const ButtonContainer = styled.TouchableOpacity`
   background-color: #023AFF;
   border-radius: 100px;
-  height: 60px;
+  height: 50px;
   padding: 10px 30px;
   vertical-align: middle;
   justify-content: center;

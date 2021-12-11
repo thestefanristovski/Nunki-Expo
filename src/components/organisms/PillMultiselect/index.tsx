@@ -13,7 +13,7 @@ interface Props {
 
 const MultiselectPillContainer = styled.View`
   display: inline-block;
-  margin-left: 30px;
+  //margin-left: 30px;
 `
 
 const FilterTitle = styled.Text`
