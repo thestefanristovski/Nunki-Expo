@@ -15,11 +15,11 @@ const TOKEN = 'pk.eyJ1IjoiemluZWJmYWRpbGkiLCJhIjoiY2t3amYwNHBpMWhqMDJ4bnN0ZGx0OG
 
 
 const MapContainer = styled.View`
-  padding: 20px;
+  padding: 40px;
   border-radius: 20px;
   background-color: #191932;
   align-items: center;
-  margin: 10px;
+  margin-top: 30px;
 `
 
 const ButtonContainer = styled.View`
@@ -100,10 +100,10 @@ const Map = (props: Props) => {
   const drawTools = (
     <>
       <TouchableOpacity style={styles.buttonDraw} onPress={() => setMode(new DrawCircleFromCenterMode())}>
-        <Text style={styles.title}>DRAW</Text>
+        <Text style={styles.title}>Draw</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.buttonDelete} onPress={onDelete}>
-        <Text style={styles.title}>DELETE</Text>
+        <Text style={styles.title}>Delete</Text>
       </TouchableOpacity>
     </>
   );
@@ -123,9 +123,10 @@ const Map = (props: Props) => {
   return (
     <MapContainer>
       <ControlPanel polygon={selectedFeature} selectRadius={setRadius} selectLatitude={setLatitude} selectLongitude={setLongitude}/>
+      <View style={{alignSelf: 'center', width: "100%", borderRadius: 20, overflow: 'hidden'}}>
       <MapGL
         {...viewport}
-        width="90vw"
+        width="100%"
         height="80vh"
         mapStyle="mapbox://styles/mapbox/streets-v11"
         mapboxApiAccessToken={TOKEN}
@@ -144,6 +145,7 @@ const Map = (props: Props) => {
         />
         {drawTools}
       </MapGL>
+      </View>
       <ButtonContainer>
         <ButtonFrame >
             <MainButton title={"Add"} onPress={onAdd}/>

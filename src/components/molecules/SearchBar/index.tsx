@@ -16,6 +16,7 @@ interface Props {
     keywords: string[]
     onDelete: (param: string) => void;
     onAdvanced: boolean;
+    onMap: boolean;
     hasLocation: boolean;
     onChangeAdvanced: (param: boolean) => void;
     onChangeMap: (param: boolean) => void;
@@ -98,8 +99,18 @@ const LocationContainerActive = styled.View`
   border: 1px solid #6083FF;
 `
 
+const LocationContainerSelected = styled.View`
+  background-color: #023AFF;
+  vertical-align: middle;
+  padding: 10px 15px;
+  border-radius: 60px;
+  display: inline-block;
+  margin-left: 10px;
+  border: 1px solid white;
+`
+
 const SearchBar = (props: Props) => {
-    const {onPressSearch, onAddKeyword, keywords, onDelete, onAdvanced, hasLocation, onChangeAdvanced, onChangeMap} = props;
+    const {onPressSearch, onAddKeyword, keywords, onDelete, onAdvanced, hasLocation, onChangeAdvanced, onChangeMap, onMap} = props;
     const [textFieldContent, setTextFieldContent] = React.useState('')
 
     const textField = React.useRef<TextInput>(null)
@@ -137,16 +148,11 @@ const SearchBar = (props: Props) => {
     }
 
     const changeMap = () => {
-        onChangeMap(true);
+        onChangeMap(!onMap);
     }
 
     return(
         <SearchContainer>
-            {onAdvanced && <>
-                <View style={{marginRight: 10}}>
-                    <IconButton onPress={changeAdvanced} icon={"ion:arrow-back-outline"}/>
-                </View>
-            </>}
             <BarContainer>
                     <Icon icon={"fluent:search-16-filled"} style={{height: 30, width:30, color:"white", marginRight: 10, marginLeft:10, verticalAlign: "middle"}}/>
                     {keywords.map((element:string) => {
@@ -156,13 +162,20 @@ const SearchBar = (props: Props) => {
                     })}
                     <StyledTextInput ref={textField} placeholder={"Search by keywords or phrases"} style={{outlineStyle:"none", boxShadow:"none"}} onChangeText={onChangedText}/>
             </BarContainer>
-            {hasLocation
-                ? <LocationContainerActive>
-                    <IconButton onPress={changeMap} icon={"ion:map-outline"}/>
-                  </LocationContainerActive>
-                : <LocationContainer>
-                    <IconButton onPress={changeMap} icon={"ion:map-outline"}/>
-                  </LocationContainer>}
+            {onMap &&
+            <LocationContainerSelected>
+                <IconButton onPress={changeMap} icon={"ion:map-outline"} color={'white'}/>
+            </LocationContainerSelected>}
+            {!onMap && hasLocation &&
+            <LocationContainerActive>
+                <IconButton onPress={changeMap} icon={"ion:map-outline"}/>
+            </LocationContainerActive>
+            }
+            {!onMap && !hasLocation &&
+            <LocationContainer>
+                <IconButton onPress={changeMap} icon={"ion:map-outline"}/>
+            </LocationContainer>
+            }
             <SearchButtonContainer>
                 <MainButton title={"Search"} onPress={onSubmitSearch}/>
             </SearchButtonContainer>
@@ -170,8 +183,10 @@ const SearchBar = (props: Props) => {
                 <View style={{marginLeft: 10, marginRight: 10}}>
                     <IconButton onPress={changeAdvanced} icon={"fluent:options-16-filled"}/>
                 </View>
-                <View style={{marginLeft: 10}}>
-                    <IconButton icon={"ion:stats-chart"}/>
+            </>}
+            {onAdvanced && <>
+                <View style={{borderColor: 'white', borderWidth: 1, backgroundColor: '#023AFF', borderRadius: 40, padding: 10}}>
+                    <IconButton onPress={changeAdvanced} icon={"fluent:options-16-filled"} color={'white'}/>
                 </View>
             </>}
         </SearchContainer>

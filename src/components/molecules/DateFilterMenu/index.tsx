@@ -34,7 +34,8 @@ const StyledDateRow = styled.View`
 const StyledDateBox = styled.View`
   display: inline-block;
   margin-left: 20px;
-   width: 150px; 
+  width: 150px;
+  z-index: 0;
 `
 
 const FilterTitle = styled.Text`

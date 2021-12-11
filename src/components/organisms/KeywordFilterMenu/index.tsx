@@ -42,7 +42,7 @@ const TextField = styled.TextInput`
   }
 `
 const FilterMenuContainer = styled.View`
-    width: 400px;
+    width: 300px;
 `;
 
 const KeywordContainer = styled.View`

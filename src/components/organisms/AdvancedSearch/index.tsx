@@ -103,28 +103,22 @@ export default function AdvancedSearch() {
       padding-left: 50px;
       background-color: #191932;
       border-radius: 20px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-content: space-around;
+      gap: 60px;
     `
-    const PanelView = styled.View`
-        display: flex;
-         flex-direction: row;
-         flex-wrap: nowrap;
-         margin-top: 20px;
-         align-self: stretch;
-         justify-content: space-between;
-    `
+
 
     return(
 
         <AdvancedContainer>
             <MultiselectFilterMenu title={"Platforms"} options={checkbox} selected={selectedCheckbox} onChanged={changedCheckbox}/>
-            <DividerShortRegular size={20} color="transparent" />
             <MultiselectFilterMenu title={"Content Types"} options={checkboxType} selected={selectedCheckboxType} onChanged={changedCheckboxType}/>
-            <DividerShortRegular size={20} color="transparent"/>
             <KeywordFilterMenu keywords={excludeParams} onAddKeyword={onAddExcludeKeyword} onDelete={onDeleteExcludeKeyword}/>
             <SliderFilterMenu min={0} defaultMin={minLength} max={10} defaultMax={maxLength} onChangeLength={onChangeVideoLength}/>
-            <DividerShortRegular size={20} color="transparent" />
             <DateFilterMenu defaultStart={"2021-12-01T13:24:00"} defaultEnd={"2020-12-17T13:24:00"} title={"Post Date"} onChangeDates={onChangeDates}/>
-            <DividerShortRegular size={30} color="transparent" />
             <DropDown backgroundC={"light"}/>
         </AdvancedContainer>
 

@@ -13,7 +13,7 @@ const PanelContainer = styled.View`
   font-family: sans-serif;
   text-align: left;
   width: 100%;
-  padding-left: 20px;
+  //padding-left: 20px;
 `
 
 const StyledP = st.p`
@@ -21,6 +21,13 @@ const StyledP = st.p`
   margin: 0;
   margin-bottom: 20px;
   font-size: 12px;
+`;
+
+const StyledH3 = st.h3`
+  padding: 0;
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 15px;
 `;
 
 interface Props {
@@ -64,7 +71,7 @@ function ControlPanel(props: Props) {
     props.selectLongitude(circleCenter.geometry.coordinates[0].toString())
     props.selectRadius(getDiameter(circleBBox).toString())
   }
-  
+
   const clearParams = () => {
     props.selectLatitude('')
     props.selectLongitude('')
@@ -77,11 +84,11 @@ function ControlPanel(props: Props) {
 
   return (
     <PanelContainer>
-      <h3>Draw an area to search in</h3>
+      <StyledH3>Draw an area to search in</StyledH3>
       {polygon ? polygon && (
         <StyledP>
           Your Area: center - ({circleCenter.geometry.coordinates.map(x => x.toFixed(3)).join(',')}) | diameter (m) - {getDiameter(circleBBox).toFixed(2)}. Click on the area and press the delete button to start over.
-        </StyledP> 
+        </StyledP>
       ) : <StyledP>Click on the Draw button to designate a search area. Click on the map to set the center and click again to select the search radius.</StyledP>}
     </PanelContainer>
   );

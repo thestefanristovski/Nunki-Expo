@@ -142,14 +142,14 @@ export default function Demo() {
         console.log(radius)
     }, [queryParams, latitude, longitude, radius])
 
+    // LISTENER FOR MAP ===================================================
+
 
     const onSelectLocation = (latitude: string, longitude: string, radius: string) => {
-        console.log('IN FONCTION')
         console.log(latitude)
         console.log(longitude)
         console.log(radius)
         if (latitude && longitude && radius) {
-            console.log('IN FONCTION')
             setRadius(radius);
             setLatitude(latitude);
             setLongitude(longitude);
@@ -224,10 +224,15 @@ export default function Demo() {
         setOnMap(changeTo);
     }
 
+    let mapSelected = true;
+    if (Number(latitude)===0 && Number(longitude)===0 && Number(radius)===0) {
+        mapSelected = false;
+    }
+
     return (
         <Router>
         <Cont>
-            {!onMap && <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword} onAdvanced={onAdvanced} onChangeAdvanced={onChangeAdvanced} onChangeMap={onChangeMap}/>}
+            <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword} onAdvanced={onAdvanced} onChangeAdvanced={onChangeAdvanced} onChangeMap={onChangeMap} onMap={onMap} hasLocation={mapSelected}/>
             {!onMap && !onAdvanced &&
             <PanelView>
                 <View>
@@ -275,7 +280,6 @@ export default function Demo() {
                     }}
                 />
             </View>
-            <StatusBar style="auto" />
         </Cont>
         </Router>
     )
