@@ -25,22 +25,24 @@ const PostContainer = styled.View`
   border-radius: 30px;
   padding: 20px;
   margin: 20px;
-  width: fit-content;
-  max-width: 600px;
+  //width: fit-content;
+  //max-width: 600px;
 `
 
 const PostText = styled.Text`
   color: white;
-  font-size: 13px;
+  font-size: 12px;
   padding: 20px 0px;
-  max-width: 400px;
+  //max-width: 400px;
+  margin-top: 0px;
 `
 
 const PostTitle = styled.Text`
   color: white;
-  font-size: 20px;
+  font-size: 18px;
   padding: 0px 0px;
-  max-width: 400px;
+  //max-width: 400px;
+  margin-bottom: 0px;
 `
 
 const VideoPost = (props: Props) => {

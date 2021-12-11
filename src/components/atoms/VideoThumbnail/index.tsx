@@ -16,14 +16,16 @@ const ThumbnailContainer = styled.TouchableOpacity`
   background-color: transparent;
   border-radius: 30px;
   padding: 0px;
-  width: 420px;
-  height: 250px;
+  //width: 420px;
+  //height: 250px;
+  aspect-ratio: 16/9;
 `
 
 const ThumbnailImage = styled.Image`
   border-radius: 30px;
-  width: 420px;
-  height: 250px;
+  //width: 420px;
+  height: inherit;
+  aspect-ratio: 16/9;
   border: #6083FF 1.5px solid;
 `
 

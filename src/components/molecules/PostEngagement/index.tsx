@@ -14,14 +14,18 @@ interface Props {
 
 const ExternalLink = styled.TouchableOpacity`
   display: inline-block;
-  margin-left: 50px;
+  margin-left: 60px;
   vertical-align: middle;
 `
 
 const EngagementContainer = styled.View`
-  display: inline-block;
   vertical-align: middle;
   line-height: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-self: stretch;
+  justify-content: space-between;
 `
 
 const StyledText = styled.Text`
