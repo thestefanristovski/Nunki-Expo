@@ -3,6 +3,7 @@ import {useState, useRef, useCallback} from 'react';
 import MapGL from 'react-map-gl';
 import {Editor, DrawCircleFromCenterMode, EditingMode} from 'react-map-gl-draw';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+// @ts-ignore
 import styled from "styled-components/native";
 
 import ControlPanel from './control-panel';
@@ -86,13 +87,16 @@ const Map = (props: Props) => {
   }, []);
 
   const onDelete = useCallback(() => {
+    // @ts-ignore
     if (selectedFeatureIndex !== null && selectedFeatureIndex >= 0) {
+      // @ts-ignore
       editorRef.current.deleteFeatures(selectedFeatureIndex);
     }
   }, [selectedFeatureIndex]);
 
   const onUpdate = useCallback(({editType}) => {
     if (editType === 'addFeature') {
+      // @ts-ignore
       setMode(new EditingMode());
     }
   }, []);

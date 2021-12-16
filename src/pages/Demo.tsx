@@ -52,6 +52,8 @@ export default function Demo() {
     //State: Platform Multiselect Menu
     const [platforms, setPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
     const [selectedPlatforms, setSelectedPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
+    //State: Pagination
+    const [last, setLast] = useState<any[]>([])
 
     //State: Location center and radius
     const [radius, setRadius] = useState('')
@@ -79,8 +81,12 @@ export default function Demo() {
         const parameters = `min=1605681523&type=video&normalize=true&limit=10&sort=relevant&anyKeywords=${queryParams.join(',')}`
         + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`;
         //const url = 'https://search.api.nunki.co/youtube/search?limit=50&sort=relevant&min=1605681523&type=video&allKeywords='+queryParams.join(',')
-        const urlYoutube = youtubeBaseUrl + parameters;
-        const urlVimeo = vimeoBaseUrl + parameters;
+        let urlYoutube = youtubeBaseUrl + parameters;
+        let urlVimeo = vimeoBaseUrl + parameters;
+        if (last.length !== 0) {
+            urlYoutube += '&next=' + last[0];
+            urlVimeo += '&next=' + last[1];
+        }
         console.log(urlYoutube);
         console.log(urlVimeo);
         Promise.all([
@@ -89,12 +95,17 @@ export default function Demo() {
         ]).then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
         .then(([data1, data2]) => {
             let vids = results;
+            let next:any[] = [];
+            console.log(data1);
             console.log(data1.contents);
             console.log(data2.contents);
             vids = vids.concat(data1.contents);
             vids = vids.concat(data2.contents);
+            next = next.concat(data1.next)
+            next = next.concat(data2.next)
             console.log(vids);
             setResults(vids);
+            setLast(next)
         })
     }
 
@@ -276,9 +287,14 @@ export default function Demo() {
                         } else {
                             return null
                         }
-
                     }}
                 />
+                {results.length !== 0 &&
+                <View style={{marginTop: 50}}>
+                    <MainButton title={"Load More"} onPress={fetchData}/>
+                </View>
+                }
+
             </View>
         </Cont>
         </Router>

@@ -23,14 +23,14 @@ const PostContainer = styled.View`
   border-radius: 30px;
   padding: 20px;
   margin: 10px;
-  width: fit-content;
+  //width: fit-content;
 `
 
 const PostTitle = styled.Text`
   color: white;
   font-size: 18px;
   padding: 0px 0px;
-  max-width: 400px;
+  //max-width: 400px;
 `
 
 const PhotoPost = (props: Props) => {
@@ -45,7 +45,7 @@ const PhotoPost = (props: Props) => {
             <PostTitle>{text}</PostTitle>
             <FBCollage
             images={images}
-            width={420}/>
+            />
             <PostMetadata poster={poster} socialMedia={socialMedia} postTime={postTime} postLocation={postLocation}/>
             <PostEngagement metricTitles={metricTitles} metricAmounts={metricAmounts} onPress={handleClick}/>
         </PostContainer>

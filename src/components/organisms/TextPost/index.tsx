@@ -21,20 +21,14 @@ const PostContainer = styled.View`
   border-radius: 30px;
   padding: 20px;
   margin: 10px;
-  width: fit-content;
-`
-
-const StyledText = styled.Text`
-  color: white;
-  font-size: 13px;
-  padding: 20px 0px;
+  //width: fit-content;
 `
 
 const PostTitle = styled.Text`
   color: white;
   font-size: 18px;
   padding: 0px 0px;
-  max-width: 400px;
+  //max-width: 400px;
 `
 
 const TextPost = (props: Props) => {

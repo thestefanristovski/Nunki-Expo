@@ -22,15 +22,6 @@ interface Props {
     onChangeMap: (param: boolean) => void;
 }
 
-const StyledText  = styled.Text`
-    color: white;
-    font-size: 17px;
-    text-align: center;
-    vertical-align: middle;
-`;
-
-//TODO: Hover behavior of button (see react-native-web-hover)
-
 const StyledTextInput = styled.TextInput`
   background-color: transparent;
   border: transparent 0px;
@@ -77,7 +68,6 @@ const BarContainer = styled.View`
   background-color: #191932;
   border-radius: 60px;
   padding: 5px;
-  
 `
 
 const LocationContainer = styled.View`
@@ -128,7 +118,6 @@ const SearchBar = (props: Props) => {
     }
 
     //When Search is clicked, add remaining keyword from text input to query params and execute query
-    //TODO test functionnality with backend
     const onSubmitSearch = async () => {
         if (textFieldContent !== '') {
            await onAddKeyword(textFieldContent);
@@ -140,7 +129,6 @@ const SearchBar = (props: Props) => {
         } else {
             onPressSearch();
         }
-
     }
 
     const changeAdvanced = () => {
@@ -190,7 +178,6 @@ const SearchBar = (props: Props) => {
                 </View>
             </>}
         </SearchContainer>
-
     )
 }
 
