@@ -44,7 +44,6 @@ export default function Demo() {
     //Query Parameters
     const [queryParams, setQueryParams] = useState([])
     // List of Elements in Grid
-    const [results, setResults] = useState<any[]>([])
     const [columns, setColumns] = useState(2);
     //State: Content Type Multiselect Menu
     const [contentTypes, setContentTypes] = useState(["Photos", "Videos", "Text"])
@@ -74,29 +73,29 @@ export default function Demo() {
     // MAKING A QUERY =========================================================
     // TODO adapt to array of parameters
 
-    const fetchData = async () => {
-        let res = results;
+    const fetchData = async ():Promise<any[]> => {
+        //get previous results or initialize new array
+        let res = data;
+        if (res === undefined) {
+            res = [];
+        }
 
+        //fetch data
         const parameters = `min=1605681523&type=video&normalize=true&limit=10&sort=relevant&anyKeywords=${queryParams.join(',')}`
         + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`;
-        //const url = 'https://search.api.nunki.co/youtube/search?limit=50&sort=relevant&min=1605681523&type=video&allKeywords='+queryParams.join(',')
         let urlYoutube = youtubeBaseUrl + parameters;
         let urlVimeo = vimeoBaseUrl + parameters;
         if (last.length !== 0) {
             urlYoutube += '&next=' + last[0];
             urlVimeo += '&next=' + last[1];
         }
-        console.log(urlYoutube);
-        console.log(urlVimeo);
+
         await Promise.all([
             fetch(urlYoutube),
             fetch(urlVimeo)
         ]).then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
         .then(([data1, data2]) => {
             let next:any[] = [];
-            console.log(data1);
-            console.log(data1.contents);
-            console.log(data2.contents);
             if (data1.contents !== undefined) {
                 res = res.concat(data1.contents);
             }
@@ -105,15 +104,14 @@ export default function Demo() {
             }
             next = next.concat(data1.next)
             next = next.concat(data2.next)
-            console.log(res);
-            setResults(res);
+
             setLast(next)
         })
 
         return res;
     }
 
-    const { isLoading, error, data, refetch, status } = useQuery("key", fetchData, {
+    const { data, refetch, status } = useQuery("key", fetchData, {
         refetchOnWindowFocus: false,
         enabled: false // needed to handle refetchs manually
     });
@@ -244,6 +242,10 @@ export default function Demo() {
         mapSelected = false;
     }
 
+    console.log("DATA")
+    console.log(data);
+
+
     return (
         <>
             <Cont>
@@ -262,8 +264,9 @@ export default function Demo() {
                 {status === 'loading' && <ActivityIndicator size="large" color="white"/> }
             </Cont>
             <View style={{zIndex:-10}}>
-                <Masonry
-                    data = {results}
+                {status === 'success' && <Masonry
+                    // @ts-ignore
+                    data = {data}
                     numColumns = {columns}
                     // @ts-ignore
                     renderItem = {({item}) => {
@@ -293,7 +296,8 @@ export default function Demo() {
                             return null
                         }
                     }}
-                />
+                />}
+
                 {results.length !== 0 &&
                 <View style={{marginVertical: 50,  marginHorizontal: 30}}>
                     <MainButton title={"Load More"} onPress={makeQuery}/>
