@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native';
 import VideoPost from "../components/organisms/VIdeoPost";
 import {DividerShortRegular} from "fluent-icons-react";
 import TextPost from "../components/organisms/TextPost";
@@ -74,10 +74,9 @@ export default function Demo() {
     // MAKING A QUERY =========================================================
     // TODO adapt to array of parameters
 
-    const fetchData = () => {
-        console.log(latitude)
-        console.log(longitude)
-        console.log(radius)
+    const fetchData = async () => {
+        let res = results;
+
         const parameters = `min=1605681523&type=video&normalize=true&limit=10&sort=relevant&anyKeywords=${queryParams.join(',')}`
         + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`;
         //const url = 'https://search.api.nunki.co/youtube/search?limit=50&sort=relevant&min=1605681523&type=video&allKeywords='+queryParams.join(',')
@@ -89,27 +88,32 @@ export default function Demo() {
         }
         console.log(urlYoutube);
         console.log(urlVimeo);
-        Promise.all([
+        await Promise.all([
             fetch(urlYoutube),
             fetch(urlVimeo)
         ]).then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
         .then(([data1, data2]) => {
-            let vids = results;
             let next:any[] = [];
             console.log(data1);
             console.log(data1.contents);
             console.log(data2.contents);
-            vids = vids.concat(data1.contents);
-            vids = vids.concat(data2.contents);
+            if (data1.contents !== undefined) {
+                res = res.concat(data1.contents);
+            }
+            if (data2.contents !== undefined) {
+                res = res.concat(data2.contents);
+            }
             next = next.concat(data1.next)
             next = next.concat(data2.next)
-            console.log(vids);
-            setResults(vids);
+            console.log(res);
+            setResults(res);
             setLast(next)
         })
+
+        return res;
     }
 
-    const { isLoading, error, data, refetch } = useQuery("key", fetchData, {
+    const { isLoading, error, data, refetch, status } = useQuery("key", fetchData, {
         refetchOnWindowFocus: false,
         enabled: false // needed to handle refetchs manually
     });
@@ -241,21 +245,22 @@ export default function Demo() {
     }
 
     return (
-        <Router>
-        <Cont>
-            <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword} onAdvanced={onAdvanced} onChangeAdvanced={onChangeAdvanced} onChangeMap={onChangeMap} onMap={onMap} hasLocation={mapSelected}/>
-            {!onMap && !onAdvanced &&
-            <PanelView>
-                <View>
-                    <PillMultiselect options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
-                </View>
-                <View>
-                    <DropDown onChangedValue={changedOrderBy}/>
-                </View>
-            </PanelView>}
-            {onAdvanced && <Advanced/>}
-            {onMap && <Map onSelectLocation={onSelectLocation}/>}
-
+        <>
+            <Cont>
+                <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword} onAdvanced={onAdvanced} onChangeAdvanced={onChangeAdvanced} onChangeMap={onChangeMap} onMap={onMap} hasLocation={mapSelected}/>
+                {!onMap && !onAdvanced &&
+                <PanelView>
+                    <View>
+                        <PillMultiselect options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
+                    </View>
+                    <View>
+                        <DropDown onChangedValue={changedOrderBy}/>
+                    </View>
+                </PanelView>}
+                {onAdvanced && <Advanced/>}
+                {onMap && <Map onSelectLocation={onSelectLocation}/>}
+                {status === 'loading' && <ActivityIndicator size="large" color="white"/> }
+            </Cont>
             <View style={{zIndex:-10}}>
                 <Masonry
                     data = {results}
@@ -290,13 +295,12 @@ export default function Demo() {
                     }}
                 />
                 {results.length !== 0 &&
-                <View style={{marginTop: 50}}>
-                    <MainButton title={"Load More"} onPress={fetchData}/>
+                <View style={{marginVertical: 50,  marginHorizontal: 30}}>
+                    <MainButton title={"Load More"} onPress={makeQuery}/>
                 </View>
                 }
-
             </View>
-        </Cont>
-        </Router>
+        </>
+
     )
 }
