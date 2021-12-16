@@ -14,11 +14,11 @@ import AdvancedSearchRadius from '../../molecules/AdvancedSearchRadius';
 
 export default function AdvancedSearch() {
     //State: Checkbox test
-    const [checkbox, setCheckbox] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
-    const [selectedCheckbox, setSelectedCheckbox] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
+    const [platforms, setPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
+    const [selectedPlatforms, setSelectedPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
     //For Source Types too
-    const [checkboxType, setCheckboxType] = useState(["Photos", "Video", "Text"])
-    const [selectedCheckboxType, setSelectedCheckboxType] = useState(["Photos", "Video", "Text"])
+    const [contentTypes, setContentTypes] = useState(["Photos", "Video", "Text"])
+    const [selectedContentTypes, setSelectedContentTypes] = useState(["Photos", "Video", "Text"])
     //State: Exclude Keywords menu
     const [excludeParams, setExcludeParams] = useState([])
     //State: Video Length Slider Menu
@@ -56,25 +56,25 @@ export default function AdvancedSearch() {
     // Listener for changed checkbox
     const changedCheckbox = (element: string, another: string):void  => {
         console.log(element)
-        console.log(selectedCheckbox)
-        if (selectedCheckbox.includes(element)) {
-            setSelectedCheckbox(selectedCheckbox.filter(selectedItem => selectedItem != element));
+        console.log(selectedPlatforms)
+        if (selectedPlatforms.includes(element)) {
+            setSelectedPlatforms(selectedPlatforms.filter(selectedItem => selectedItem != element));
         } else if (element === "All") {
-            setSelectedCheckbox(checkbox);
+            setSelectedPlatforms(platforms);
         } else {
-            setSelectedCheckbox(selectedCheckbox.concat(element));
+            setSelectedPlatforms(selectedPlatforms.concat(element));
         }
     }
 
     const changedCheckboxType = (element: string, another: string):void  => {
         console.log(element)
-        console.log(selectedCheckboxType)
-        if (selectedCheckboxType.includes(element)) {
-            setSelectedCheckboxType(selectedCheckboxType.filter(selectedItem => selectedItem != element));
+        console.log(selectedContentTypes)
+        if (selectedContentTypes.includes(element)) {
+            setSelectedContentTypes(selectedContentTypes.filter(selectedItem => selectedItem != element));
         } else if (element === "All") {
-            setSelectedCheckboxType(checkboxType);
+            setSelectedContentTypes(contentTypes);
         } else {
-            setSelectedCheckboxType(selectedCheckboxType.concat(element));
+            setSelectedContentTypes(selectedContentTypes.concat(element));
         }
     }
 
@@ -114,8 +114,8 @@ export default function AdvancedSearch() {
     return(
 
         <AdvancedContainer>
-            <MultiselectFilterMenu title={"Platforms"} options={checkbox} selected={selectedCheckbox} onChanged={changedCheckbox}/>
-            <MultiselectFilterMenu title={"Content Types"} options={checkboxType} selected={selectedCheckboxType} onChanged={changedCheckboxType}/>
+            <MultiselectFilterMenu title={"Platforms"} options={platforms} selected={selectedPlatforms} onChanged={changedCheckbox}/>
+            <MultiselectFilterMenu title={"Content Types"} options={contentTypes} selected={selectedContentTypes} onChanged={changedCheckboxType}/>
             <KeywordFilterMenu keywords={excludeParams} onAddKeyword={onAddExcludeKeyword} onDelete={onDeleteExcludeKeyword}/>
             <SliderFilterMenu min={0} defaultMin={minLength} max={10} defaultMax={maxLength} onChangeLength={onChangeVideoLength}/>
             <DateFilterMenu defaultStart={"2021-12-01T13:24:00"} defaultEnd={"2020-12-17T13:24:00"} title={"Post Date"} onChangeDates={onChangeDates}/>

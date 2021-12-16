@@ -64,7 +64,7 @@ export default function Demo() {
 
     const youtubeBaseUrl = 'https://search.api.nunki.co/youtube/search?'
     const vimeoBaseUrl = 'https://search.api.nunki.co/vimeo/search?'
-    const OrderBy = ['relevance', 'recent', 'popular']
+    const OrderBy = ['relevant', 'recent', 'popular']
     const [selectedOrder, setSelectedOrder] = useState(0);
     //State: Page display
     const [onAdvanced, setOnAdvanced] = useState(false);
@@ -81,7 +81,7 @@ export default function Demo() {
         }
 
         //fetch data
-        const parameters = `min=1605681523&type=video&normalize=true&limit=10&sort=relevant&anyKeywords=${queryParams.join(',')}`
+        const parameters = `min=1605681523&type=video&normalize=true&limit=10&sort=${OrderBy[selectedOrder]}&anyKeywords=${queryParams.join(',')}`
         + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`;
         let urlYoutube = youtubeBaseUrl + parameters;
         let urlVimeo = vimeoBaseUrl + parameters;
@@ -97,9 +97,11 @@ export default function Demo() {
         .then(([data1, data2]) => {
             let next:any[] = [];
             if (data1.contents !== undefined) {
+                // @ts-ignore
                 res = res.concat(data1.contents);
             }
             if (data2.contents !== undefined) {
+                // @ts-ignore
                 res = res.concat(data2.contents);
             }
             next = next.concat(data1.next)
@@ -261,7 +263,6 @@ export default function Demo() {
                 </PanelView>}
                 {onAdvanced && <Advanced/>}
                 {onMap && <Map onSelectLocation={onSelectLocation}/>}
-                {status === 'loading' && <ActivityIndicator size="large" color="white"/> }
             </Cont>
             <View style={{zIndex:-10}}>
                 {status === 'success' && <Masonry
@@ -297,12 +298,16 @@ export default function Demo() {
                         }
                     }}
                 />}
-
-                {results.length !== 0 &&
+                {data !== undefined && data.length !== 0 &&
                 <View style={{marginVertical: 50,  marginHorizontal: 30}}>
                     <MainButton title={"Load More"} onPress={makeQuery}/>
                 </View>
                 }
+                {status === 'loading' && <ActivityIndicator size="large" color="white"/> }
+                {status === 'error' &&
+                <Cont>
+                    <Text style={{color: 'white'}}>There was an error loading your results.</Text>
+                </Cont>}
             </View>
         </>
 
