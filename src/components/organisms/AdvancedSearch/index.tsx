@@ -1,6 +1,6 @@
 
 import { DividerShortRegular } from 'fluent-icons-react';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Pressable, Text, View} from "react-native";
 // @ts-ignore
 import styled from "styled-components/native";
@@ -10,84 +10,106 @@ import MultiselectFilterMenu from '../MultiselectFilterMenu';
 import KeywordFilterMenu from "../KeywordFilterMenu";
 import SliderFilterMenu from "../SliderFilterMenu";
 import AdvancedSearchRadius from '../../molecules/AdvancedSearchRadius';
+import queryParamsContext from "../../../state/queryParams";
 
 
 export default function AdvancedSearch() {
-    //State: Checkbox test
-    const [platforms, setPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
-    const [selectedPlatforms, setSelectedPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
-    //For Source Types too
-    const [contentTypes, setContentTypes] = useState(["Photos", "Video", "Text"])
-    const [selectedContentTypes, setSelectedContentTypes] = useState(["Photos", "Video", "Text"])
-    //State: Exclude Keywords menu
-    const [excludeParams, setExcludeParams] = useState([])
-    //State: Video Length Slider Menu
-    const [minLength, setMinLength] = useState(0)
-    const [maxLength, setMaxLength] = useState(5)
-    //State: Date Picker
-    const [startDate, setStartDate] = useState('')
-    const [endDate, setEndDate] = useState('')
+
+    const params = useContext(queryParamsContext)
+    const [parameters, setParameters] = useState(params);
 
     // EXCLUDE KEYWORDS FILTER METHODS ========================================
 
     // A keyword needs to be added (submitted with ','
-    const onAddExcludeKeyword = async (text: string) => {
+    const onAddExcludeKeyword = (text: string) => {
         if (text.endsWith(',')) {
             const keyword:string = text.substring(0, text.lastIndexOf(','));
-            const keywords:string[] = excludeParams;
+            const keywords:string[] = [...parameters.excludedKeywords];
+            let p = {...parameters}
+            keywords.push(keyword);
             // @ts-ignore
-            setExcludeParams(keywords.concat(keyword));
+            p.excludedKeywords = keywords;
+            console.log(p);
+            setParameters(p)
+            //setExcludeParams(keywords.concat(keyword));
         } else {
-            const keywords:string[] = excludeParams;
+            const keywords:string[] = parameters.excludedKeywords;
             // @ts-ignore
-            setExcludeParams(keywords.concat(text));
+            let p = {...parameters}
+            // @ts-ignore
+            p.excludedKeywords = keywords.concat(text)
+            setParameters(p)
         }
     }
 
     // A keyword is deleted
     const onDeleteExcludeKeyword = (text:string) => {
-        const keywords:string[] = excludeParams;
+        const keywords:string[] = parameters.excludedKeywords;
+
+        let p = {...parameters}
         // @ts-ignore
-        setExcludeParams(keywords.filter(item => item !== text));
+        p.excludedKeywords = keywords.filter(item => item !== text)
+        setParameters(p)
+
     }
 
     // CHECKBOX METHODS ========================================
 
     // Listener for changed checkbox
     const changedCheckbox = (element: string, another: string):void  => {
-        console.log(element)
-        console.log(selectedPlatforms)
-        if (selectedPlatforms.includes(element)) {
-            setSelectedPlatforms(selectedPlatforms.filter(selectedItem => selectedItem != element));
+        if (parameters.selectedPlatforms.includes(element)) {
+            let p = {...parameters}
+            // @ts-ignore
+            p.selectedPlatforms = parameters.selectedPlatforms.filter(selectedItem => selectedItem != element)
+            setParameters(p)
         } else if (element === "All") {
-            setSelectedPlatforms(platforms);
+            let p = {...parameters}
+            // @ts-ignore
+            p.selectedPlatforms = parameters.platforms
+            setParameters(p)
         } else {
-            setSelectedPlatforms(selectedPlatforms.concat(element));
+            let p = {...parameters}
+            // @ts-ignore
+            p.selectedPlatforms = parameters.selectedPlatforms.concat(element)
+            setParameters(p)
         }
     }
 
     const changedCheckboxType = (element: string, another: string):void  => {
-        console.log(element)
-        console.log(selectedContentTypes)
-        if (selectedContentTypes.includes(element)) {
-            setSelectedContentTypes(selectedContentTypes.filter(selectedItem => selectedItem != element));
+        if (parameters.selectedContentTypes.includes(element)) {
+            let p = {...parameters}
+            // @ts-ignore
+            p.selectedContentTypes = parameters.selectedContentTypes.filter(selectedItem => selectedItem != element)
+            setParameters(p)
         } else if (element === "All") {
-            setSelectedContentTypes(contentTypes);
+            let p = {...parameters}
+            // @ts-ignore
+            p.selectedContentTypes = parameters.contentTypes
+            setParameters(p)
         } else {
-            setSelectedContentTypes(selectedContentTypes.concat(element));
+            let p = {...parameters}
+            // @ts-ignore
+            p.selectedContentTypes = parameters.selectedContentTypes.concat(element)
+            setParameters(p)
         }
     }
 
     // LENGTH SLIDER FILTER METHODS ========================================
     const onChangeVideoLength = (min:number, max:number) => {
-        setMinLength(min);
-        setMaxLength(max);
+        let p = {...parameters}
+        // @ts-ignore
+        p.minLength = min;
+        p.maxLength = max;
+        setParameters(p)
     }
 
     // DATE PICKER FILTER METHODS ========================================
     const onChangeDates = (start:string, end:string) => {
-        setStartDate(start);
-        setEndDate(end);
+        let p = {...parameters}
+        // @ts-ignore
+        p.startDate = start;
+        p.endDate = end;
+        setParameters(p)
     }
 
 
@@ -110,15 +132,14 @@ export default function AdvancedSearch() {
       gap: 60px;
     `
 
-
     return(
 
         <AdvancedContainer>
-            <MultiselectFilterMenu title={"Platforms"} options={platforms} selected={selectedPlatforms} onChanged={changedCheckbox}/>
-            <MultiselectFilterMenu title={"Content Types"} options={contentTypes} selected={selectedContentTypes} onChanged={changedCheckboxType}/>
-            <KeywordFilterMenu keywords={excludeParams} onAddKeyword={onAddExcludeKeyword} onDelete={onDeleteExcludeKeyword}/>
-            <SliderFilterMenu min={0} defaultMin={minLength} max={10} defaultMax={maxLength} onChangeLength={onChangeVideoLength}/>
-            <DateFilterMenu defaultStart={"2021-12-01T13:24:00"} defaultEnd={"2020-12-17T13:24:00"} title={"Post Date"} onChangeDates={onChangeDates}/>
+            <MultiselectFilterMenu title={"Platforms"} options={parameters.platforms} selected={parameters.selectedPlatforms} onChanged={changedCheckbox}/>
+            <MultiselectFilterMenu title={"Content Types"} options={parameters.contentTypes} selected={parameters.selectedContentTypes} onChanged={changedCheckboxType}/>
+            <KeywordFilterMenu keywords={parameters.excludedKeywords} onAddKeyword={onAddExcludeKeyword} onDelete={onDeleteExcludeKeyword}/>
+            <SliderFilterMenu min={0} defaultMin={parameters.minLength} max={10} defaultMax={parameters.maxLength} onChangeLength={onChangeVideoLength}/>
+            <DateFilterMenu defaultStart={parameters.startDate} defaultEnd={parameters.endDate} title={"Post Date"} onChangeDates={onChangeDates}/>
             <DropDown backgroundC={"light"}/>
         </AdvancedContainer>
 
