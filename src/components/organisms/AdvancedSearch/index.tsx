@@ -91,7 +91,7 @@ const Advanced = () => {
         }
     }
 
-    // LENGTH SLIDER FILTER METHODS ========================================
+    // LENGTH VIDEO FILTER METHODS ========================================
     const onChangeVideoLength = (min:number, max:number) => {
         let p = {...context.parameters}
         // @ts-ignore
@@ -109,7 +109,8 @@ const Advanced = () => {
         context.updateParams(p)
     }
 
-
+    //CSS
+    
     const StyledText  = styled.Text`
         color: white;
         font-size: 17px;

@@ -72,11 +72,8 @@ export default function Demo() {
     const [onMap, setOnMap] = useState(false);
 
     // MAKING A QUERY =========================================================
-    // TODO adapt to array of parameters
 
     const p = useContext(queryParamsContext)
-
-
 
     const fetchData = async ():Promise<any[]> => {
         //get previous results or initialize new array
@@ -85,7 +82,6 @@ export default function Demo() {
             res = [];
         }
         console.log("PARAMS CONTEXT")
-        console.log(p);
 
         //fetch data
         const parameters = `min=1605681523&type=video&normalize=true&limit=10&sort=${OrderBy[selectedOrder]}&anyKeywords=${queryParams.join(',')}`
