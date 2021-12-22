@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native';
 import VideoPost from "../components/organisms/VIdeoPost";
 import {DividerShortRegular} from "fluent-icons-react";
@@ -24,6 +24,7 @@ import SliderFilterMenu from "../components/organisms/SliderFilterMenu";
 import Map from "../components/organisms/Map"
 import ClusterMenu from '../components/organisms/ClusterMenu';
 import MainButton from "../components/atoms/MainButton";
+import {queryParamsContext, QueryParamsProvider} from "../state/queryParams";
 
 
 const Cont = styled.View`
@@ -73,12 +74,18 @@ export default function Demo() {
     // MAKING A QUERY =========================================================
     // TODO adapt to array of parameters
 
+    const p = useContext(queryParamsContext)
+
+
+
     const fetchData = async ():Promise<any[]> => {
         //get previous results or initialize new array
         let res = data;
         if (res === undefined) {
             res = [];
         }
+        console.log("PARAMS CONTEXT")
+        console.log(p);
 
         //fetch data
         const parameters = `min=1605681523&type=video&normalize=true&limit=10&sort=${OrderBy[selectedOrder]}&anyKeywords=${queryParams.join(',')}`
@@ -249,7 +256,7 @@ export default function Demo() {
 
 
     return (
-        <>
+        <QueryParamsProvider>
             <Cont>
                 <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword} onAdvanced={onAdvanced} onChangeAdvanced={onChangeAdvanced} onChangeMap={onChangeMap} onMap={onMap} hasLocation={mapSelected}/>
                 {!onMap && !onAdvanced &&
@@ -309,7 +316,7 @@ export default function Demo() {
                     <Text style={{color: 'white'}}>There was an error loading your results.</Text>
                 </Cont>}
             </View>
-        </>
+        </QueryParamsProvider>
 
     )
 }
