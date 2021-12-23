@@ -42,8 +42,6 @@ const PanelView = styled.View`
 `
 
 export default function Demo() {
-    //Query Parameters
-    const [queryParams, setQueryParams] = useState([])
     // List of Elements in Grid
     const [columns, setColumns] = useState(2);
     //State: Content Type Multiselect Menu
@@ -71,94 +69,71 @@ export default function Demo() {
     const [onAdvanced, setOnAdvanced] = useState(false);
     const [onMap, setOnMap] = useState(false);
 
+    const [queryParameters, setQueryParameters] = useState('noQuery')
+
     // MAKING A QUERY =========================================================
 
-    const p = useContext(queryParamsContext)
+    const fetchData = async (key: any):Promise<any[]> => {
+        if (key.queryKey[1] !== 'noQuery') {
+            //get previous results or initialize new array
+            let res = data;
+            if (res === undefined) {
+                res = [];
+            }
 
-    const fetchData = async ():Promise<any[]> => {
-        //get previous results or initialize new array
-        let res = data;
-        if (res === undefined) {
-            res = [];
+            console.log("LOG")
+            console.log(key.queryKey[1])
+
+            //fetch data
+            const parameters = `min=1605681523&type=video&normalize=true&limit=10&sort=${OrderBy[selectedOrder]}&anyKeywords=${key.queryKey[1]}`
+                + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`;
+            let urlYoutube = youtubeBaseUrl + parameters;
+            let urlVimeo = vimeoBaseUrl + parameters;
+            if (last.length !== 0) {
+                urlYoutube += '&next=' + last[0];
+                urlVimeo += '&next=' + last[1];
+            }
+
+            await Promise.all([
+                fetch(urlYoutube),
+                fetch(urlVimeo)
+            ]).then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
+                .then(([data1, data2]) => {
+                    let next:any[] = [];
+                    if (data1.contents !== undefined) {
+                        // @ts-ignore
+                        res = res.concat(data1.contents);
+                    }
+                    if (data2.contents !== undefined) {
+                        // @ts-ignore
+                        res = res.concat(data2.contents);
+                    }
+                    next = next.concat(data1.next)
+                    next = next.concat(data2.next)
+
+                    setLast(next)
+                })
+
+            return res;
         }
-        console.log("PARAMS CONTEXT")
-
-        //fetch data
-        const parameters = `min=1605681523&type=video&normalize=true&limit=10&sort=${OrderBy[selectedOrder]}&anyKeywords=${queryParams.join(',')}`
-        + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`;
-        let urlYoutube = youtubeBaseUrl + parameters;
-        let urlVimeo = vimeoBaseUrl + parameters;
-        if (last.length !== 0) {
-            urlYoutube += '&next=' + last[0];
-            urlVimeo += '&next=' + last[1];
-        }
-
-        await Promise.all([
-            fetch(urlYoutube),
-            fetch(urlVimeo)
-        ]).then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
-        .then(([data1, data2]) => {
-            let next:any[] = [];
-            if (data1.contents !== undefined) {
-                // @ts-ignore
-                res = res.concat(data1.contents);
-            }
-            if (data2.contents !== undefined) {
-                // @ts-ignore
-                res = res.concat(data2.contents);
-            }
-            next = next.concat(data1.next)
-            next = next.concat(data2.next)
-
-            setLast(next)
-        })
-
-        return res;
-    }
-
-    const { data, refetch, status } = useQuery("key", fetchData, {
-        refetchOnWindowFocus: false,
-        enabled: false // needed to handle refetchs manually
-    });
-
-    const makeQuery = () => {
-        refetch()
-    }
-
-    // SEARCH BAR KEYWORD METHODS ==============================================
-
-    // A keyword needs to be added
-    const onAddKeyword = async (text: string) => {
-        if (text.endsWith(',')) {
-            const keyword:string = text.substring(0, text.lastIndexOf(','));
-            const keywords:string[] = queryParams;
-            if (!keywords.includes(keyword)) {
-                // @ts-ignore
-                setQueryParams(keywords.concat(keyword));
-            }
-        } else {
-            const keywords:string[] = queryParams;
-            if (!keywords.includes(text)) {
-                // @ts-ignore
-                setQueryParams(keywords.concat(text));
-            }
+        else {
+            return [];
         }
     }
 
-    // A keyword is deleted
-    const onDeleteKeyword = (text:string) => {
-        const keywords:string[] = queryParams;
-        // @ts-ignore
-        setQueryParams(keywords.filter(item => item !== text));
+
+    // @ts-ignore
+    const { data, refetch, status } = useQuery(["key", queryParameters], fetchData );
+
+    const makeQuery = async (text:string) => {
+        setQueryParameters(text);
     }
 
     useEffect(() => {
-        console.log("YO");
-        console.log(queryParams);
         console.log(latitude)
         console.log(longitude)
         console.log(radius)
-    }, [queryParams, latitude, longitude, radius])
+    }, [latitude, longitude, radius])
 
     // LISTENER FOR MAP ===================================================
 
@@ -247,14 +222,10 @@ export default function Demo() {
         mapSelected = false;
     }
 
-    console.log("DATA")
-    console.log(data);
-
-
     return (
         <QueryParamsProvider>
             <Cont>
-                <SearchBar onPressSearch={makeQuery} onAddKeyword={onAddKeyword} keywords={queryParams} onDelete={onDeleteKeyword} onAdvanced={onAdvanced} onChangeAdvanced={onChangeAdvanced} onChangeMap={onChangeMap} onMap={onMap} hasLocation={mapSelected}/>
+                <SearchBar onPressSearch={makeQuery} onAdvanced={onAdvanced} onChangeAdvanced={onChangeAdvanced} onChangeMap={onChangeMap} onMap={onMap} hasLocation={mapSelected}/>
                 {!onMap && !onAdvanced &&
                 <PanelView>
                     <View>

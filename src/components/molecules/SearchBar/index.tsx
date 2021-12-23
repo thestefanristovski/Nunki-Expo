@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Button, Pressable, Text, View, TextInput} from "react-native";
 // @ts-ignore
 import styled from "styled-components/native";
@@ -7,14 +7,12 @@ import KeywordPill from "../../atoms/KeywordPill";
 import InputField from "../InputField";
 import MainButton from "../../atoms/MainButton";
 import IconButton from "../../atoms/IconButton";
+import {queryParamsContext} from "../../../state/queryParams";
 
 
 interface Props {
     title: string;
-    onPressSearch: () => void;
-    onAddKeyword: (param: string) => void;
-    keywords: string[]
-    onDelete: (param: string) => void;
+    onPressSearch: (text:string) => void;
     onAdvanced: boolean;
     onMap: boolean;
     hasLocation: boolean;
@@ -100,10 +98,39 @@ const LocationContainerSelected = styled.View`
 `
 
 const SearchBar = (props: Props) => {
-    const {onPressSearch, onAddKeyword, keywords, onDelete, onAdvanced, hasLocation, onChangeAdvanced, onChangeMap, onMap} = props;
+    const {onPressSearch, onAdvanced, hasLocation, onChangeAdvanced, onChangeMap, onMap} = props;
+
     const [textFieldContent, setTextFieldContent] = React.useState('')
+    const [queryKeywords, setQueryKeywords] = React.useState([])
 
     const textField = React.useRef<TextInput>(null)
+
+    const context = useContext(queryParamsContext)
+
+    // A keyword needs to be added
+    const onAddKeyword = async (text: string) => {
+        if (text.endsWith(',')) {
+            const keyword:string = text.substring(0, text.lastIndexOf(','));
+            const keywords:string[] = queryKeywords;
+            if (!keywords.includes(keyword)) {
+                // @ts-ignore
+                setQueryKeywords(keywords.concat(keyword));
+            }
+        } else {
+            const keywords:string[] = queryKeywords;
+            if (!keywords.includes(text)) {
+                // @ts-ignore
+                setQueryKeywords(keywords.concat(text));
+            }
+        }
+    }
+
+    // A keyword is deleted
+    const onDeleteKeyword = (text:string) => {
+        const keywords:string[] = queryKeywords;
+        // @ts-ignore
+        setQueryKeywords(keywords.filter(item => item !== text));
+    }
 
     //Listen for changes in text field, trigger add keyword method in parent when , is typed
     const onChangedText = (text:string) => {
@@ -119,15 +146,21 @@ const SearchBar = (props: Props) => {
 
     //When Search is clicked, add remaining keyword from text input to query params and execute query
     const onSubmitSearch = async () => {
+
         if (textFieldContent !== '') {
            await onAddKeyword(textFieldContent);
-            if (textField !== null) {
+           let toSend = queryKeywords
+           // @ts-ignore
+           toSend = toSend.concat(textFieldContent);
+           let parameters = toSend.join(",")
+           onPressSearch(parameters);
+           if (textField !== null) {
                 // @ts-ignore
                 textField.current.clear();
             }
-            onPressSearch();
         } else {
-            onPressSearch();
+            let parameters = queryKeywords.join(",")
+            onPressSearch(parameters);;
         }
     }
 
@@ -143,9 +176,9 @@ const SearchBar = (props: Props) => {
         <SearchContainer>
             <BarContainer>
                     <Icon icon={"fluent:search-16-filled"} style={{height: 30, width:30, color:"white", marginRight: 10, marginLeft:10, verticalAlign: "middle"}}/>
-                    {keywords.map((element:string) => {
+                    {queryKeywords.map((element:string) => {
                         if (element !== '') {
-                            return <KeywordPill title={element} onPress={onDelete}/>
+                            return <KeywordPill title={element} onPress={onDeleteKeyword}/>
                         }
                     })}
                     <StyledTextInput ref={textField} placeholder={"Search by keywords or phrases"} style={{outlineStyle:"none", boxShadow:"none"}} onChangeText={onChangedText}/>
