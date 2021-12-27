@@ -1,30 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {useContext, useEffect, useState} from 'react';
 import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native';
 import VideoPost from "../components/organisms/VIdeoPost";
-import {DividerShortRegular} from "fluent-icons-react";
-import TextPost from "../components/organisms/TextPost";
-import PhotoPost from "../components/organisms/PhotoPost";
 import SearchBar from "../components/molecules/SearchBar";
-import PlatformPills from "../components/organisms/PillMultiselect";
 // @ts-ignore
 import styled from "styled-components/native";
-import PostEngagement from "../components/molecules/PostEngagement";
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import { useQuery } from 'react-query'
 import Masonry from "@react-native-seoul/masonry-list"
 import PillMultiselect from "../components/organisms/PillMultiselect";
-import {BrowserRouter as Router, Routes, Route, Link, Outlet} from "react-router-dom";
 import Advanced from "../components/organisms/AdvancedSearch";
 import DropDown from "../components/molecules/DropDown";
 import moment from "moment";
 import {fromUnixTime, formatDistanceToNowStrict} from 'date-fns'
-import MultiselectFilterMenu from "../components/organisms/MultiselectFilterMenu";
-import KeywordFilterMenu from "../components/organisms/KeywordFilterMenu";
-import SliderFilterMenu from "../components/organisms/SliderFilterMenu";
 import Map from "../components/organisms/Map"
-import ClusterMenu from '../components/organisms/ClusterMenu';
 import MainButton from "../components/atoms/MainButton";
-import {queryParamsContext, QueryParamsProvider} from "../state/queryParams";
+import {QueryParamsProvider} from "../state/queryParams";
 
 
 const Cont = styled.View`
@@ -47,28 +36,25 @@ export default function Demo() {
     //State: Content Type Multiselect Menu
     const [contentTypes, setContentTypes] = useState(["Photos", "Videos", "Text"])
     const [selectedContentTypes, setSelectedContentTypes] = useState(["Photos", "Videos", "Text"])
-    //State: Platform Multiselect Menu
-    const [platforms, setPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
-    const [selectedPlatforms, setSelectedPlatforms] = useState(["Youtube", "Twitter", "Vimeo", "VK"])
+    //State: Order by Menu
+    const OrderBy = ['relevant', 'recent', 'popular']
+    const [selectedOrder, setSelectedOrder] = useState(0);
     //State: Pagination
     const [last, setLast] = useState<any[]>([])
-
     //State: Location center and radius
     const [radius, setRadius] = useState('')
     const [latitude, setLatitude] = useState('')
     const [longitude, setLongitude] = useState('')
-
+    //State: clusters
     const [clusters, setCluster] = useState(["Topic 1", "Topic 2", "Topic 3", "Topic 4"])
     const [selectedCluster, setSelectedCluster] = useState(["Topic 1 ", "Topic 2", "Topic 3", "Topic 4"])
-
-    const youtubeBaseUrl = 'https://search.api.nunki.co/youtube/search?'
-    const vimeoBaseUrl = 'https://search.api.nunki.co/vimeo/search?'
-    const OrderBy = ['relevant', 'recent', 'popular']
-    const [selectedOrder, setSelectedOrder] = useState(0);
     //State: Page display
     const [onAdvanced, setOnAdvanced] = useState(false);
     const [onMap, setOnMap] = useState(false);
-
+    //Base URLs
+    const youtubeBaseUrl = 'https://search.api.nunki.co/youtube/search?'
+    const vimeoBaseUrl = 'https://search.api.nunki.co/vimeo/search?'
+    //State: Query Parameters (sent from context)
     const [queryParameters, setQueryParameters] = useState('noQuery')
 
     // MAKING A QUERY =========================================================
@@ -87,8 +73,10 @@ export default function Demo() {
             if (key.queryKey[1].excludedKeywords.length !== 0) {
                 parameters += `&notKeywords=${key.queryKey[1].excludedKeywords.join(',')}`
             }
+
             let urlYoutube = youtubeBaseUrl + parameters;
             let urlVimeo = vimeoBaseUrl + parameters;
+
             if (last.length !== 0) {
                 urlYoutube += '&next=' + last[0];
                 urlVimeo += '&next=' + last[1];
@@ -97,22 +85,23 @@ export default function Demo() {
             await Promise.all([
                 fetch(urlYoutube),
                 fetch(urlVimeo)
-            ]).then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
-                .then(([data1, data2]) => {
-                    let next:any[] = [];
-                    if (data1.contents !== undefined && key.queryKey[1].selectedPlatforms.includes('Youtube') && key.queryKey[1].selectedContentTypes.includes('Video')) {
-                        // @ts-ignore
-                        res = res.concat(data1.contents);
-                    }
-                    if (data2.contents !== undefined && key.queryKey[1].selectedPlatforms.includes('Vimeo') && key.queryKey[1].selectedContentTypes.includes('Video')) {
-                        // @ts-ignore
-                        res = res.concat(data2.contents);
-                    }
-                    next = next.concat(data1.next)
-                    next = next.concat(data2.next)
+            ])
+            .then(([resYT, resVim]) => Promise.all([resYT.json(), resVim.json()]))
+            .then(([dataYT, dataVim]) => {
+                let next:any[] = [];
+                if (dataYT.contents !== undefined && key.queryKey[1].selectedPlatforms.includes('Youtube') && key.queryKey[1].selectedContentTypes.includes('Video')) {
+                    // @ts-ignore
+                    res = res.concat(dataYT.contents);
+                }
+                if (dataVim.contents !== undefined && key.queryKey[1].selectedPlatforms.includes('Vimeo') && key.queryKey[1].selectedContentTypes.includes('Video')) {
+                    // @ts-ignore
+                    res = res.concat(dataVim.contents);
+                }
+                next = next.concat(dataYT.next)
+                next = next.concat(dataVim.next)
 
-                    setLast(next)
-                })
+                setLast(next)
+            })
 
             return res;
         }
@@ -163,8 +152,6 @@ export default function Demo() {
     })
 
     // MULTISELECT MENU LISTENERS =================================================
-    //TODO Unite the two functions
-
     // Listener for changed content type
     const changedContentType = (element: string, another: string):void  => {
         console.log(element)
@@ -183,18 +170,7 @@ export default function Demo() {
         setSelectedOrder(element);
     }
 
-    // Listener for changed platform
-    const changedPlatform = (element: string, another: string):void  => {
-        console.log(element)
-        console.log(selectedPlatforms)
-        if (selectedPlatforms.includes(element)) {
-            setSelectedPlatforms(selectedPlatforms.filter(selectedItem => selectedItem != element));
-        } else if (element === "All") {
-            setSelectedPlatforms(platforms);
-        } else {
-            setSelectedPlatforms(selectedPlatforms.concat(element));
-        }
-    }
+    // CLUSTERS ====================================================================
 
     const changedCluster = (element: string, another: string):void  => {
         console.log(element)
@@ -251,7 +227,7 @@ export default function Demo() {
                             if (item.network === 'vimeo') {
                                 metricTitles = ['views', 'likes', "comments"]
                             }
-                            if ((item.network === 'youtube' && selectedPlatforms.includes('Youtube')) || (item.network === 'vimeo' && selectedPlatforms.includes('Vimeo'))) {
+                            if (item.network === 'youtube' || item.network === 'vimeo' ) {
                                 return <VideoPost title={item.title}
                                                   description={item.text}
                                                   metricTitles={metricTitles}
