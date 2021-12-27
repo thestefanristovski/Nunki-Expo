@@ -81,12 +81,12 @@ export default function Demo() {
                 res = [];
             }
 
-            console.log("LOG")
-            console.log(key.queryKey[1])
-
             //fetch data
-            const parameters = `min=1605681523&type=video&normalize=true&limit=10&sort=${OrderBy[selectedOrder]}&anyKeywords=${key.queryKey[1]}`
+            let parameters = `min=1605681523&type=video&normalize=true&limit=10&sort=${key.queryKey[1].orderBy}&anyKeywords=${key.queryKey[1].anyKeywords.join(',')}`
                 + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`;
+            if (key.queryKey[1].excludedKeywords.length !== 0) {
+                parameters += `&notKeywords=${key.queryKey[1].excludedKeywords.join(',')}`
+            }
             let urlYoutube = youtubeBaseUrl + parameters;
             let urlVimeo = vimeoBaseUrl + parameters;
             if (last.length !== 0) {
@@ -100,11 +100,11 @@ export default function Demo() {
             ]).then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
                 .then(([data1, data2]) => {
                     let next:any[] = [];
-                    if (data1.contents !== undefined) {
+                    if (data1.contents !== undefined && key.queryKey[1].selectedPlatforms.includes('Youtube') && key.queryKey[1].selectedContentTypes.includes('Video')) {
                         // @ts-ignore
                         res = res.concat(data1.contents);
                     }
-                    if (data2.contents !== undefined) {
+                    if (data2.contents !== undefined && key.queryKey[1].selectedPlatforms.includes('Vimeo') && key.queryKey[1].selectedContentTypes.includes('Video')) {
                         // @ts-ignore
                         res = res.concat(data2.contents);
                     }

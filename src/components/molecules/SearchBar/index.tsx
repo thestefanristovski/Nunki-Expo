@@ -115,12 +115,20 @@ const SearchBar = (props: Props) => {
             if (!keywords.includes(keyword)) {
                 // @ts-ignore
                 setQueryKeywords(keywords.concat(keyword));
+                let p = {...context.parameters}
+                // @ts-ignore
+                p.anyKeywords = context.parameters.anyKeywords.concat(keyword)
+                context.updateParams(p)
             }
         } else {
             const keywords:string[] = queryKeywords;
             if (!keywords.includes(text)) {
                 // @ts-ignore
                 setQueryKeywords(keywords.concat(text));
+                let p = {...context.parameters}
+                // @ts-ignore
+                p.anyKeywords = context.parameters.anyKeywords.concat(text)
+                context.updateParams(p)
             }
         }
     }
@@ -140,6 +148,7 @@ const SearchBar = (props: Props) => {
             if (textField !== null) {
                 // @ts-ignore
                 textField.current.clear();
+                setTextFieldContent('')
             }
         }
     }
@@ -149,18 +158,20 @@ const SearchBar = (props: Props) => {
 
         if (textFieldContent !== '') {
            await onAddKeyword(textFieldContent);
-           let toSend = queryKeywords
+
+           let p = {...context.parameters}
            // @ts-ignore
-           toSend = toSend.concat(textFieldContent);
-           let parameters = toSend.join(",")
-           onPressSearch(parameters);
+           p.anyKeywords = context.parameters.anyKeywords.concat(textFieldContent)
+           context.updateParams(p)
+
+           onPressSearch(p);
            if (textField !== null) {
                 // @ts-ignore
                 textField.current.clear();
             }
         } else {
-            let parameters = queryKeywords.join(",")
-            onPressSearch(parameters);;
+            let p = {...context.parameters}
+            onPressSearch(p);
         }
     }
 

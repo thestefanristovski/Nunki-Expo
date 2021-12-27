@@ -6,10 +6,12 @@ const defaultQueryParams = {
     contentTypes : ["Photos", "Video", "Text"],
     selectedContentTypes : ["Photos", "Video", "Text"],
     excludedKeywords : [],
+    anyKeywords: [],
     minLength : 0,
     maxLength : 30,
     startDate : "2021-12-01T13:24:00",
     endDate : "2020-12-17T13:24:00",
+    orderBy : "relevant",
     updateParams : (p:any) => {}
 }
 
