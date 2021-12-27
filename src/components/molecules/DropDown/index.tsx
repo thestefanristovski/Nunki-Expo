@@ -70,7 +70,7 @@ const DropDown = (props: Props) => {
 
 DropDown.defaultProps = {
     items: ["Relevant", "Recent", "Popular"],
-    defaultValue: "Relevance",
+    defaultValue: "relevant",
     onChangedValue: () => {},
     backgroundC: "dark"
 }

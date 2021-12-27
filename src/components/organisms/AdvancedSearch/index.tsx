@@ -109,8 +109,20 @@ const Advanced = () => {
         context.updateParams(p)
     }
 
+    // DROPDOWN ORDER BY MENU LISTENER =============================================
+    const OrderBy = ['relevant', 'recent', 'popular']
+    const changedOrderBy = (element: number) => {
+        console.log("ACTIVATED")
+        console.log(element)
+        //State: Order by Menu
+        let p = {...context.parameters}
+        // @ts-ignore
+        p.orderBy = OrderBy[element]
+        context.updateParams(p)
+    }
+
     //CSS
-    
+
     const StyledText  = styled.Text`
         color: white;
         font-size: 17px;
@@ -118,9 +130,6 @@ const Advanced = () => {
     `;
 
     const AdvancedContainer = styled.View`
-      margin-top: 30px;
-      padding: 20px;
-      padding-left: 50px;
       background-color: #191932;
       border-radius: 20px;
       display: flex;
@@ -128,18 +137,20 @@ const Advanced = () => {
       flex-wrap: wrap;
       align-content: space-around;
       gap: 60px;
+      margin-bottom: 20px;
     `
 
     return(
-
+    <View style={{backgroundColor: "#191932", borderRadius: 20, marginTop: 30, padding: 20, paddingLeft: 50}}>
         <AdvancedContainer>
             <MultiselectFilterMenu title={"Platforms"} options={context.parameters.platforms} selected={context.parameters.selectedPlatforms} onChanged={changedCheckbox}/>
             <MultiselectFilterMenu title={"Content Types"} options={context.parameters.contentTypes} selected={context.parameters.selectedContentTypes} onChanged={changedCheckboxType}/>
             <KeywordFilterMenu keywords={context.parameters.excludedKeywords} onAddKeyword={onAddExcludeKeyword} onDelete={onDeleteExcludeKeyword}/>
             <SliderFilterMenu min={0} defaultMin={context.parameters.minLength} max={10} defaultMax={context.parameters.maxLength} onChangeLength={onChangeVideoLength}/>
             <DateFilterMenu defaultStart={context.parameters.startDate} defaultEnd={context.parameters.endDate} title={"Post Date"} onChangeDates={onChangeDates}/>
-            <DropDown backgroundC={"light"}/>
         </AdvancedContainer>
+        <DropDown backgroundC={"light"} onChangedValue={changedOrderBy}/>
+    </View>
 
 
 
