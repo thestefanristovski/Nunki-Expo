@@ -112,8 +112,6 @@ const Advanced = () => {
     // DROPDOWN ORDER BY MENU LISTENER =============================================
     const OrderBy = ['relevant', 'recent', 'popular']
     const changedOrderBy = (element: number) => {
-        console.log("ACTIVATED")
-        console.log(element)
         //State: Order by Menu
         let p = {...context.parameters}
         // @ts-ignore

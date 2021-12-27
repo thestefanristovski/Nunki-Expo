@@ -21,7 +21,6 @@ export const QueryParamsProvider = (props:any) => {
     const [parameters, setParameters] = useState(defaultQueryParams)
 
     const updateParams = (params:any) => {
-        console.log("I'm hereeee")
         setParameters(params)
     }
 

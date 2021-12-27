@@ -36,9 +36,6 @@ export default function Demo() {
     //State: Content Type Multiselect Menu
     const [contentTypes, setContentTypes] = useState(["Photos", "Videos", "Text"])
     const [selectedContentTypes, setSelectedContentTypes] = useState(["Photos", "Videos", "Text"])
-    //State: Order by Menu
-    const OrderBy = ['relevant', 'recent', 'popular']
-    const [selectedOrder, setSelectedOrder] = useState(0);
     //State: Pagination
     const [last, setLast] = useState<any[]>([])
     //State: Location center and radius
@@ -154,8 +151,6 @@ export default function Demo() {
     // MULTISELECT MENU LISTENERS =================================================
     // Listener for changed content type
     const changedContentType = (element: string, another: string):void  => {
-        console.log(element)
-        console.log(selectedContentTypes)
         if (selectedContentTypes.includes(element)) {
             setSelectedContentTypes(selectedContentTypes.filter(selectedItem => selectedItem != element));
         } else if (element === "All") {
@@ -163,11 +158,6 @@ export default function Demo() {
         } else {
             setSelectedContentTypes(selectedContentTypes.concat(element));
         }
-    }
-
-    // DROPDOWN ORDER BY MENU LISTENER =============================================
-    const changedOrderBy = (element: number) => {
-        setSelectedOrder(element);
     }
 
     // CLUSTERS ====================================================================
@@ -208,7 +198,7 @@ export default function Demo() {
                         <PillMultiselect options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
                     </View>
                     <View>
-                        <DropDown onChangedValue={changedOrderBy}/>
+
                     </View>
                 </PanelView>}
                 {onAdvanced && <Advanced/>}
