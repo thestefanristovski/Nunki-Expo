@@ -9,8 +9,8 @@ const defaultQueryParams = {
     anyKeywords: [],
     minLength : 0,
     maxLength : 30,
-    startDate : "2021-12-01T13:24:00",
-    endDate : "2020-12-17T13:24:00",
+    startDate : '2020/01/01',
+    endDate : "2021/01/01",
     orderBy : "relevant",
     updateParams : (p:any) => {}
 }

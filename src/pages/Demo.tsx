@@ -10,7 +10,7 @@ import PillMultiselect from "../components/organisms/PillMultiselect";
 import Advanced from "../components/organisms/AdvancedSearch";
 import DropDown from "../components/molecules/DropDown";
 import moment from "moment";
-import {fromUnixTime, formatDistanceToNowStrict} from 'date-fns'
+import {fromUnixTime, formatDistanceToNowStrict, parse} from 'date-fns'
 import Map from "../components/organisms/Map"
 import MainButton from "../components/atoms/MainButton";
 import {QueryParamsProvider} from "../state/queryParams";
@@ -65,14 +65,22 @@ export default function Demo() {
             }
 
             //fetch data
-            let parameters = `min=1605681523&type=video&normalize=true&limit=10&sort=${key.queryKey[1].orderBy}&anyKeywords=${key.queryKey[1].anyKeywords.join(',')}`
+            let parameters = `type=video&normalize=true&limit=10&sort=${key.queryKey[1].orderBy}&anyKeywords=${key.queryKey[1].anyKeywords.join(',')}`
                 + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`;
             if (key.queryKey[1].excludedKeywords.length !== 0) {
                 parameters += `&notKeywords=${key.queryKey[1].excludedKeywords.join(',')}`
             }
+            if (key.queryKey[1].startDate !== 'noDate') {
+                parameters += `&min=${parse(key.queryKey[1].startDate, 'yyyy/MM/dd', new Date()).getTime()}`
+            }
+            if (key.queryKey[1].endDate !== 'noDate') {
+                parameters += `&max=${parse(key.queryKey[1].endDate, 'yyyy/MM/dd', new Date()).getTime()}`
+            }
 
             let urlYoutube = youtubeBaseUrl + parameters;
             let urlVimeo = vimeoBaseUrl + parameters;
+
+            console.log(urlYoutube);
 
             if (last.length !== 0) {
                 urlYoutube += '&next=' + last[0];

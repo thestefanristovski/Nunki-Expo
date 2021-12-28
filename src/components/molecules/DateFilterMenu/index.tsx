@@ -7,6 +7,7 @@ import styled from "styled-components/native";
 // @ts-ignore
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import {format} from "date-fns";
 
 
 
@@ -35,7 +36,6 @@ const StyledDateBox = styled.View`
   display: inline-block;
   margin-left: 20px;
   width: 150px;
-  z-index: 0;
 `
 
 const FilterTitle = styled.Text`
@@ -59,12 +59,12 @@ export default function DateFilterMenu(props: Props) {
 
     const onChangeDateStart = (date:Date) => {
         setSelectedDateStart(date)
-        onChangeDates(date.toDateString(), selectedDateEnd.toDateString())
+        onChangeDates(format(date, 'yyyy/MM/dd'), format(selectedDateEnd, 'yyyy/MM/dd'))
     }
 
     const onChangeDateEnd = (date:Date) => {
         setSelectedDateEnd(date)
-        onChangeDates(selectedDateStart.toDateString(), date.toDateString())
+        onChangeDates(format(selectedDateStart, 'yyyy/MM/dd'), format(date, 'yyyy/MM/dd'))
     }
 
     return(
@@ -78,8 +78,7 @@ export default function DateFilterMenu(props: Props) {
                             selected = {selectedDateStart}
                             onChange={onChangeDateStart}
                             dateFormat='yyyy/MM/dd'
-                            showYearDropdown
-                            scrollableMonthYearDropdown
+                            withPortal
                             customInput={<DateButton/>}
                         />
                     </StyledDateBox>
@@ -91,8 +90,7 @@ export default function DateFilterMenu(props: Props) {
                             selected = {selectedDateEnd}
                             onChange={onChangeDateEnd}
                             dateFormat='yyyy/MM/dd'
-                            showYearDropdown
-                            scrollableMonthYearDropdown
+                            withPortal
                             customInput={<DateButton/>}
                         />
                     </StyledDateBox>

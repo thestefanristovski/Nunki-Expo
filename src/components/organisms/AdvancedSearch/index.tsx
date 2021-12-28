@@ -1,7 +1,6 @@
 
-import { DividerShortRegular } from 'fluent-icons-react';
-import React, {useContext, useEffect, useState} from 'react';
-import {Button, Pressable, Text, View} from "react-native";
+import React, {useContext} from 'react';
+import {View} from "react-native";
 // @ts-ignore
 import styled from "styled-components/native";
 import DateFilterMenu from '../../molecules/DateFilterMenu';
@@ -9,8 +8,7 @@ import DropDown from "../../molecules/DropDown";
 import MultiselectFilterMenu from '../MultiselectFilterMenu';
 import KeywordFilterMenu from "../KeywordFilterMenu";
 import SliderFilterMenu from "../SliderFilterMenu";
-import AdvancedSearchRadius from '../../molecules/AdvancedSearchRadius';
-import {queryParamsContext, QueryParamsProvider} from "../../../state/queryParams";
+import {queryParamsContext} from "../../../state/queryParams";
 
 
 const Advanced = () => {
@@ -104,6 +102,10 @@ const Advanced = () => {
     const onChangeDates = (start:string, end:string) => {
         let p = {...context.parameters}
         // @ts-ignore
+        console.log("S")
+        console.log(start)
+        console.log("E")
+        console.log(end)
         p.startDate = start;
         p.endDate = end;
         context.updateParams(p)
@@ -139,21 +141,18 @@ const Advanced = () => {
     `
 
     return(
-    <View style={{backgroundColor: "#191932", borderRadius: 20, marginTop: 30, padding: 20, paddingLeft: 50}}>
-        <AdvancedContainer>
-            <MultiselectFilterMenu title={"Platforms"} options={context.parameters.platforms} selected={context.parameters.selectedPlatforms} onChanged={changedCheckbox}/>
-            <MultiselectFilterMenu title={"Content Types"} options={context.parameters.contentTypes} selected={context.parameters.selectedContentTypes} onChanged={changedCheckboxType}/>
-            <KeywordFilterMenu keywords={context.parameters.excludedKeywords} onAddKeyword={onAddExcludeKeyword} onDelete={onDeleteExcludeKeyword}/>
-            <SliderFilterMenu min={0} defaultMin={context.parameters.minLength} max={10} defaultMax={context.parameters.maxLength} onChangeLength={onChangeVideoLength}/>
-            <DateFilterMenu defaultStart={context.parameters.startDate} defaultEnd={context.parameters.endDate} title={"Post Date"} onChangeDates={onChangeDates}/>
-        </AdvancedContainer>
-        <DropDown backgroundC={"light"} onChangedValue={changedOrderBy}/>
-    </View>
-
-
-
+        <View style={{backgroundColor: "#191932", borderRadius: 20, marginTop: 30, padding: 20, paddingLeft: 50}}>
+            <AdvancedContainer>
+                <MultiselectFilterMenu title={"Platforms"} options={context.parameters.platforms} selected={context.parameters.selectedPlatforms} onChanged={changedCheckbox}/>
+                <MultiselectFilterMenu title={"Content Types"} options={context.parameters.contentTypes} selected={context.parameters.selectedContentTypes} onChanged={changedCheckboxType}/>
+                <KeywordFilterMenu keywords={context.parameters.excludedKeywords} onAddKeyword={onAddExcludeKeyword} onDelete={onDeleteExcludeKeyword}/>
+                <DateFilterMenu defaultStart={context.parameters.startDate} defaultEnd={context.parameters.endDate} title={"Post Date"} onChangeDates={onChangeDates}/>
+            </AdvancedContainer>
+            <DropDown backgroundC={"light"} onChangedValue={changedOrderBy}/>
+        </View>
     )
-
 }
+
+//<SliderFilterMenu min={0} defaultMin={context.parameters.minLength} max={10} defaultMax={context.parameters.maxLength} onChangeLength={onChangeVideoLength}/>
 
 export default Advanced
