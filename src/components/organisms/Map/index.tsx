@@ -81,10 +81,11 @@ const Map = (props: Props) => {
   const [mode, setMode] = useState(null);
   const [selectedFeatureIndex, setSelectedFeatureIndex] = useState(null);
   const editorRef = useRef(null);
-  const [radius, setRadius] = useState(context.radius)
-  const [latitude, setLatitude] = useState(context.lat)
-  const [longitude, setLongitude] = useState(context.long)
+  const [radius, setRadius] = useState(context.parameters.radius)
+  const [latitude, setLatitude] = useState(context.parameters.lat)
+  const [longitude, setLongitude] = useState(context.parameters.long)
 
+  const [featuresI, setFeatures] = useState(context.parameters.mapFeature)
 
   const onSelect = useCallback(options => {
     setSelectedFeatureIndex(options && options.selectedFeatureIndex);
@@ -98,10 +99,13 @@ const Map = (props: Props) => {
     }
   }, [selectedFeatureIndex]);
 
-  const onUpdate = useCallback(({editType}) => {
+  const onUpdate = useCallback(({editType, data}) => {
     if (editType === 'addFeature') {
+      const edMode = new EditingMode()
       // @ts-ignore
-      setMode(new EditingMode());
+      setMode(edMode);
+      // add to initial feature
+      setFeatures(data);
     }
   }, []);
 
@@ -118,6 +122,8 @@ const Map = (props: Props) => {
 
   let features = editorRef.current && editorRef.current.getFeatures();
   //features = editorRef.current && editorRef.current.addFeatures(initial_features);
+
+
   const selectedFeature =
     features && (features[selectedFeatureIndex] || features[features.length - 1]);
 
@@ -126,6 +132,7 @@ const Map = (props: Props) => {
     p.lat = latitude
     p.long = longitude
     p.radius = radius
+    p.mapFeature = featuresI
     context.updateParams(p)
     props.onSelectLocation(true)
   }
@@ -138,6 +145,13 @@ const Map = (props: Props) => {
     context.updateParams(p)
     props.onSelectLocation(false)
   }
+
+  console.log(featuresI)
+  console.log(latitude)
+  console.log(longitude)
+  console.log(radius)
+  console.log(context)
+
   return (
     <MapContainer>
       <ControlPanel polygon={selectedFeature} selectRadius={setRadius} selectLatitude={setLatitude} selectLongitude={setLongitude}/>
@@ -160,6 +174,7 @@ const Map = (props: Props) => {
         editHandleShape={'circle'}
         featureStyle={getFeatureStyle}
         editHandleStyle={getEditHandleStyle}
+        features={featuresI}
       />
       {drawTools}
       </MapGL>

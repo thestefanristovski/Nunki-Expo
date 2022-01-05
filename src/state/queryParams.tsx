@@ -15,6 +15,7 @@ const defaultQueryParams = {
     lat: "",
     long: "",
     radius: "",
+    mapFeature: "",
     updateParams : (p:any) => {}
 }
 
