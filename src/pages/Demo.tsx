@@ -62,10 +62,7 @@ export default function Demo() {
 
     const fetchData = async (key: any):Promise<any[]> => {
 
-        let params = key;
-        if (key.queryKey !== undefined) {
-            params = key.queryKey[1];
-        }
+        let params = key.queryKey[1];
 
         if (params !== 'noQuery') {
             //get previous results or initialize new array
@@ -75,16 +72,16 @@ export default function Demo() {
             }
 
             //fetch data
-            let parameters = `&min=3&limit=10&sort=${params.orderBy}&anyKeywords=${params.anyKeywords.join(',')}`
+            let parameters = `&limit=10&sort=${params.orderBy}&anyKeywords=${params.anyKeywords.join(',')}`
                 + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`;
             if (params.excludedKeywords.length !== 0) {
                 parameters += `&notKeywords=${params.excludedKeywords.join(',')}`
             }
             if (params.startDate !== 'noDate') {
-                //parameters += `&min=${parse(key.queryKey[1].startDate, 'yyyy/MM/dd', new Date()).getTime()}`
+                parameters += `&min=${(parse(key.queryKey[1].startDate, 'yyyy/MM/dd', new Date()).getTime())/1000}`
             }
             if (params.endDate !== 'noDate') {
-                //parameters += `&max=${parse(key.queryKey[1].endDate, 'yyyy/MM/dd', new Date()).getTime()}`
+                parameters += `&max=${(parse(key.queryKey[1].endDate, 'yyyy/MM/dd', new Date()).getTime())/1000}`
             }
 
             let urlYoutube = youtubeBaseUrl + parameters;
@@ -260,12 +257,8 @@ export default function Demo() {
                             let metricAmounts = [item.views, item.likes, item.dislikes]
                             if (item.network === 'vimeo') {
                                 metricTitles = ['views', 'likes', "comments"]
-                            } else if (item.network === 'twitter') {
-                                metricTitles = ['likes']
-                                metricAmounts = [item.likes]
                             }
                             if (item.network === 'youtube' || item.network === 'vimeo' ) {
-                                console.log("YOUTUBE - VIMEO")
                                 return <VideoPost title={item.title}
                                                   description={item.text}
                                                   metricTitles={metricTitles}
@@ -277,8 +270,9 @@ export default function Demo() {
                                                   postLocation={item.location && item.location.coordinates.join(',')}
                                                   postLink={item.link}
                                                   length={item.duration}/>
-                            } else if (item.content_type === 'video') {
-                                console.log("TWITTER VIDEO")
+                            } else if (item.network === 'twitter') {
+                                metricTitles = ['likes']
+                                metricAmounts = [item.likes]
                                 return <VideoPost title={item.title}
                                                   description={''}
                                                   metricTitles={metricTitles}
