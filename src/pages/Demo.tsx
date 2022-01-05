@@ -14,6 +14,9 @@ import {fromUnixTime, formatDistanceToNowStrict, parse} from 'date-fns'
 import Map from "../components/organisms/Map"
 import MainButton from "../components/atoms/MainButton";
 import {QueryParamsProvider} from "../state/queryParams";
+import TextPost from "../components/organisms/TextPost";
+import PhotoPost from "../components/organisms/PhotoPost";
+import * as url from "url";
 
 
 const Cont = styled.View`
@@ -49,8 +52,9 @@ export default function Demo() {
     const [onAdvanced, setOnAdvanced] = useState(false);
     const [onMap, setOnMap] = useState(false);
     //Base URLs
-    const youtubeBaseUrl = 'https://search.api.nunki.co/youtube/search?'
-    const vimeoBaseUrl = 'https://search.api.nunki.co/vimeo/search?'
+    const youtubeBaseUrl = 'https://search.api.nunki.co/youtube/search?type=video&normalize=true'
+    const vimeoBaseUrl = 'https://search.api.nunki.co/vimeo/search?type=video&normalize=true'
+    const twitterBaseUrl = 'https://search.api.nunki.co/twitter/search?normalize=true'
     //State: Query Parameters (sent from context)
     const [queryParameters, setQueryParameters] = useState('noQuery')
 
@@ -65,34 +69,49 @@ export default function Demo() {
             }
 
             //fetch data
-            let parameters = `type=video&normalize=true&limit=10&sort=${key.queryKey[1].orderBy}&anyKeywords=${key.queryKey[1].anyKeywords.join(',')}`
+            let parameters = `&min=3&limit=10&sort=${key.queryKey[1].orderBy}&anyKeywords=${key.queryKey[1].anyKeywords.join(',')}`
                 + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`;
             if (key.queryKey[1].excludedKeywords.length !== 0) {
                 parameters += `&notKeywords=${key.queryKey[1].excludedKeywords.join(',')}`
             }
             if (key.queryKey[1].startDate !== 'noDate') {
-                parameters += `&min=${parse(key.queryKey[1].startDate, 'yyyy/MM/dd', new Date()).getTime()}`
+                //parameters += `&min=${parse(key.queryKey[1].startDate, 'yyyy/MM/dd', new Date()).getTime()}`
             }
             if (key.queryKey[1].endDate !== 'noDate') {
-                parameters += `&max=${parse(key.queryKey[1].endDate, 'yyyy/MM/dd', new Date()).getTime()}`
+                //parameters += `&max=${parse(key.queryKey[1].endDate, 'yyyy/MM/dd', new Date()).getTime()}`
             }
 
             let urlYoutube = youtubeBaseUrl + parameters;
             let urlVimeo = vimeoBaseUrl + parameters;
-
-            console.log(urlYoutube);
+            let urlTwitter = twitterBaseUrl + parameters;
 
             if (last.length !== 0) {
                 urlYoutube += '&next=' + last[0];
                 urlVimeo += '&next=' + last[1];
+                urlTwitter += '&next=' + last[2];
             }
+
+            let twitterTypes = []
+            if (key.queryKey[1].selectedContentTypes.includes('Video')) {
+                twitterTypes.push('video')
+            }
+            if (key.queryKey[1].selectedContentTypes.includes('Text')) {
+                twitterTypes.push('text')
+            }
+            if (key.queryKey[1].selectedContentTypes.includes('Photos')) {
+                twitterTypes.push('image')
+            }
+            urlTwitter += '&type=' + twitterTypes.join(',')
+
+            console.log(urlTwitter);
 
             await Promise.all([
                 fetch(urlYoutube),
-                fetch(urlVimeo)
+                fetch(urlVimeo),
+                fetch(urlTwitter),
             ])
-            .then(([resYT, resVim]) => Promise.all([resYT.json(), resVim.json()]))
-            .then(([dataYT, dataVim]) => {
+            .then(([resYT, resVim, resTw]) => Promise.all([resYT.json(), resVim.json(), resTw.json()]))
+            .then(([dataYT, dataVim, dataTw]) => {
                 let next:any[] = [];
                 if (dataYT.contents !== undefined && key.queryKey[1].selectedPlatforms.includes('Youtube') && key.queryKey[1].selectedContentTypes.includes('Video')) {
                     // @ts-ignore
@@ -102,12 +121,17 @@ export default function Demo() {
                     // @ts-ignore
                     res = res.concat(dataVim.contents);
                 }
+                if (dataTw.contents !== undefined && key.queryKey[1].selectedPlatforms.includes('Twitter')) {
+                    // @ts-ignore
+                    res = res.concat(dataTw.contents);
+                }
                 next = next.concat(dataYT.next)
                 next = next.concat(dataVim.next)
+                next = next.concat(dataTw.next)
 
                 setLast(next)
             })
-
+            console.log(res)
             return res;
         }
         else {
@@ -117,7 +141,7 @@ export default function Demo() {
 
 
     // @ts-ignore
-    const { data, refetch, status } = useQuery(["key", queryParameters], fetchData );
+    const { data, refetch, status } = useQuery(["key", queryParameters], fetchData, { refetchOnWindowFocus: false } );
 
     const makeQuery = async (text:string) => {
         setQueryParameters(text);
@@ -224,8 +248,12 @@ export default function Demo() {
                             let metricAmounts = [item.views, item.likes, item.dislikes]
                             if (item.network === 'vimeo') {
                                 metricTitles = ['views', 'likes', "comments"]
+                            } else if (item.network === 'twitter') {
+                                metricTitles = ['likes']
+                                metricAmounts = [item.likes]
                             }
                             if (item.network === 'youtube' || item.network === 'vimeo' ) {
+                                console.log("YOUTUBE - VIMEO")
                                 return <VideoPost title={item.title}
                                                   description={item.text}
                                                   metricTitles={metricTitles}
@@ -237,10 +265,45 @@ export default function Demo() {
                                                   postLocation={item.location && item.location.coordinates.join(',')}
                                                   postLink={item.link}
                                                   length={item.duration}/>
+                            } else if (item.content_type === 'video') {
+                                console.log("TWITTER VIDEO")
+                                return <VideoPost title={item.title}
+                                                  description={''}
+                                                  metricTitles={metricTitles}
+                                                  metricAmounts={metricAmounts}
+                                                  thumbnail={item.user_thumb}
+                                                  channel={"@" + item.user_name}
+                                                  socialMedia={item.network}
+                                                  postTime={formatDistanceToNowStrict(fromUnixTime(item.unix), {addSuffix: true})}
+                                                  postLocation={item.user_location}
+                                                  postLink={item.link}
+                                                  length={item.duration}/>
                             } else {
                                 return null
                             }
-
+                        } else if (item.content_type === 'text' && selectedContentTypes.includes("Text")){
+                            let metricTitles = ['likes']
+                            let metricAmounts = [item.likes]
+                            return <TextPost text={item.text}
+                                             poster={"@" + item.user_name}
+                                             socialMedia={item.network}
+                                             postTime={formatDistanceToNowStrict(fromUnixTime(item.unix), {addSuffix: true})}
+                                             postLocation={item.user_location}
+                                             postLink={item.link}
+                                             metricTitles={metricTitles}
+                                             metricAmounts={metricAmounts}/>
+                        } else if (item.content_type === 'image' && selectedContentTypes.includes("Photos")) {
+                            let metricTitles = ['likes']
+                            let metricAmounts = [item.likes]
+                            return <PhotoPost postLink={item.link}
+                                              metricTitles={metricTitles}
+                                              metricAmounts={metricAmounts}
+                                              text={item.text}
+                                              poster={"@" + item.user_name}
+                                              socialMedia={item.network}
+                                              postTime={formatDistanceToNowStrict(fromUnixTime(item.unix), {addSuffix: true})}
+                                              postLocation={item.user_location}
+                                              images={item.images}/>
                         } else {
                             return null
                         }

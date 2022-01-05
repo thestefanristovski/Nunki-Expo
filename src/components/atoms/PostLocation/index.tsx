@@ -26,10 +26,10 @@ const PostMetadataText = styled.Text`
 
 const PostLocation = (props: Props) => {
     const {flag, location} = props;
-    const icon: string = "twemoji:flag-for-flag-" + flag;
+    const icon: string = "fluent:location-12-filled";
     return(
         <PostMetaElementContainer>
-            <Icon icon={icon} style={{color:"black", width:25, lineHeight:25, display:"inline-block", paddingRight:0, verticalAlign:"middle"}}/>
+            <Icon icon={icon} style={{color:"white", width:25, lineHeight:25, display:"inline-block", paddingRight:0, verticalAlign:"middle"}}/>
             <PostMetadataText>{location}</PostMetadataText>
         </PostMetaElementContainer>
     )
