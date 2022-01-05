@@ -16,7 +16,6 @@ import {queryParamsContext} from "../../../state/queryParams";
 
 const TOKEN = 'pk.eyJ1IjoiemluZWJmYWRpbGkiLCJhIjoiY2t3amYwNHBpMWhqMDJ4bnN0ZGx0OGpwaiJ9.TSa7TFyuKEt2cBxu4eUZag'; // Set your mapbox token here
 
-
 const MapContainer = styled.View`
   padding: 40px;
   border-radius: 20px;
@@ -66,11 +65,9 @@ const styles = StyleSheet.create({
   },
 });
 
-
 interface Props {
   onSelectLocation: (mapSelected: boolean) => void;
 }
-
 
 const Map = (props: Props) => {
 
@@ -84,9 +81,9 @@ const Map = (props: Props) => {
   const [mode, setMode] = useState(null);
   const [selectedFeatureIndex, setSelectedFeatureIndex] = useState(null);
   const editorRef = useRef(null);
-  const [radius, setRadius] = useState('')
-  const [latitude, setLatitude] = useState('')
-  const [longitude, setLongitude] = useState('')
+  const [radius, setRadius] = useState(context.radius)
+  const [latitude, setLatitude] = useState(context.lat)
+  const [longitude, setLongitude] = useState(context.long)
 
 
   const onSelect = useCallback(options => {
@@ -119,7 +116,8 @@ const Map = (props: Props) => {
     </>
   );
 
-  const features = editorRef.current && editorRef.current.getFeatures();
+  let features = editorRef.current && editorRef.current.getFeatures();
+  //features = editorRef.current && editorRef.current.addFeatures(initial_features);
   const selectedFeature =
     features && (features[selectedFeatureIndex] || features[features.length - 1]);
 
@@ -129,7 +127,7 @@ const Map = (props: Props) => {
     p.long = longitude
     p.radius = radius
     context.updateParams(p)
-     props.onSelectLocation(true)
+    props.onSelectLocation(true)
   }
 
   const onCancel = () => {
@@ -139,7 +137,6 @@ const Map = (props: Props) => {
     p.radius = ''
     context.updateParams(p)
     props.onSelectLocation(false)
-
   }
   return (
     <MapContainer>
@@ -153,18 +150,18 @@ const Map = (props: Props) => {
         mapboxApiAccessToken={TOKEN}
         onViewportChange={setViewport}
       >
-        <Editor
-          ref={editorRef}
-          style={{width: '100%', height: '100%'}}
-          clickRadius={12}
-          mode={mode}
-          onSelect={onSelect}
-          onUpdate={onUpdate}
-          editHandleShape={'circle'}
-          featureStyle={getFeatureStyle}
-          editHandleStyle={getEditHandleStyle}
-        />
-        {drawTools}
+      <Editor
+        ref={editorRef}
+        style={{width: '100%', height: '100%'}}
+        clickRadius={12}
+        mode={mode}
+        onSelect={onSelect}
+        onUpdate={onUpdate}
+        editHandleShape={'circle'}
+        featureStyle={getFeatureStyle}
+        editHandleStyle={getEditHandleStyle}
+      />
+      {drawTools}
       </MapGL>
       </View>
       <ButtonContainer>

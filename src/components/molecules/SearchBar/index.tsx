@@ -180,6 +180,13 @@ const SearchBar = (props: Props) => {
     }
 
     const changeMap = () => {
+        if (!onMap) {
+            let p = {...context.parameters}
+            p.lat = ''
+            p.long = ''
+            p.radius = ''
+            context.updateParams(p)
+        }
         onChangeMap(!onMap);
     }
 
