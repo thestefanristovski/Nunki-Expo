@@ -3,8 +3,8 @@ import React, {createContext, useState} from "react";
 const defaultQueryParams = {
     platforms : ["Youtube", "Twitter", "Vimeo", "VK"],
     selectedPlatforms : ["Youtube", "Twitter", "Vimeo", "VK"],
-    contentTypes : ["Photos", "Video", "Text"],
-    selectedContentTypes : ["Photos", "Video", "Text"],
+    contentTypes : ["Image", "Video", "Text"],
+    selectedContentTypes : ["Image", "Video", "Text"],
     excludedKeywords : [],
     anyKeywords: [],
     minLength : 0,

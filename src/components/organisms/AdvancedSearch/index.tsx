@@ -1,7 +1,6 @@
-
+// @ts-nocheck
 import React, {useContext} from 'react';
 import {View} from "react-native";
-// @ts-ignore
 import styled from "styled-components/native";
 import DateFilterMenu from '../../molecules/DateFilterMenu';
 import DropDown from "../../molecules/DropDown";
@@ -24,14 +23,11 @@ const Advanced = () => {
             const keywords:string[] = [...context.parameters.excludedKeywords];
             let p = {...context.parameters}
             keywords.push(keyword);
-            // @ts-ignore
             p.excludedKeywords = keywords;
             context.updateParams(p)
         } else {
             const keywords:string[] = [...context.parameters.excludedKeywords];
-            // @ts-ignore
             let p = {...context.parameters}
-            // @ts-ignore
             p.excludedKeywords = keywords.concat(text)
             context.updateParams(p)
         }
@@ -42,7 +38,6 @@ const Advanced = () => {
         const keywords:string[] = context.parameters.excludedKeywords;
 
         let p = {...context.parameters}
-        // @ts-ignore
         p.excludedKeywords = keywords.filter(item => item !== text)
         context.updateParams(p)
 
@@ -54,17 +49,14 @@ const Advanced = () => {
     const changedCheckbox = (element: string, another: string):void  => {
         if (context.parameters.selectedPlatforms.includes(element)) {
             let p = {...context.parameters}
-            // @ts-ignore
             p.selectedPlatforms = context.parameters.selectedPlatforms.filter(selectedItem => selectedItem != element)
             context.updateParams(p)
         } else if (element === "All") {
             let p = {...context.parameters}
-            // @ts-ignore
             p.selectedPlatforms = context.parameters.platforms
             context.updateParams(p)
         } else {
             let p = {...context.parameters}
-            // @ts-ignore
             p.selectedPlatforms = context.parameters.selectedPlatforms.concat(element)
             context.updateParams(p)
         }
@@ -73,17 +65,14 @@ const Advanced = () => {
     const changedCheckboxType = (element: string, another: string):void  => {
         if (context.parameters.selectedContentTypes.includes(element)) {
             let p = {...context.parameters}
-            // @ts-ignore
             p.selectedContentTypes = context.parameters.selectedContentTypes.filter(selectedItem => selectedItem != element)
             context.updateParams(p)
         } else if (element === "All") {
             let p = {...context.parameters}
-            // @ts-ignore
             p.selectedContentTypes = context.parameters.contentTypes
             context.updateParams(p)
         } else {
             let p = {...context.parameters}
-            // @ts-ignore
             p.selectedContentTypes = context.parameters.selectedContentTypes.concat(element)
             context.updateParams(p)
         }
@@ -92,7 +81,6 @@ const Advanced = () => {
     // LENGTH VIDEO FILTER METHODS ========================================
     const onChangeVideoLength = (min:number, max:number) => {
         let p = {...context.parameters}
-        // @ts-ignore
         p.minLength = min;
         p.maxLength = max;
         context.updateParams(p)
@@ -101,7 +89,6 @@ const Advanced = () => {
     // DATE PICKER FILTER METHODS ========================================
     const onChangeDates = (start:string, end:string) => {
         let p = {...context.parameters}
-        // @ts-ignore
         console.log("S")
         console.log(start)
         console.log("E")
@@ -116,7 +103,6 @@ const Advanced = () => {
     const changedOrderBy = (element: number) => {
         //State: Order by Menu
         let p = {...context.parameters}
-        // @ts-ignore
         p.orderBy = OrderBy[element]
         context.updateParams(p)
     }
@@ -152,7 +138,5 @@ const Advanced = () => {
         </View>
     )
 }
-
-//<SliderFilterMenu min={0} defaultMin={context.parameters.minLength} max={10} defaultMax={context.parameters.maxLength} onChangeLength={onChangeVideoLength}/>
 
 export default Advanced

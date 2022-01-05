@@ -1,8 +1,8 @@
+// @ts-nocheck
 import React, {useContext, useEffect, useState} from 'react';
 import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native';
 import VideoPost from "../components/organisms/VIdeoPost";
 import SearchBar from "../components/molecules/SearchBar";
-// @ts-ignore
 import styled from "styled-components/native";
 import { useQuery } from 'react-query'
 import Masonry from "@react-native-seoul/masonry-list"
@@ -46,8 +46,8 @@ export default function Demo() {
     const [latitude, setLatitude] = useState('')
     const [longitude, setLongitude] = useState('')
     //State: clusters
-    const [clusters, setCluster] = useState(["Topic 1", "Topic 2", "Topic 3", "Topic 4"])
-    const [selectedCluster, setSelectedCluster] = useState(["Topic 1 ", "Topic 2", "Topic 3", "Topic 4"])
+    //const [clusters, setCluster] = useState(["Topic 1", "Topic 2", "Topic 3", "Topic 4"])
+    //const [selectedCluster, setSelectedCluster] = useState(["Topic 1 ", "Topic 2", "Topic 3", "Topic 4"])
     //State: Page display
     const [onAdvanced, setOnAdvanced] = useState(false);
     const [onMap, setOnMap] = useState(false);
@@ -71,43 +71,25 @@ export default function Demo() {
                 res = [];
             }
 
-            //fetch data
+            //insert all parameters passed from context
             let parameters = `&limit=10&sort=${params.orderBy}&anyKeywords=${params.anyKeywords.join(',')}`
-                + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`;
-            if (params.excludedKeywords.length !== 0) {
-                parameters += `&notKeywords=${params.excludedKeywords.join(',')}`
-            }
-            if (params.startDate !== 'noDate') {
-                parameters += `&min=${(parse(key.queryKey[1].startDate, 'yyyy/MM/dd', new Date()).getTime())/1000}`
-            }
-            if (params.endDate !== 'noDate') {
-                parameters += `&max=${(parse(key.queryKey[1].endDate, 'yyyy/MM/dd', new Date()).getTime())/1000}`
-            }
+                + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`
+                + `${params.excludedKeywords.length !== 0 ? `&notKeywords=${params.excludedKeywords.join(',')}`: ''}`
+                + `${params.startDate !== 'noDate' ? `&min=${(parse(key.queryKey[1].startDate, 'yyyy/MM/dd', new Date()).getTime())/1000}`:''}`
+                + `${params.endDate !== 'noDate' ? `&max=${(parse(key.queryKey[1].endDate, 'yyyy/MM/dd', new Date()).getTime())/1000}`:''}`
 
             let urlYoutube = youtubeBaseUrl + parameters;
             let urlVimeo = vimeoBaseUrl + parameters;
-            let urlTwitter = twitterBaseUrl + parameters;
+            let urlTwitter = twitterBaseUrl + parameters + '&type=' + params.selectedContentTypes.join(',').toLowerCase();
 
+            //attach the next parameter if load more was pressed
             if (last.length !== 0) {
                 urlYoutube += '&next=' + last[0];
                 urlVimeo += '&next=' + last[1];
                 urlTwitter += '&next=' + last[2];
             }
 
-            let twitterTypes = []
-            if (params.selectedContentTypes.includes('Video')) {
-                twitterTypes.push('video')
-            }
-            if (params.selectedContentTypes.includes('Text')) {
-                twitterTypes.push('text')
-            }
-            if (params.selectedContentTypes.includes('Photos')) {
-                twitterTypes.push('image')
-            }
-            urlTwitter += '&type=' + twitterTypes.join(',')
-
-            console.log(urlTwitter);
-
+            //fetch data
             await Promise.all([
                 fetch(urlYoutube),
                 fetch(urlVimeo),
@@ -117,24 +99,20 @@ export default function Demo() {
             .then(([dataYT, dataVim, dataTw]) => {
                 let next:any[] = [];
                 if (dataYT.contents !== undefined && params.selectedPlatforms.includes('Youtube') && params.selectedContentTypes.includes('Video')) {
-                    // @ts-ignore
                     res = res.concat(dataYT.contents);
                 }
                 if (dataVim.contents !== undefined && params.selectedPlatforms.includes('Vimeo') && params.selectedContentTypes.includes('Video')) {
-                    // @ts-ignore
                     res = res.concat(dataVim.contents);
                 }
                 if (dataTw.contents !== undefined && params.selectedPlatforms.includes('Twitter')) {
-                    // @ts-ignore
                     res = res.concat(dataTw.contents);
                 }
-                next = next.concat(dataYT.next)
-                next = next.concat(dataVim.next)
-                next = next.concat(dataTw.next)
-
+                //set next attributes for load more
+                next = next.concat([dataYT.next, dataVim.next, dataTw.next])
                 setLast(next)
             })
-            console.log(res)
+
+            console.log(res);
             return res;
         }
         else {
@@ -142,8 +120,6 @@ export default function Demo() {
         }
     }
 
-
-    // @ts-ignore
     const { data, refetch, status } = useQuery(["key", queryParameters], fetchData, { refetchOnWindowFocus: false } );
 
     const makeQuery = async (text:string) => {
@@ -202,7 +178,7 @@ export default function Demo() {
     }
 
     // CLUSTERS ====================================================================
-
+    /*
     const changedCluster = (element: string, another: string):void  => {
         console.log(element)
         console.log(selectedCluster)
@@ -214,6 +190,7 @@ export default function Demo() {
             setSelectedCluster(selectedCluster.concat(element));
         }
     }
+     */
 
     //FUNCTIONS FOR PAGE STATE CHANGE ==================================================
     const onChangeAdvanced = (changeTo: boolean) => {
@@ -247,10 +224,8 @@ export default function Demo() {
             </Cont>
             <View style={{zIndex:-10}}>
                 {status === 'success' && <Masonry
-                    // @ts-ignore
                     data = {data}
                     numColumns = {columns}
-                    // @ts-ignore
                     renderItem = {({item}) => {
                         if (item.content_type === 'video' && selectedContentTypes.includes("Videos")) {
                             let metricTitles = ['views', 'thumbsup', "thumbsdown"]
@@ -273,7 +248,7 @@ export default function Demo() {
                             } else if (item.network === 'twitter') {
                                 metricTitles = ['likes']
                                 metricAmounts = [item.likes]
-                                return <VideoPost title={item.title}
+                                return <VideoPost title={item.text}
                                                   description={''}
                                                   metricTitles={metricTitles}
                                                   metricAmounts={metricAmounts}
@@ -283,7 +258,7 @@ export default function Demo() {
                                                   postTime={formatDistanceToNowStrict(fromUnixTime(item.unix), {addSuffix: true})}
                                                   postLocation={item.user_location}
                                                   postLink={item.link}
-                                                  length={item.duration}/>
+                                                  length={Math.floor(item.duration/1000)}/>
                             } else {
                                 return null
                             }
