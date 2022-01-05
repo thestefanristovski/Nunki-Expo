@@ -1,8 +1,10 @@
+// @ts-nocheck
 import * as React from 'react';
 import area from '@turf/area';
 import centroid from '@turf/centroid'
 import bbox from '@turf/bbox'
 import distance from '@turf/distance'
+// @ts-ignore
 import styled from "styled-components/native";
 import st from "styled-components"
 import { useEffect } from 'react';

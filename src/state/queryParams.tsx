@@ -12,6 +12,9 @@ const defaultQueryParams = {
     startDate : '2020/01/01',
     endDate : "2021/01/01",
     orderBy : "relevant",
+    lat: "",
+    long: "",
+    radius: "",
     updateParams : (p:any) => {}
 }
 

@@ -36,20 +36,17 @@ export default function Demo() {
     // List of Elements in Grid
     const [columns, setColumns] = useState(2);
     //State: Content Type Multiselect Menu
-    const [contentTypes, setContentTypes] = useState(["Photos", "Videos", "Text"])
+    const [contentTypes] = useState(["Photos", "Videos", "Text"])
     const [selectedContentTypes, setSelectedContentTypes] = useState(["Photos", "Videos", "Text"])
     //State: Pagination
     const [last, setLast] = useState<any[]>([])
-    //State: Location center and radius
-    const [radius, setRadius] = useState('')
-    const [latitude, setLatitude] = useState('')
-    const [longitude, setLongitude] = useState('')
     //State: clusters
     //const [clusters, setCluster] = useState(["Topic 1", "Topic 2", "Topic 3", "Topic 4"])
     //const [selectedCluster, setSelectedCluster] = useState(["Topic 1 ", "Topic 2", "Topic 3", "Topic 4"])
     //State: Page display
     const [onAdvanced, setOnAdvanced] = useState(false);
     const [onMap, setOnMap] = useState(false);
+    const [mapSelected, setMapSelected] = useState(false)
     //Base URLs
     const youtubeBaseUrl = 'https://search.api.nunki.co/youtube/search?type=video&normalize=true'
     const vimeoBaseUrl = 'https://search.api.nunki.co/vimeo/search?type=video&normalize=true'
@@ -62,6 +59,7 @@ export default function Demo() {
     const fetchData = async (key: any):Promise<any[]> => {
 
         let params = key.queryKey[1];
+        console.log(params);
 
         if (params !== 'noQuery') {
             //get previous results or initialize new array
@@ -72,7 +70,7 @@ export default function Demo() {
 
             //insert all parameters passed from context
             let parameters = `&limit=10&sort=${params.orderBy}&anyKeywords=${params.anyKeywords.join(',')}`
-                + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius > 25000 ? 25000 : radius}`:''}`
+                + `${params.lat && params.long && params.radius ? `&lat=${params.lat}&lng=${params.long}&radius=${params.radius > 25000 ? 25000 : params.radius}`:''}`
                 + `${params.excludedKeywords.length !== 0 ? `&notKeywords=${params.excludedKeywords.join(',')}`: ''}`
                 + `${params.startDate !== 'noDate' ? `&min=${(parse(key.queryKey[1].startDate, 'yyyy/MM/dd', new Date()).getTime())/1000}`:''}`
                 + `${params.endDate !== 'noDate' ? `&max=${(parse(key.queryKey[1].endDate, 'yyyy/MM/dd', new Date()).getTime())/1000}`:''}`
@@ -126,32 +124,10 @@ export default function Demo() {
     }
 
     useEffect(() => {
-        console.log(latitude)
-        console.log(longitude)
-        console.log(radius)
-    }, [latitude, longitude, radius])
-
-    useEffect(() => {
         return () => {
             // This is the cleanup function
         }
     }, []);
-
-    // LISTENER FOR MAP ===================================================
-
-
-    const onSelectLocation = (latitude: string, longitude: string, radius: string) => {
-        console.log(latitude)
-        console.log(longitude)
-        console.log(radius)
-        if (latitude && longitude && radius) {
-            setRadius(radius);
-            setLatitude(latitude);
-            setLongitude(longitude);
-        }
-        setOnMap(false);
-        //setRadius(radius);
-    }
 
     // VISUAL =================================================================
 
@@ -200,9 +176,9 @@ export default function Demo() {
         setOnMap(changeTo);
     }
 
-    let mapSelected = true;
-    if (Number(latitude)===0 && Number(longitude)===0 && Number(radius)===0) {
-        mapSelected = false;
+    const onSelectLocation = (mapSelected:boolean) => {
+        setOnMap(false);
+        setMapSelected(mapSelected)
     }
 
     return (

@@ -1,5 +1,6 @@
+// @ts-nocheck
 import * as React from 'react';
-import {useState, useRef, useCallback} from 'react';
+import {useState, useRef, useCallback, useContext} from 'react';
 import MapGL from 'react-map-gl';
 import {Editor, DrawCircleFromCenterMode, EditingMode} from 'react-map-gl-draw';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
@@ -11,6 +12,7 @@ import {getFeatureStyle, getEditHandleStyle} from './style';
 import MainButton from "../../atoms/MainButton";
 import TextButton from "../../atoms/TextButton";
 import { Link } from 'react-router-dom';
+import {queryParamsContext} from "../../../state/queryParams";
 
 const TOKEN = 'pk.eyJ1IjoiemluZWJmYWRpbGkiLCJhIjoiY2t3amYwNHBpMWhqMDJ4bnN0ZGx0OGpwaiJ9.TSa7TFyuKEt2cBxu4eUZag'; // Set your mapbox token here
 
@@ -66,9 +68,14 @@ const styles = StyleSheet.create({
 
 
 interface Props {
-  onSelectLocation: (latitude: string, longitude: string, radius: string) => void;
+  onSelectLocation: (mapSelected: boolean) => void;
 }
+
+
 const Map = (props: Props) => {
+
+  const context = useContext(queryParamsContext)
+
   const [viewport, setViewport] = useState({
     longitude: 2.3522,
     latitude: 48.8566,
@@ -117,11 +124,21 @@ const Map = (props: Props) => {
     features && (features[selectedFeatureIndex] || features[features.length - 1]);
 
   const onAdd = () => {
-     props.onSelectLocation(latitude, longitude, radius)
+    let p = {...context.parameters}
+    p.lat = latitude
+    p.long = longitude
+    p.radius = radius
+    context.updateParams(p)
+     props.onSelectLocation(true)
   }
 
   const onCancel = () => {
-    props.onSelectLocation('','', '')
+    let p = {...context.parameters}
+    p.lat = ''
+    p.long = ''
+    p.radius = ''
+    context.updateParams(p)
+    props.onSelectLocation(false)
 
   }
   return (

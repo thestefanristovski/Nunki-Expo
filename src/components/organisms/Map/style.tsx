@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {RENDER_STATE} from 'react-map-gl-draw';
 
 export function getEditHandleStyle({feature, state}) {
