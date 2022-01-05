@@ -45,7 +45,7 @@ const PostEngagement = (props: Props) => {
     return(
         <EngagementContainer>
             {metricTitles.map((val, i) => {
-                return <EngagementMetric metric={val} amount={metricAmounts[i]}/>
+                return <EngagementMetric key={val} metric={val} amount={metricAmounts[i]}/>
             })}
             <ExternalLink onPress={onPress}>
                 <Icon icon="heroicons-solid:external-link" style={{color:"#6A6A9F", width:20, height:20, verticalAlign:"middle"}} />

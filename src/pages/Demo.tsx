@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, Text, View} from 'react-native';
+import {ActivityIndicator, Text, View, LogBox} from 'react-native';
 import VideoPost from "../components/organisms/VIdeoPost";
 import SearchBar from "../components/molecules/SearchBar";
 import styled from "styled-components/native";
@@ -29,6 +29,8 @@ const PanelView = styled.View`
   align-self: stretch;
   justify-content: space-between;
 `
+
+LogBox.ignoreAllLogs();
 
 export default function Demo() {
     // List of Elements in Grid
@@ -70,7 +72,7 @@ export default function Demo() {
 
             //insert all parameters passed from context
             let parameters = `&limit=10&sort=${params.orderBy}&anyKeywords=${params.anyKeywords.join(',')}`
-                + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`
+                + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius > 25000 ? 25000 : radius}`:''}`
                 + `${params.excludedKeywords.length !== 0 ? `&notKeywords=${params.excludedKeywords.join(',')}`: ''}`
                 + `${params.startDate !== 'noDate' ? `&min=${(parse(key.queryKey[1].startDate, 'yyyy/MM/dd', new Date()).getTime())/1000}`:''}`
                 + `${params.endDate !== 'noDate' ? `&max=${(parse(key.queryKey[1].endDate, 'yyyy/MM/dd', new Date()).getTime())/1000}`:''}`
@@ -228,7 +230,8 @@ export default function Demo() {
                                 metricTitles = ['views', 'likes', "comments"]
                             }
                             if (item.network === 'youtube' || item.network === 'vimeo' ) {
-                                return <VideoPost title={item.title}
+                                return <VideoPost key={item.text}
+                                                  title={item.title}
                                                   description={item.text}
                                                   metricTitles={metricTitles}
                                                   metricAmounts={metricAmounts}
@@ -242,7 +245,8 @@ export default function Demo() {
                             } else if (item.network === 'twitter') {
                                 metricTitles = ['likes']
                                 metricAmounts = [item.likes]
-                                return <VideoPost title={item.text}
+                                return <VideoPost key={item.text}
+                                                  title={item.text}
                                                   description={''}
                                                   metricTitles={metricTitles}
                                                   metricAmounts={metricAmounts}
@@ -259,7 +263,8 @@ export default function Demo() {
                         } else if (item.content_type === 'text' && selectedContentTypes.includes("Text")){
                             let metricTitles = ['likes']
                             let metricAmounts = [item.likes]
-                            return <TextPost text={item.text}
+                            return <TextPost key={item.text}
+                                             text={item.text}
                                              poster={"@" + item.user_name}
                                              socialMedia={item.network}
                                              postTime={formatDistanceToNowStrict(fromUnixTime(item.unix), {addSuffix: true})}
@@ -270,7 +275,8 @@ export default function Demo() {
                         } else if (item.content_type === 'image' && selectedContentTypes.includes("Photos")) {
                             let metricTitles = ['likes']
                             let metricAmounts = [item.likes]
-                            return <PhotoPost postLink={item.link}
+                            return <PhotoPost key={item.text}
+                                              postLink={item.link}
                                               metricTitles={metricTitles}
                                               metricAmounts={metricAmounts}
                                               text={item.text}

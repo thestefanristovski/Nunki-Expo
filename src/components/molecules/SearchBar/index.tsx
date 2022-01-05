@@ -1,6 +1,6 @@
+// @ts-nocheck
 import React, {useContext} from 'react';
 import {Button, Pressable, Text, View, TextInput} from "react-native";
-// @ts-ignore
 import styled from "styled-components/native";
 import {Icon} from "@iconify/react";
 import KeywordPill from "../../atoms/KeywordPill";
@@ -189,7 +189,7 @@ const SearchBar = (props: Props) => {
                     <Icon icon={"fluent:search-16-filled"} style={{height: 30, width:30, color:"white", marginRight: 10, marginLeft:10, verticalAlign: "middle"}}/>
                     {queryKeywords.map((element:string) => {
                         if (element !== '') {
-                            return <KeywordPill title={element} onPress={onDeleteKeyword}/>
+                            return <KeywordPill key={element} title={element} onPress={onDeleteKeyword}/>
                         }
                     })}
                     <StyledTextInput ref={textField} placeholder={"Search by keywords or phrases"} style={{outlineStyle:"none", boxShadow:"none"}} onChangeText={onChangedText}/>

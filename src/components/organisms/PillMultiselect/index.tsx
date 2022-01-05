@@ -35,9 +35,9 @@ const PillMultiselect = (props: Props) => {
                     <MultiPill title={"All"} onPress={onSelected} statusActive={"active"}/>
                     {options.map((element) => {
                         if (selected.includes(element)) {
-                            return (<MultiPill title={element} onPress={onSelected} statusActive={"active"}/>)
+                            return (<MultiPill key={element} title={element} onPress={onSelected} statusActive={"active"}/>)
                         } else {
-                            return (<MultiPill title={element} onPress={onSelected} statusActive={"inactive"}/>)
+                            return (<MultiPill key={element} title={element} onPress={onSelected} statusActive={"inactive"}/>)
                         }
                     })}
                 </MultiselectPillContainer>
