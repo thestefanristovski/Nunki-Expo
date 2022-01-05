@@ -16,8 +16,6 @@ const ButtonText  = styled.Text`
     vertical-align: middle;
 `;
 
-//TODO: Hover behavior of button (see react-native-web-hover)
-
 const ButtonContainer = styled.TouchableOpacity`
   background-color: #023AFF;
   border-radius: 100px;

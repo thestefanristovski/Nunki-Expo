@@ -1,6 +1,6 @@
 // @ts-nocheck
-import React, {useContext, useEffect, useState} from 'react';
-import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, Text, View} from 'react-native';
 import VideoPost from "../components/organisms/VIdeoPost";
 import SearchBar from "../components/molecules/SearchBar";
 import styled from "styled-components/native";
@@ -8,18 +8,15 @@ import { useQuery } from 'react-query'
 import Masonry from "@react-native-seoul/masonry-list"
 import PillMultiselect from "../components/organisms/PillMultiselect";
 import Advanced from "../components/organisms/AdvancedSearch";
-import DropDown from "../components/molecules/DropDown";
-import moment from "moment";
 import {fromUnixTime, formatDistanceToNowStrict, parse} from 'date-fns'
 import Map from "../components/organisms/Map"
 import MainButton from "../components/atoms/MainButton";
 import {QueryParamsProvider} from "../state/queryParams";
 import TextPost from "../components/organisms/TextPost";
 import PhotoPost from "../components/organisms/PhotoPost";
-import * as url from "url";
 
 
-const Cont = styled.View`
+const SettingsContainer = styled.View`
   background-color: #111121;
   padding: 30px;
 `
@@ -208,20 +205,17 @@ export default function Demo() {
 
     return (
         <QueryParamsProvider>
-            <Cont>
+            <SettingsContainer>
                 <SearchBar onPressSearch={makeQuery} onAdvanced={onAdvanced} onChangeAdvanced={onChangeAdvanced} onChangeMap={onChangeMap} onMap={onMap} hasLocation={mapSelected}/>
                 {!onMap && !onAdvanced &&
                 <PanelView>
                     <View>
                         <PillMultiselect options={contentTypes} selected={selectedContentTypes} onSelected={changedContentType} />
                     </View>
-                    <View>
-
-                    </View>
                 </PanelView>}
                 {onAdvanced && <Advanced/>}
                 {onMap && <Map onSelectLocation={onSelectLocation}/>}
-            </Cont>
+            </SettingsContainer>
             <View style={{zIndex:-10}}>
                 {status === 'success' && <Masonry
                     data = {data}
@@ -297,9 +291,9 @@ export default function Demo() {
                 }
                 {status === 'loading' && <ActivityIndicator size="large" color="white"/> }
                 {status === 'error' &&
-                <Cont>
+                <SettingsContainer>
                     <Text style={{color: 'white'}}>There was an error loading your results.</Text>
-                </Cont>}
+                </SettingsContainer>}
             </View>
         </QueryParamsProvider>
 
