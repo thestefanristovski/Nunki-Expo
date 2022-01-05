@@ -61,7 +61,13 @@ export default function Demo() {
     // MAKING A QUERY =========================================================
 
     const fetchData = async (key: any):Promise<any[]> => {
-        if (key.queryKey[1] !== 'noQuery') {
+
+        let params = key;
+        if (key.queryKey !== undefined) {
+            params = key.queryKey[1];
+        }
+
+        if (params !== 'noQuery') {
             //get previous results or initialize new array
             let res = data;
             if (res === undefined) {
@@ -69,15 +75,15 @@ export default function Demo() {
             }
 
             //fetch data
-            let parameters = `&min=3&limit=10&sort=${key.queryKey[1].orderBy}&anyKeywords=${key.queryKey[1].anyKeywords.join(',')}`
+            let parameters = `&min=3&limit=10&sort=${params.orderBy}&anyKeywords=${params.anyKeywords.join(',')}`
                 + `${latitude && longitude && radius ? `&lat=${latitude}&lng=${longitude}&radius=${radius}`:''}`;
-            if (key.queryKey[1].excludedKeywords.length !== 0) {
-                parameters += `&notKeywords=${key.queryKey[1].excludedKeywords.join(',')}`
+            if (params.excludedKeywords.length !== 0) {
+                parameters += `&notKeywords=${params.excludedKeywords.join(',')}`
             }
-            if (key.queryKey[1].startDate !== 'noDate') {
+            if (params.startDate !== 'noDate') {
                 //parameters += `&min=${parse(key.queryKey[1].startDate, 'yyyy/MM/dd', new Date()).getTime()}`
             }
-            if (key.queryKey[1].endDate !== 'noDate') {
+            if (params.endDate !== 'noDate') {
                 //parameters += `&max=${parse(key.queryKey[1].endDate, 'yyyy/MM/dd', new Date()).getTime()}`
             }
 
@@ -92,13 +98,13 @@ export default function Demo() {
             }
 
             let twitterTypes = []
-            if (key.queryKey[1].selectedContentTypes.includes('Video')) {
+            if (params.selectedContentTypes.includes('Video')) {
                 twitterTypes.push('video')
             }
-            if (key.queryKey[1].selectedContentTypes.includes('Text')) {
+            if (params.selectedContentTypes.includes('Text')) {
                 twitterTypes.push('text')
             }
-            if (key.queryKey[1].selectedContentTypes.includes('Photos')) {
+            if (params.selectedContentTypes.includes('Photos')) {
                 twitterTypes.push('image')
             }
             urlTwitter += '&type=' + twitterTypes.join(',')
@@ -113,15 +119,15 @@ export default function Demo() {
             .then(([resYT, resVim, resTw]) => Promise.all([resYT.json(), resVim.json(), resTw.json()]))
             .then(([dataYT, dataVim, dataTw]) => {
                 let next:any[] = [];
-                if (dataYT.contents !== undefined && key.queryKey[1].selectedPlatforms.includes('Youtube') && key.queryKey[1].selectedContentTypes.includes('Video')) {
+                if (dataYT.contents !== undefined && params.selectedPlatforms.includes('Youtube') && params.selectedContentTypes.includes('Video')) {
                     // @ts-ignore
                     res = res.concat(dataYT.contents);
                 }
-                if (dataVim.contents !== undefined && key.queryKey[1].selectedPlatforms.includes('Vimeo') && key.queryKey[1].selectedContentTypes.includes('Video')) {
+                if (dataVim.contents !== undefined && params.selectedPlatforms.includes('Vimeo') && params.selectedContentTypes.includes('Video')) {
                     // @ts-ignore
                     res = res.concat(dataVim.contents);
                 }
-                if (dataTw.contents !== undefined && key.queryKey[1].selectedPlatforms.includes('Twitter')) {
+                if (dataTw.contents !== undefined && params.selectedPlatforms.includes('Twitter')) {
                     // @ts-ignore
                     res = res.concat(dataTw.contents);
                 }
@@ -152,6 +158,12 @@ export default function Demo() {
         console.log(longitude)
         console.log(radius)
     }, [latitude, longitude, radius])
+
+    useEffect(() => {
+        return () => {
+            // This is the cleanup function
+        }
+    }, []);
 
     // LISTENER FOR MAP ===================================================
 
@@ -311,7 +323,7 @@ export default function Demo() {
                 />}
                 {data !== undefined && data.length !== 0 &&
                 <View style={{marginVertical: 50,  marginHorizontal: 30}}>
-                    <MainButton title={"Load More"} onPress={makeQuery}/>
+                    <MainButton title={"Load More"} onPress={refetch}/>
                 </View>
                 }
                 {status === 'loading' && <ActivityIndicator size="large" color="white"/> }
