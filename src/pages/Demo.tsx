@@ -14,11 +14,12 @@ import MainButton from "../components/atoms/MainButton";
 import {QueryParamsProvider} from "../state/queryParams";
 import TextPost from "../components/organisms/TextPost";
 import PhotoPost from "../components/organisms/PhotoPost";
+import ClusterMenu from "../components/organisms/ClusterMenu";
 
 
 const SettingsContainer = styled.View`
   background-color: #111121;
-  padding: 30px;
+  padding: 30px 30px 10px;
 `
 
 const PanelView = styled.View`
@@ -41,8 +42,8 @@ export default function Demo() {
     //State: Pagination
     const [last, setLast] = useState<any[]>([])
     //State: clusters
-    //const [clusters, setCluster] = useState(["Topic 1", "Topic 2", "Topic 3", "Topic 4"])
-    //const [selectedCluster, setSelectedCluster] = useState(["Topic 1 ", "Topic 2", "Topic 3", "Topic 4"])
+    const [clusters, setCluster] = useState([])
+    const [selectedClusters, setSelectedCluster] = useState([])
     //State: Page display
     const [onAdvanced, setOnAdvanced] = useState(false);
     const [onMap, setOnMap] = useState(false);
@@ -153,19 +154,17 @@ export default function Demo() {
     }
 
     // CLUSTERS ====================================================================
-    /*
     const changedCluster = (element: string, another: string):void  => {
         console.log(element)
-        console.log(selectedCluster)
-        if (selectedCluster.includes(element)) {
-            setSelectedCluster(selectedCluster.filter(selectedItem => selectedItem != element));
+        console.log(selectedClusters)
+        if (selectedClusters.includes(element)) {
+            setSelectedCluster(selectedClusters.filter(selectedItem => selectedItem != element));
         } else if (element === "All") {
             setSelectedCluster(clusters);
         } else {
-            setSelectedCluster(selectedCluster.concat(element));
+            setSelectedCluster(selectedClusters.concat(element));
         }
     }
-     */
 
     //FUNCTIONS FOR PAGE STATE CHANGE ==================================================
     const onChangeAdvanced = (changeTo: boolean) => {
@@ -199,6 +198,7 @@ export default function Demo() {
                 {onAdvanced && <Advanced/>}
                 {onMap && <Map onSelectLocation={onSelectLocation}/>}
             </SettingsContainer>
+            {clusters.length!==0 && <ClusterMenu onSelected={changedCluster} options={clusters} selected={selectedClusters}/>}
             <View style={{zIndex:-10}}>
                 {status === 'success' && <Masonry
                     data = {data}

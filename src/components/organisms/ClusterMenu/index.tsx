@@ -11,7 +11,7 @@ interface Props {
     onSelected: (element:string, another:string) => void;
 }
 
-const MultiselectPillContainer = styled.View`
+const ClusterMenuContainer = styled.View`
   display: inline-block;
   margin-left: 30px;
 `
@@ -27,44 +27,26 @@ const FilterTitle = styled.Text`
 const ClusterMenu = (props: Props) => {
     const {title, options, selected, onSelected} = props
 
-    if (selected.length === options.length) {
-        return(
-            <View>
-                {<FilterTitle>{title}</FilterTitle> }
-                <MultiselectPillContainer>
-                    {options.map((element) => {
-                        if (selected.includes(element)) {
-                            return (<ClusterPill title={element} onPress={onSelected} statusActive={"active"}/>)
-                        } else {
-                            return (<ClusterPill title={element} onPress={onSelected} statusActive={"inactive"}/>)
-                        }
-                    })}
-                </MultiselectPillContainer>
-            </View>
-
-        )
-    } else {
-        return(
-            <View>
-                {<FilterTitle>{title}</FilterTitle> }
-                <MultiselectPillContainer>
-                    {options.map((element) => {
-                        if (selected.includes(element)) {
-                            return (<ClusterPill title={element} onPress={onSelected} statusActive={"active"}/>)
-                        } else {
-                            return (<ClusterPill title={element} onPress={onSelected} statusActive={"inactive"}/>)
-                        }
-                    })}
-                </MultiselectPillContainer>
-            </View>
-        )
-    }
+    return(
+        <View>
+            <FilterTitle>{title}</FilterTitle>
+            <ClusterMenuContainer>
+                {options.map((element) => {
+                    if (selected.includes(element)) {
+                        return (<ClusterPill title={element} onPress={onSelected} statusActive={"active"}/>)
+                    } else {
+                        return (<ClusterPill title={element} onPress={onSelected} statusActive={"inactive"}/>)
+                    }
+                })}
+            </ClusterMenuContainer>
+        </View>
+    )
 
 
 }
 
 ClusterMenu.defaultProps = {
-    title: "Topics related to your search",
+    title: "Related topics found in the results",
     options: ["Topic 1", "Topic 2", "Topic 3", "Topic 4"],
     selected: ["Topic 1", "Topic 2", "Topic 3", "Topic 4"]
 }
