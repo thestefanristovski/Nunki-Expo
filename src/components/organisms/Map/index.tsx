@@ -92,6 +92,7 @@ const Map = (props: Props) => {
   }, []);
 
   const onDelete = useCallback(() => {
+    setFeatures("")
     // @ts-ignore
     if (selectedFeatureIndex !== null && selectedFeatureIndex >= 0) {
       // @ts-ignore
@@ -111,7 +112,10 @@ const Map = (props: Props) => {
 
   const drawTools = (
     <>
-      <TouchableOpacity style={styles.buttonDraw} onPress={() => setMode(new DrawCircleFromCenterMode())}>
+      <TouchableOpacity style={styles.buttonDraw} onPress={() => {
+        setFeatures("")
+        setMode(new DrawCircleFromCenterMode())
+      }}>
         <Text style={styles.title}>Draw</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.buttonDelete} onPress={onDelete}>
@@ -142,6 +146,7 @@ const Map = (props: Props) => {
     p.lat = ''
     p.long = ''
     p.radius = ''
+    p.mapFeature = ''
     context.updateParams(p)
     props.onSelectLocation(false)
   }
