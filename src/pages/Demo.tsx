@@ -173,9 +173,11 @@ export default function Demo() {
     }
 
     const onChangeMap = (changeTo: boolean) => {
+        /*
         if (changeTo) {
             setMapSelected(false);
         }
+         */
         setOnMap(changeTo);
     }
 
