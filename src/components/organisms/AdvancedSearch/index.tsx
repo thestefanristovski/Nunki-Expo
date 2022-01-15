@@ -99,7 +99,7 @@ const Advanced = () => {
     }
 
     // DROPDOWN ORDER BY MENU LISTENER =============================================
-    const OrderBy = ['relevant', 'recent', 'popular']
+    const OrderBy = ['recent', 'relevant', 'popular']
     const changedOrderBy = (element: number) => {
         //State: Order by Menu
         let p = {...context.parameters}

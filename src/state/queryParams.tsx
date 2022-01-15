@@ -1,4 +1,5 @@
 import React, {createContext, useState} from "react";
+import {format} from "date-fns";
 
 const defaultQueryParams = {
     platforms : ["Youtube", "Twitter", "Vimeo", "VK"],
@@ -10,8 +11,8 @@ const defaultQueryParams = {
     minLength : 0,
     maxLength : 30,
     startDate : '2020/01/01',
-    endDate : "2021/01/01",
-    orderBy : "relevant",
+    endDate :  format(new Date(), 'yyyy/MM/dd'),
+    orderBy : "recent",
     lat: "",
     long: "",
     radius: "",
