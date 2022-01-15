@@ -7,7 +7,8 @@ import {View} from "react-native";
 interface Props {
     title: string;
     options: string[],
-    selected: string[]
+    optionsData: any[],
+    selected: string[],
     onSelected: (element:string, another:string) => void;
 }
 
@@ -25,17 +26,18 @@ const FilterTitle = styled.Text`
 `
 
 const ClusterMenu = (props: Props) => {
-    const {title, options, selected, onSelected} = props
+    const {title, options, selected, onSelected, optionsData} = props
 
     return(
         <View>
             <FilterTitle>{title}</FilterTitle>
             <ClusterMenuContainer>
-                {options.map((element) => {
+                {options.map((element, key) => {
+                    console.log(key);
                     if (selected.includes(element)) {
-                        return (<ClusterPill title={element} onPress={onSelected} statusActive={"active"}/>)
+                        return (<ClusterPill title={element} onPress={onSelected} amount={optionsData[key].length} statusActive={"active"}/>)
                     } else {
-                        return (<ClusterPill title={element} onPress={onSelected} statusActive={"inactive"}/>)
+                        return (<ClusterPill title={element} onPress={onSelected} amount={optionsData[key].length} statusActive={"inactive"}/>)
                     }
                 })}
             </ClusterMenuContainer>

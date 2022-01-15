@@ -6,7 +6,7 @@ import styled from "styled-components/native";
 
 interface Props {
     title: string;
-
+    amount: number;
     onPress: (element: string, another:string) => void;
     statusActive: string;
 }
@@ -54,7 +54,7 @@ const ActiveClusterContainer = styled.Pressable`
 `
 
 const ClusterPill = (props: Props) => {
-    const {title, onPress, statusActive} = props;
+    const {title, onPress, statusActive, amount} = props;
 
     if (statusActive === "active") {
         return(
@@ -62,7 +62,7 @@ const ClusterPill = (props: Props) => {
                 onPress(title)}}>
                 <View>
                     <ClusterPillText>{title}</ClusterPillText>
-                    <ClusterResultText>22 results</ClusterResultText>
+                    <ClusterResultText>{amount} results</ClusterResultText>
                 </View>
             </ActiveClusterContainer>
         )
@@ -72,7 +72,7 @@ const ClusterPill = (props: Props) => {
                 onPress(title)}}>
                 <View>
                     <ClusterPillText>{title}</ClusterPillText>
-                    <ClusterResultText>22 results</ClusterResultText>
+                    <ClusterResultText>{amount} results</ClusterResultText>
                 </View>
             </ClusterContainer>
         )

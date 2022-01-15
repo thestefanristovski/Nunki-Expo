@@ -50,7 +50,7 @@ const PillMultiselect = (props: Props) => {
                 {title!=="" && <FilterTitle>{title}</FilterTitle> }
                 <MultiselectPillContainer>
                     <MultiPill title={"All"} onPress={onSelected} statusActive={"inactive"}/>
-                    {options.map((element) => {
+                    {options.map((element, key) => {
                         if (selected.includes(element)) {
                             return (<MultiPill title={element} onPress={onSelected} statusActive={"active"}/>)
                         } else {

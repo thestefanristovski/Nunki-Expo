@@ -44,6 +44,7 @@ export default function Demo() {
     //State: clusters
     const [clusters, setCluster] = useState([])
     const [selectedClusters, setSelectedCluster] = useState([])
+    const [clustersData, setClustersData] = useState([])
     //State: Page display
     const [onAdvanced, setOnAdvanced] = useState(false);
     const [onMap, setOnMap] = useState(false);
@@ -52,10 +53,36 @@ export default function Demo() {
     const youtubeBaseUrl = 'https://search.api.nunki.co/youtube/search?type=video&normalize=true'
     const vimeoBaseUrl = 'https://search.api.nunki.co/vimeo/search?type=video&normalize=true'
     const twitterBaseUrl = 'https://search.api.nunki.co/twitter/search?normalize=true'
+    const clusteringBaseUrl = 'https://search.api.nunki.co/clustering/cluster?'
     //State: Query Parameters (sent from context)
     const [queryParameters, setQueryParameters] = useState('noQuery')
 
     // MAKING A QUERY =========================================================
+
+    const fetchClusters = async (clusteringRequest:string, jsonBody:any) => {
+        fetch(clusteringRequest, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(jsonBody) // body data type must match "Content-Type" header
+        })
+            .then(response => response.json())
+            .then(clusterResults => {
+                let clusterNames = []
+                let clusterData = []
+                if (clusterResults.clusters) {
+                    clusterResults.clusters.forEach(item => {
+                        clusterNames.push(item.words[0])
+                        clusterData.push(item.data)
+                    })
+                }
+                console.log(clusterData)
+                setClustersData(clusterData)
+                setCluster(clusterNames)
+            })
+    }
 
     const fetchData = async (key: any):Promise<any[]> => {
 
@@ -108,6 +135,19 @@ export default function Demo() {
                 //set next attributes for load more
                 next = next.concat([dataYT.next, dataVim.next, dataTw.next])
                 setLast(next)
+            }).then(() => {
+                let clusteringRequest = clusteringBaseUrl + `exclude=${params.anyKeywords.join(',')}`
+                    + `&cluster_num=4`;
+                let jsonBody = {
+                    "network":"Twitter",
+                    "length":res?.length,
+                    "next":"",
+                    "contents":res?.filter((item) => {console.log(item.network); return item.network !== 'vimeo'}),
+                };
+
+                console.log(jsonBody);
+                console.log(JSON.stringify(jsonBody));
+                fetchClusters(clusteringRequest, jsonBody)
             })
 
             console.log(res);
@@ -198,7 +238,7 @@ export default function Demo() {
                 {onAdvanced && <Advanced/>}
                 {onMap && <Map onSelectLocation={onSelectLocation}/>}
             </SettingsContainer>
-            {clusters.length!==0 && <ClusterMenu onSelected={changedCluster} options={clusters} selected={selectedClusters}/>}
+            {clusters.length!==0 && <ClusterMenu onSelected={changedCluster} options={clusters} selected={selectedClusters} optionsData={clustersData}/>}
             <View style={{zIndex:-10}}>
                 {status === 'success' && <Masonry
                     data = {data}
