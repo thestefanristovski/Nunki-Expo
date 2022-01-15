@@ -210,6 +210,11 @@ export default function Demo() {
                             if (item.network === 'vimeo') {
                                 metricTitles = ['views', 'likes', "comments"]
                             }
+                            if (item.location) {
+                                let coords = []
+                                item.location.coordinates.forEach(element => {coords.push(element.toFixed(2))})
+                                item.location.coordinates = coords;
+                            }
                             if (item.network === 'youtube' || item.network === 'vimeo' ) {
                                 return <VideoPost key={item.text}
                                                   title={item.title}
@@ -220,7 +225,7 @@ export default function Demo() {
                                                   channel={item.user_fullname}
                                                   socialMedia={item.network}
                                                   postTime={formatDistanceToNowStrict(fromUnixTime(item.unix), {addSuffix: true})}
-                                                  postLocation={item.location && item.location.coordinates.join(',')}
+                                                  postLocation={item.location && item.location.coordinates.join(', ')}
                                                   postLink={item.link}
                                                   length={item.duration}/>
                             } else if (item.network === 'twitter') {
