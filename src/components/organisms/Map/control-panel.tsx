@@ -89,9 +89,9 @@ function ControlPanel(props: Props) {
       <StyledH3>Draw an area to search in</StyledH3>
       {polygon ? polygon && (
         <StyledP>
-          Your Area: center - ({circleCenter.geometry.coordinates.map(x => x.toFixed(3)).join(',')}) | diameter (m) - {getDiameter(circleBBox).toFixed(2)}. Click on the area and press the delete button to start over.
+          Your Area: center - ({circleCenter.geometry.coordinates.map(x => x.toFixed(3)).join(',')}) | diameter (m) - {getDiameter(circleBBox).toFixed(2)}. Select the area and click the Clear button to remove selection.
         </StyledP>
-      ) : <StyledP>Click on the Draw button to designate a search area. Click on the map to set the center and click again to select the search radius.</StyledP>}
+      ) : <StyledP>Click on the Draw button to designate a search area. Click on the map to set the center and click again to select the search radius. Click on the Clear Map button to remove all existing selections.</StyledP>}
     </PanelContainer>
   );
 }

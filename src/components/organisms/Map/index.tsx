@@ -93,6 +93,9 @@ const Map = (props: Props) => {
 
   const onDelete = useCallback(() => {
     setFeatures("")
+    if (featuresI==="") {
+      editorRef.current.deleteFeatures(featuresI)
+    }
     // @ts-ignore
     if (selectedFeatureIndex !== null && selectedFeatureIndex >= 0) {
       // @ts-ignore
@@ -119,7 +122,7 @@ const Map = (props: Props) => {
         <Text style={styles.title}>Draw</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.buttonDelete} onPress={onDelete}>
-        <Text style={styles.title}>Delete</Text>
+        <Text style={styles.title}>Clear Map</Text>
       </TouchableOpacity>
     </>
   );
