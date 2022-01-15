@@ -15,6 +15,7 @@ import {QueryParamsProvider} from "../state/queryParams";
 import TextPost from "../components/organisms/TextPost";
 import PhotoPost from "../components/organisms/PhotoPost";
 import ClusterMenu from "../components/organisms/ClusterMenu";
+import * as dJSON from 'dirty-json'
 
 
 const SettingsContainer = styled.View`
@@ -75,7 +76,12 @@ export default function Demo() {
                 if (clusterResults.clusters) {
                     clusterResults.clusters.forEach(item => {
                         clusterNames.push(item.words[0])
-                        clusterData.push(item.data)
+                        let dataToAdd = []
+                        item.data.forEach(stringJson => {
+                            console.log(stringJson)
+                            dataToAdd.push(dJSON.parse(stringJson))
+                        })
+                        clusterData.push(dataToAdd)
                     })
                 }
                 console.log(clusterData)
@@ -225,6 +231,16 @@ export default function Demo() {
         setMapSelected(mapSelected)
     }
 
+    let dataToDisplay = data;
+    if (selectedClusters.length!==0) {
+        dataToDisplay = [];
+        selectedClusters.forEach((item) => {
+            dataToDisplay = dataToDisplay?.concat(clustersData[clusters.indexOf(item)])
+        })
+    }
+
+    console.log(dataToDisplay)
+
     return (
         <QueryParamsProvider>
             <SettingsContainer>
@@ -241,7 +257,7 @@ export default function Demo() {
             {clusters.length!==0 && <ClusterMenu onSelected={changedCluster} options={clusters} selected={selectedClusters} optionsData={clustersData}/>}
             <View style={{zIndex:-10}}>
                 {status === 'success' && <Masonry
-                    data = {data}
+                    data = {dataToDisplay}
                     numColumns = {columns}
                     renderItem = {({item}) => {
                         if (item.content_type === 'video' && selectedContentTypes.includes("Videos")) {
