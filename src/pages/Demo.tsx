@@ -36,7 +36,7 @@ LogBox.ignoreAllLogs();
 
 export default function Demo() {
     // List of Elements in Grid
-    const [columns, setColumns] = useState(2);
+    const [columns, setColumns] = useState(Math.round(window.innerWidth/500));
     //State: Content Type Multiselect Menu
     const [contentTypes] = useState(["Photos", "Videos", "Text"])
     const [selectedContentTypes, setSelectedContentTypes] = useState(["Photos", "Videos", "Text"])
@@ -60,6 +60,9 @@ export default function Demo() {
 
     // MAKING A QUERY =========================================================
 
+    //FetchClusters
+    //Gets cluster data, called after results are fetched
+    //TODO replace with proper react query, add loading indicator
     const fetchClusters = async (clusteringRequest:string, jsonBody:any) => {
         fetch(clusteringRequest, {
             method: 'POST',
@@ -77,22 +80,22 @@ export default function Demo() {
                         clusterNames.push(item.words[0])
                         let dataToAdd = []
                         item.data.forEach(stringJson => {
-                            console.log(stringJson)
                             dataToAdd.push(dJSON.parse(stringJson))
                         })
                         clusterData.push(dataToAdd)
                     })
                 }
-                console.log(clusterData)
                 setClustersData(clusterData)
                 setCluster(clusterNames)
             })
     }
 
+    //FetchData
+    // constructs query, executes API calls to Back End Service. Uses React Query.
+    // return: list of results in JSON format
     const fetchData = async (key: any):Promise<any[]> => {
 
         let params = key.queryKey[1];
-        console.log(params);
 
         if (params !== 'noQuery') {
             //get previous results or initialize new array
@@ -147,15 +150,12 @@ export default function Demo() {
                     "network":"Twitter",
                     "length":res?.length,
                     "next":"",
-                    "contents":res?.filter((item) => {console.log(item.network); return item.network !== 'vimeo'}),
+                    "contents":res?.filter((item) => { return item.network !== 'vimeo'}),
                 };
 
-                console.log(jsonBody);
-                console.log(JSON.stringify(jsonBody));
                 fetchClusters(clusteringRequest, jsonBody)
             })
 
-            console.log(res);
             return res;
         }
         else {
@@ -163,20 +163,16 @@ export default function Demo() {
         }
     }
 
+    //React Query implementation
     const { data, refetch, status } = useQuery(["key", queryParameters], fetchData, { refetchOnWindowFocus: false } );
 
+    //makeQuery function
+    //called when Search button is pressed, updates Query Parameters (shared state) to initiate the fetchData function (React Query)
     const makeQuery = async (text:string) => {
         setQueryParameters(text);
     }
 
-    useEffect(() => {
-        return () => {
-            // This is the cleanup function
-        }
-    }, []);
-
     // VISUAL =================================================================
-
     //Recalculate the number of columns to display for grid
     React.useEffect(() => {
         function handleResize() {
@@ -199,9 +195,8 @@ export default function Demo() {
     }
 
     // CLUSTERS ====================================================================
+    // Listener for Cluster multiselect menu
     const changedCluster = (element: string, another: string):void  => {
-        console.log(element)
-        console.log(selectedClusters)
         if (selectedClusters.includes(element)) {
             setSelectedCluster(selectedClusters.filter(selectedItem => selectedItem != element));
         } else if (element === "All") {
@@ -217,11 +212,6 @@ export default function Demo() {
     }
 
     const onChangeMap = (changeTo: boolean) => {
-        /*
-        if (changeTo) {
-            setMapSelected(false);
-        }
-         */
         setOnMap(changeTo);
     }
 
@@ -230,6 +220,7 @@ export default function Demo() {
         setMapSelected(mapSelected)
     }
 
+    //chooses to display all or part of results depending on selected clusters
     let dataToDisplay = data;
     if (selectedClusters.length!==0) {
         dataToDisplay = [];
@@ -237,8 +228,6 @@ export default function Demo() {
             dataToDisplay = dataToDisplay?.concat(clustersData[clusters.indexOf(item)])
         })
     }
-
-    console.log(dataToDisplay)
 
     return (
         <QueryParamsProvider>
