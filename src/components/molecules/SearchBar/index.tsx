@@ -138,6 +138,10 @@ const SearchBar = (props: Props) => {
         const keywords:string[] = queryKeywords;
         // @ts-ignore
         setQueryKeywords(keywords.filter(item => item !== text));
+        let p = {...context.parameters}
+        // @ts-ignore
+        p.anyKeywords = context.parameters.anyKeywords.filter(item => item !== text)
+        context.updateParams(p)
     }
 
     //Listen for changes in text field, trigger add keyword method in parent when , is typed
@@ -173,6 +177,7 @@ const SearchBar = (props: Props) => {
             let p = {...context.parameters}
             onPressSearch(p);
         }
+
     }
 
     const changeAdvanced = () => {

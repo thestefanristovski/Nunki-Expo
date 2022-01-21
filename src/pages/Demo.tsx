@@ -65,7 +65,6 @@ export default function Demo() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: JSON.stringify(jsonBody) // body data type must match "Content-Type" header
         })
