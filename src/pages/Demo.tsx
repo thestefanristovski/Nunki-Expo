@@ -145,7 +145,8 @@ export default function Demo() {
                 setLast(next)
             }).then(() => {
                 let clusteringRequest = clusteringBaseUrl + `exclude=${params.anyKeywords.join(',')}`
-                    + `&cluster_num=4`;
+                    + `&cluster_num=${Math.floor(res?.length/6)}`;
+                console.log(clusteringRequest)
                 let jsonBody = {
                     "network":"Twitter",
                     "length":res?.length,
@@ -229,6 +230,9 @@ export default function Demo() {
         })
     }
 
+    console.log(status);
+    console.log(((status==='success' || status === 'loading') && clusters.length===0))
+
     return (
         <QueryParamsProvider>
             <SettingsContainer>
@@ -242,6 +246,7 @@ export default function Demo() {
                 {onAdvanced && <Advanced/>}
                 {onMap && <Map onSelectLocation={onSelectLocation}/>}
             </SettingsContainer>
+            {((status==='success' || status === 'loading') && dataToDisplay?.length!==0 && clusters.length===0) && <ActivityIndicator size="small" color="white"/>}
             {clusters.length!==0 && <ClusterMenu onSelected={changedCluster} options={clusters} selected={selectedClusters} optionsData={clustersData}/>}
             <View style={{zIndex:-10}}>
                 {status === 'success' && <Masonry
@@ -256,7 +261,7 @@ export default function Demo() {
                             }
                             if (item.location) {
                                 let coords = []
-                                item.location.coordinates.forEach(element => {coords.push(element.toFixed(2))})
+                                item.location.coordinates.forEach(element => {coords.push((element*1).toFixed(2))})
                                 item.location.coordinates = coords;
                             }
                             if (item.network === 'youtube' || item.network === 'vimeo' ) {
